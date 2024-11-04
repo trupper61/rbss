@@ -14,6 +14,5 @@ namespace rbss1
         {
             this.besitzer = besitzer;
         }
-
     }
 }
