@@ -44,7 +44,6 @@ namespace rbss1
                 x += 50;
 
             }
-            label1.Text = $"{this.Width}";
         }
     }
 }
