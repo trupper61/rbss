@@ -9,6 +9,11 @@ namespace rbss1
 {
     internal class Feld
     {
-        public PictureBox textur;
+        public PictureBox textur { get; set; }
+
+        public Feld() 
+        {
+            textur = new PictureBox();
+        }
     }
 }
