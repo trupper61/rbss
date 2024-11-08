@@ -15,6 +15,7 @@ namespace rbss1
     {
         private PictureBox lastClicked = null;
         private Feld[,] felder;
+        Random random = new Random();
         public Form1()
         {
             InitializeComponent();
@@ -27,15 +28,34 @@ namespace rbss1
             int x = 0;
             int y = 0;
             int feldgroesse = 50;
+            
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
+                    int feldtyp = random.Next(1, 4);
                     Feld feld = new Feld();
+
+                    if(feldtyp > 0 && feldtyp < 3) 
+                    {
+                        feld.feldart = "Grass";
+                    }
+                    else if(feldtyp == 3)
+                    {
+                        feld.feldart = "Water";
+                    }
                     feld.textur.Size = new Size(feldgroesse, feldgroesse);
                     feld.textur.Location = new Point(j * feldgroesse, i * feldgroesse);
-                    feld.textur.Image = Properties.Resources.squar2;
+                    if(feld.feldart == "Grass") 
+                    {
+                        feld.textur.Image = Properties.Resources.grass;
+                    }
+                    else if(feld.feldart == "Water")
+                    {
+                        feld.textur.Image = Properties.Resources.water;
+                    }
                     feld.textur.BackColor = Color.White;
+                    feld.textur.Tag = feld;
                     feld.textur.Click += new EventHandler(feld_Click);
 
                     felder[i, j] = feld;
@@ -54,21 +74,35 @@ namespace rbss1
         public void feld_Click(object sender, EventArgs e) 
         {
             PictureBox feld = sender as PictureBox;
-            if(feld.BackColor == Color.White) 
+            Feld felder = feld.Tag as Feld;
+
+            if (felder != null && felder.feldart == "Water")
             {
-                feld.BackColor = Color.Gray;
-            }
-            else if(feld.BackColor == Color.Gray) 
-            {
-                feld.BackColor= Color.White;
+                return;
             }
 
-            if (lastClicked != null && lastClicked != feld)
+            if(felder != null && felder.feldart == "Grass") 
             {
-                lastClicked.BackColor = Color.White;
+                if (feld.BackColor == Color.White)
+                {
+                    feld.BackColor = Color.Gray;
+                    feld.Image = Properties.Resources.grasstransparent;
+                }
+                else if (feld.BackColor == Color.Gray)
+                {
+                    feld.BackColor = Color.White;
+                    feld.Image = Properties.Resources.grass;
+                }
+
+                if (lastClicked != null && lastClicked != feld)
+                {
+                    lastClicked.BackColor = Color.White;
+                    lastClicked.Image = Properties.Resources.grass;
+                }
+
+                lastClicked = feld;
             }
             
-            lastClicked = feld;
         }
     }
 }

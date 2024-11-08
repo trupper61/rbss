@@ -88,5 +88,14 @@
   <ItemGroup>
     <None Include="assets\squar2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\grasstransparent.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
