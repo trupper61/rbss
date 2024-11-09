@@ -17,12 +17,13 @@ namespace rbss1
         private Truppe selectedTruppe = null;
         private Feld[,] felder;
         Random random = new Random();
+        Random rescourcen = new Random();
+        Random rescourcenMenge = new Random();
         public Form1()
         {
             InitializeComponent();
             felder = new Feld[10, 10];
             Feldgenerierung();
-    
         }
         public void Feldgenerierung() 
         {
@@ -35,7 +36,15 @@ namespace rbss1
                 for (int j = 0; j < 10; j++)
                 {
                     int feldtyp = random.Next(1, 4);
+                    int rescourcenEinteilung = rescourcen.Next(0, 2);
+                    int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
+
                     Feld feld = new Feld();
+
+                    if(rescourcenEinteilung == 1) 
+                    {
+                        feld.rescourcen = new Eisen(10, rescourcenAnzahl);
+                    }
 
                     if(feldtyp > 0 && feldtyp < 3) 
                     {
@@ -76,6 +85,9 @@ namespace rbss1
         {
             var clickedObject = (sender as PictureBox).Tag;
 
+
+            UIInfo.Show();
+            UIInfo.Image = Properties.Resources.UI2;
             if (lastClickedFeld != null)
             {
                 lastClickedFeld.textur.BackColor = Color.White;
@@ -88,8 +100,26 @@ namespace rbss1
             }
             else if (clickedObject is Feld clickedFeld)
             {
+              if (clickedFeld.rescourcen != null && clickedFeld.feldart != "Water") 
+              {
+                MessageBox.Show($"{felder.rescourcen.ToString()}");
+                UIInfo.Image = Properties.Resources.UI2eisen;
+                anzahlRes.Show();
+
+                anzahlRes.Text = felder.rescourcen.ToString();
+
+                anzahlRes.BringToFront();
+              }
+              else 
+              {
+                anzahlRes.Hide();
+              }
                 if (clickedFeld.feldart == "Water")
                 {
+                    feld.BackColor = Color.White;
+                    feld.Image = Properties.Resources.grass;
+                    UIInfo.Hide();
+                    anzahlRes.Hide();
                     return;
                 }
                 clickedFeld.textur.BackColor = Color.Gray;
@@ -98,6 +128,11 @@ namespace rbss1
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
+                    lastClicked.BackColor = Color.White;
+                    lastClicked.Image = Properties.Resources.grass;
+                    
+                }
+
                     int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
                     int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
                     int zielx = clickedFeld.textur.Location.X / 50;

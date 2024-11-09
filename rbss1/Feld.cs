@@ -14,6 +14,8 @@ namespace rbss1
         public Truppe TruppeAufFeld { get; private set; }
 
         public string feldart {  get; set; }
+
+        public Rescourcen rescourcen { get; set; }
         public Feld() 
         {
             textur = new PictureBox();
