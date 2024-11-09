@@ -16,12 +16,13 @@ namespace rbss1
         private PictureBox lastClicked = null;
         private Feld[,] felder;
         Random random = new Random();
+        Random rescourcen = new Random();
+        Random rescourcenMenge = new Random();
         public Form1()
         {
             InitializeComponent();
             felder = new Feld[10, 10];
             Feldgenerierung();
-    
         }
         public void Feldgenerierung() 
         {
@@ -34,7 +35,15 @@ namespace rbss1
                 for (int j = 0; j < 10; j++)
                 {
                     int feldtyp = random.Next(1, 4);
+                    int rescourcenEinteilung = rescourcen.Next(0, 2);
+                    int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
+
                     Feld feld = new Feld();
+
+                    if(rescourcenEinteilung == 1) 
+                    {
+                        feld.rescourcen = new Eisen(10, rescourcenAnzahl);
+                    }
 
                     if(feldtyp > 0 && feldtyp < 3) 
                     {
@@ -76,6 +85,24 @@ namespace rbss1
             PictureBox feld = sender as PictureBox;
             Feld felder = feld.Tag as Feld;
 
+            UIInfo.Show();
+            UIInfo.Image = Properties.Resources.UI2;
+
+            if (felder.rescourcen != null && felder.feldart != "Water") 
+            {
+                MessageBox.Show($"{felder.rescourcen.ToString()}");
+                UIInfo.Image = Properties.Resources.UI2eisen;
+                anzahlRes.Show();
+
+                anzahlRes.Text = felder.rescourcen.ToString();
+
+                anzahlRes.BringToFront();
+            }
+            else 
+            {
+                anzahlRes.Hide();
+            }
+
             if (felder != null && felder.feldart == "Water")
             {
                 return;
@@ -92,17 +119,20 @@ namespace rbss1
                 {
                     feld.BackColor = Color.White;
                     feld.Image = Properties.Resources.grass;
+                    UIInfo.Hide();
+                    anzahlRes.Hide();
                 }
 
                 if (lastClicked != null && lastClicked != feld)
                 {
                     lastClicked.BackColor = Color.White;
                     lastClicked.Image = Properties.Resources.grass;
+                    
                 }
 
                 lastClicked = feld;
             }
-            
+
         }
     }
 }
