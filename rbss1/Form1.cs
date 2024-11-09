@@ -81,13 +81,13 @@ namespace rbss1
                 }
             }
         }
-        public void feld_Click(object sender, EventArgs e) 
+        public void feld_Click(object sender, EventArgs e)
         {
             var clickedObject = (sender as PictureBox).Tag;
 
-
             UIInfo.Show();
             UIInfo.Image = Properties.Resources.UI2;
+
             if (lastClickedFeld != null)
             {
                 lastClickedFeld.textur.BackColor = Color.White;
@@ -100,24 +100,21 @@ namespace rbss1
             }
             else if (clickedObject is Feld clickedFeld)
             {
-              if (clickedFeld.rescourcen != null && clickedFeld.feldart != "Water") 
-              {
-                MessageBox.Show($"{felder.rescourcen.ToString()}");
-                UIInfo.Image = Properties.Resources.UI2eisen;
-                anzahlRes.Show();
+                if (clickedFeld.rescourcen != null && clickedFeld.feldart != "Water")
+                {
+                    UIInfo.Image = Properties.Resources.UI2eisen;
+                    anzahlRes.Show();
 
-                anzahlRes.Text = felder.rescourcen.ToString();
+                    anzahlRes.Text = clickedFeld.rescourcen.ToString();
 
-                anzahlRes.BringToFront();
-              }
-              else 
-              {
-                anzahlRes.Hide();
-              }
+                    anzahlRes.BringToFront();
+                }
+                else
+                {
+                    anzahlRes.Hide();
+                }
                 if (clickedFeld.feldart == "Water")
                 {
-                    feld.BackColor = Color.White;
-                    feld.Image = Properties.Resources.grass;
                     UIInfo.Hide();
                     anzahlRes.Hide();
                     return;
@@ -128,28 +125,21 @@ namespace rbss1
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
-                    lastClicked.BackColor = Color.White;
-                    lastClicked.Image = Properties.Resources.grass;
-                    
-                }
-
                     int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
                     int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
                     int zielx = clickedFeld.textur.Location.X / 50;
                     int ziely = clickedFeld.textur.Location.Y / 50;
-                    
+
                     int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
 
                     if (distanz > selectedTruppe.Bewegungsreichweite)
                     {
-                        MessageBox.Show("Bewegungslimit überschritten");
                         selectedTruppe.Darstellung.BackColor = Color.Blue;
                         selectedTruppe = null;
                         lastClickedFeld.textur.BackColor = Color.White;
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
                         return;
                     }
-
                     selectedTruppe.AktuellesFeld.EntferneTruppe();
                     clickedFeld.SetzeTruppe(selectedTruppe);
 
@@ -160,3 +150,4 @@ namespace rbss1
         }
     }
 }
+
