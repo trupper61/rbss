@@ -13,7 +13,8 @@ namespace rbss1
 {
     public partial class Form1 : Form
     {
-        private PictureBox lastClicked = null;
+        private Feld lastClickedFeld = null;
+        private Truppe selectedTruppe = null;
         private Feld[,] felder;
         Random random = new Random();
         public Form1()
@@ -63,46 +64,64 @@ namespace rbss1
                     {
                         Truppe truppe = new Truppe();
                         feld.SetzeTruppe(truppe);
+                        truppe.Darstellung.Tag = truppe;
+                        truppe.Darstellung.Click += new EventHandler(feld_Click);
                         this.Controls.Add(truppe.Darstellung);
-
                     }
-
                     this.Controls.Add(feld.textur);
                 }
             }
         }
         public void feld_Click(object sender, EventArgs e) 
         {
-            PictureBox feld = sender as PictureBox;
-            Feld felder = feld.Tag as Feld;
+            var clickedObject = (sender as PictureBox).Tag;
 
-            if (felder != null && felder.feldart == "Water")
+            if (lastClickedFeld != null)
             {
-                return;
+                lastClickedFeld.textur.BackColor = Color.White;
+                lastClickedFeld.textur.Image = Properties.Resources.grass;
             }
-
-            if(felder != null && felder.feldart == "Grass") 
+            if (clickedObject is Truppe clickedTruppe)
             {
-                if (feld.BackColor == Color.White)
-                {
-                    feld.BackColor = Color.Gray;
-                    feld.Image = Properties.Resources.grasstransparent;
-                }
-                else if (feld.BackColor == Color.Gray)
-                {
-                    feld.BackColor = Color.White;
-                    feld.Image = Properties.Resources.grass;
-                }
-
-                if (lastClicked != null && lastClicked != feld)
-                {
-                    lastClicked.BackColor = Color.White;
-                    lastClicked.Image = Properties.Resources.grass;
-                }
-
-                lastClicked = feld;
+                selectedTruppe = clickedTruppe;
+                clickedTruppe.Darstellung.BackColor = Color.LightBlue;
             }
-            
+            else if (clickedObject is Feld clickedFeld)
+            {
+                if (clickedFeld.feldart == "Water")
+                {
+                    return;
+                }
+                clickedFeld.textur.BackColor = Color.Gray;
+                clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                lastClickedFeld = clickedFeld;
+
+                if (selectedTruppe != null && clickedFeld.feldart == "Grass")
+                {
+                    int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
+                    int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
+                    int zielx = clickedFeld.textur.Location.X / 50;
+                    int ziely = clickedFeld.textur.Location.Y / 50;
+                    
+                    int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
+
+                    if (distanz > selectedTruppe.Bewegungsreichweite)
+                    {
+                        MessageBox.Show("Bewegungslimit überschritten");
+                        selectedTruppe.Darstellung.BackColor = Color.Blue;
+                        selectedTruppe = null;
+                        lastClickedFeld.textur.BackColor = Color.White;
+                        lastClickedFeld.textur.Image = Properties.Resources.grass;
+                        return;
+                    }
+
+                    selectedTruppe.AktuellesFeld.EntferneTruppe();
+                    clickedFeld.SetzeTruppe(selectedTruppe);
+
+                    selectedTruppe.Darstellung.BackColor = Color.Blue;
+                    selectedTruppe = null;
+                }
+            }
         }
     }
 }
