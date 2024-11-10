@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace rbss1
 {
-    internal class Rescourcen
+    public class Rescourcen
     {
         private int wert {  get; set; }
         private int anzahl { get; set; }

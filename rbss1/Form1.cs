@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -68,7 +69,7 @@ namespace rbss1
                     feld.textur.Click += new EventHandler(feld_Click);
 
                     felder[i, j] = feld;
-                    if (i == 1 && j == 1)
+                    if ((i == 1 && j == 1) || (i == 4 && j == 4))
                     {
                         Truppe truppe = new Truppe();
                         feld.SetzeTruppe(truppe);
@@ -87,29 +88,40 @@ namespace rbss1
             UIInfo.Show();
             UIInfo.Image = Properties.Resources.UI2;
 
-            
+
             if (clickedObject is Truppe clickedTruppe)
             {
-                if(selectedTruppe == null) 
+                if (selectedTruppe != null && selectedTruppe != clickedTruppe)
+                {
+                    selectedTruppe.Angreifen(clickedTruppe);
+                    selectedTruppe = null;
+                    UpdateTruppenLabels(null);
+                    return;
+                }
+                if (selectedTruppe == null)
                 {
                     selectedTruppe = clickedTruppe;
                     clickedTruppe.Darstellung.BackColor = Color.LightBlue;
 
-                    if(lastClickedFeld != null) 
+                    if (lastClickedFeld != null)
                     {
                         lastClickedFeld.textur.BackColor = Color.White;
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
                     }
-                    
+                    UpdateTruppenLabels(clickedTruppe);
                 }
-                else if (selectedTruppe != null) 
+                else if (selectedTruppe != null)
                 {
                     selectedTruppe = null;
                     clickedTruppe.Darstellung.BackColor = Color.Blue;
+
+                    truppenLebenLB.Visible = false;
+                    truppenSchadenLB.Visible = false;
                 }
             }
             else if (clickedObject is Feld clickedFeld)
             {
+                UpdateTruppenLabels(null);
                 if (clickedFeld.rescourcen != null && clickedFeld.feldart != "Water")
                 {
                     UIInfo.Image = Properties.Resources.UI2eisen;
@@ -131,17 +143,19 @@ namespace rbss1
                 {
                     clickedFeld.textur.BackColor = Color.Gray;
                     clickedFeld.textur.Image = Properties.Resources.grasstransparent;
-                    
+
                 }
                 else if (clickedFeld.textur.BackColor == Color.Gray)
                 {
+                    truppenLebenLB.Visible = false;
+                    truppenSchadenLB.Visible = false;
                     clickedFeld.textur.BackColor = Color.White;
                     clickedFeld.textur.Image = Properties.Resources.grass;
 
                     UIInfo.Hide();
                     anzahlRes.Hide();
 
-                    if (selectedTruppe != null) 
+                    if (selectedTruppe != null)
                     {
                         selectedTruppe.Darstellung.BackColor = Color.Blue;
                         selectedTruppe = null;
@@ -156,7 +170,7 @@ namespace rbss1
                 lastClickedFeld = clickedFeld;
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
-                { 
+                {
                     int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
                     int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
                     int zielx = clickedFeld.textur.Location.X / 50;
@@ -179,6 +193,22 @@ namespace rbss1
                     selectedTruppe = null;
                 }
 
+            }
+
+        }
+        public void UpdateTruppenLabels (Truppe truppe)
+        {
+            if (truppe != null)
+            {
+                truppenLebenLB.Text = $"Leben: {truppe.Leben}";
+                truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
+                truppenLebenLB.Visible = true;
+                truppenSchadenLB.Visible = true;
+            }
+            else
+            {
+                truppenLebenLB.Visible = false;
+                truppenSchadenLB.Visible= false;
             }
         }
     }

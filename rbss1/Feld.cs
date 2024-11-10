@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace rbss1
 {
-    internal class Feld
+    public class Feld
     {
         public PictureBox textur { get; set; }
         public Truppe TruppeAufFeld { get; private set; }
