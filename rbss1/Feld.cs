@@ -31,6 +31,7 @@ namespace rbss1
             int x = (textur.Width - truppe.Darstellung.Width) / 2;
             int y = (textur.Height - truppe.Darstellung.Height) / 2;
             truppe.Darstellung.Location = new Point(textur.Location.X + x, textur.Location.Y + y);
+            truppe.Darstellung.BringToFront();
         }
         public void EntferneTruppe()
         {

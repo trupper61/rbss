@@ -15,14 +15,13 @@ namespace rbss1
     {
         private Feld lastClickedFeld = null;
         private Truppe selectedTruppe = null;
-        private Feld[,] felder;
+        private Feld[,] felder = new Feld[10, 10];
         Random random = new Random();
         Random rescourcen = new Random();
         Random rescourcenMenge = new Random();
         public Form1()
         {
             InitializeComponent();
-            felder = new Feld[10, 10];
             Feldgenerierung();
         }
         public void Feldgenerierung() 
@@ -115,9 +114,7 @@ namespace rbss1
                 {
                     UIInfo.Image = Properties.Resources.UI2eisen;
                     anzahlRes.Show();
-
                     anzahlRes.Text = clickedFeld.rescourcen.ToString();
-
                     anzahlRes.BringToFront();
                 }
                 else
@@ -159,7 +156,7 @@ namespace rbss1
                 lastClickedFeld = clickedFeld;
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
-                {
+                { 
                     int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
                     int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
                     int zielx = clickedFeld.textur.Location.X / 50;

@@ -27,9 +27,5 @@ namespace rbss1
         {
             AktuellesFeld = neuesFeld;
         }
-        public void Bewegen(Feld neuesFeld)
-        {
-            
-        }
     }
 }
