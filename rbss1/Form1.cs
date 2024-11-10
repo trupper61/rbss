@@ -88,15 +88,26 @@ namespace rbss1
             UIInfo.Show();
             UIInfo.Image = Properties.Resources.UI2;
 
-            if (lastClickedFeld != null)
-            {
-                lastClickedFeld.textur.BackColor = Color.White;
-                lastClickedFeld.textur.Image = Properties.Resources.grass;
-            }
+            
             if (clickedObject is Truppe clickedTruppe)
             {
-                selectedTruppe = clickedTruppe;
-                clickedTruppe.Darstellung.BackColor = Color.LightBlue;
+                if(selectedTruppe == null) 
+                {
+                    selectedTruppe = clickedTruppe;
+                    clickedTruppe.Darstellung.BackColor = Color.LightBlue;
+
+                    if(lastClickedFeld != null) 
+                    {
+                        lastClickedFeld.textur.BackColor = Color.White;
+                        lastClickedFeld.textur.Image = Properties.Resources.grass;
+                    }
+                    
+                }
+                else if (selectedTruppe != null) 
+                {
+                    selectedTruppe = null;
+                    clickedTruppe.Darstellung.BackColor = Color.Blue;
+                }
             }
             else if (clickedObject is Feld clickedFeld)
             {
@@ -119,8 +130,32 @@ namespace rbss1
                     anzahlRes.Hide();
                     return;
                 }
-                clickedFeld.textur.BackColor = Color.Gray;
-                clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                if (clickedFeld.textur.BackColor == Color.White)
+                {
+                    clickedFeld.textur.BackColor = Color.Gray;
+                    clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                    
+                }
+                else if (clickedFeld.textur.BackColor == Color.Gray)
+                {
+                    clickedFeld.textur.BackColor = Color.White;
+                    clickedFeld.textur.Image = Properties.Resources.grass;
+
+                    UIInfo.Hide();
+                    anzahlRes.Hide();
+
+                    if (selectedTruppe != null) 
+                    {
+                        selectedTruppe.Darstellung.BackColor = Color.Blue;
+                        selectedTruppe = null;
+                    }
+                }
+                if (lastClickedFeld != null && lastClickedFeld != clickedFeld)
+                {
+                    lastClickedFeld.textur.BackColor = Color.White;
+                    lastClickedFeld.textur.Image = Properties.Resources.grass;
+                }
+
                 lastClickedFeld = clickedFeld;
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
@@ -146,6 +181,7 @@ namespace rbss1
                     selectedTruppe.Darstellung.BackColor = Color.Blue;
                     selectedTruppe = null;
                 }
+
             }
         }
     }
