@@ -27,8 +27,6 @@ namespace rbss1
         }
         public void Feldgenerierung() 
         {
-            int x = 0;
-            int y = 0;
             int feldgroesse = 50;
             
             for (int i = 0; i < 10; i++)
@@ -41,7 +39,7 @@ namespace rbss1
 
                     Feld feld = new Feld();
 
-                    if(rescourcenEinteilung == 1) 
+                    if(rescourcenEinteilung == 1)
                     {
                         feld.rescourcen = new Eisen(10, rescourcenAnzahl);
                     }
