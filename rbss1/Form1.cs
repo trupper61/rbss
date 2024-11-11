@@ -75,6 +75,12 @@ namespace rbss1
                         truppe.Darstellung.Click += new EventHandler(feld_Click);
                         this.Controls.Add(truppe.Darstellung);
                     }
+                    if (i == 5 && j == 5)
+                    {
+                        Stadt stadt = new Stadt(felder[i,j], felder);
+                        this.Controls.Add(stadt.textur);
+                    }
+                    feld.position = new Point(i, j);
                     this.Controls.Add(feld.textur);
                 }
             }

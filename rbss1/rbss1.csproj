@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rescourcen.cs" />
     <Compile Include="Spieler.cs" />
+    <Compile Include="Stadt.cs" />
     <Compile Include="Truppe.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
