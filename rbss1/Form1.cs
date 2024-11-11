@@ -27,31 +27,47 @@ namespace rbss1
         }
         public void Feldgenerierung() 
         {
+            bool flag = false;
             int feldgroesse = 50;
+            int durchlauefe = 0;
             
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    int feldtyp = random.Next(1, 4);
+                    int feldtyp = random.Next(1, 8);
                     int rescourcenEinteilung = rescourcen.Next(0, 2);
                     int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
 
                     Feld feld = new Feld();
 
-                    if(rescourcenEinteilung == 1)
+                    if(feldtyp > 0 && feldtyp < 7 && durchlauefe <= 0) 
+                    {
+                        feld.feldart = "Grass";
+                    }
+                    else if(feldtyp == 7 || durchlauefe > 0)
+                    {
+                        feld.feldart = "Water";
+                        durchlauefe--;
+                    }
+                    if(feld.feldart == "Water" && durchlauefe <= 0) 
+                    {   
+                        if(flag != true) 
+                        {
+                            durchlauefe = 1;
+                        }
+                        flag = true;
+                        if(durchlauefe == 0) 
+                        {
+                            flag = false;
+                        }
+                    }
+
+                    if (rescourcenEinteilung == 1 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Eisen(10, rescourcenAnzahl);
                     }
 
-                    if(feldtyp > 0 && feldtyp < 3) 
-                    {
-                        feld.feldart = "Grass";
-                    }
-                    else if(feldtyp == 3)
-                    {
-                        feld.feldart = "Water";
-                    }
                     feld.textur.Size = new Size(feldgroesse, feldgroesse);
                     feld.textur.Location = new Point(j * feldgroesse, i * feldgroesse);
                     if(feld.feldart == "Grass") 
@@ -82,6 +98,21 @@ namespace rbss1
                     }
                     feld.position = new Point(i, j);
                     this.Controls.Add(feld.textur);
+                }
+            }
+            for(int i = 0; i < 10; i++) 
+            {
+                for(int j = 0; j < 10; j++) 
+                {
+                    MessageBox.Show($"{felder[j, i].feldart}");
+                    if (felder[j, i].feldart == "Water") 
+                    {
+                        if(i > 0) 
+                        {
+                            felder[j, i - 1].feldart = "Water";
+                            
+                        }
+                    }
                 }
             }
         }
@@ -188,6 +219,8 @@ namespace rbss1
                         selectedTruppe = null;
                         lastClickedFeld.textur.BackColor = Color.White;
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
+                        clickedFeld.textur.BackColor = Color.Gray;
+                        clickedFeld.textur.Image = Properties.Resources.grasstransparent;
                         return;
                     }
                     selectedTruppe.AktuellesFeld.EntferneTruppe();
