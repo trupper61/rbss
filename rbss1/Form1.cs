@@ -44,19 +44,22 @@ namespace rbss1
                     int rescourcenEinteilung = rescourcen.Next(0, 2);
                     int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
 
-                    if (wasserMax > 0 && random.Next(1, 100) < 10 || durchlauefe > 0 && j != felderyMax && i != felderxMax && j != 0 && i != 0)
+                    if (wasserMax > 0 && random.Next(1, 100) < 10 || durchlauefe > 0)
                     {
-                        feld.feldart = "Water";
-                        feld.textur.Image = Properties.Resources.water;
-                        wasserMax--;
-                        durchlauefe--;
+                        if (j != felderyMax && i != felderxMax && j != 0 && i != 0) 
+                        {
+                            feld.feldart = "Water";
+                            feld.textur.Image = Properties.Resources.water;
+                            wasserMax--;
+                            durchlauefe--;
+                        }
+                        else
+                        {
+                            feld.feldart = "Grass";
+                            feld.textur.Image = Properties.Resources.grass;
+                        }
                     }
                     else if (durchlauefe <= 0)
-                    {
-                        feld.feldart = "Grass";
-                        feld.textur.Image = Properties.Resources.grass;
-                    }
-                    else 
                     {
                         feld.feldart = "Grass";
                         feld.textur.Image = Properties.Resources.grass;
