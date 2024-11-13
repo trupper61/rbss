@@ -16,7 +16,7 @@ namespace rbss1
     {
         private Feld lastClickedFeld = null;
         private Truppe selectedTruppe = null;
-        private Feld[,] felder = new Feld[10, 10];
+
         Random random = new Random();
         Random rescourcen = new Random();
         Random rescourcenMenge = new Random();
@@ -27,46 +27,69 @@ namespace rbss1
         }
         public void Feldgenerierung() 
         {
+            bool flag = false;
+            int felderxMax = 10;
+            int felderyMax = 10;
+            Feld[,] felder = new Feld[felderxMax, felderyMax];
+            int wasserMax = (felderxMax * felderyMax) / 2;
             int feldgroesse = 50;
-            
-            for (int i = 0; i < 10; i++)
+            int durchlauefe = 0;
+
+            for (int i = 0; i < felderxMax; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < felderyMax; j++)
                 {
-                    int feldtyp = random.Next(1, 4);
+                    Feld feld = new Feld();
+
                     int rescourcenEinteilung = rescourcen.Next(0, 2);
                     int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
 
-                    Feld feld = new Feld();
+                    if (wasserMax > 0 && random.Next(1, 100) < 10 || durchlauefe > 0)
+                    {
+                        if (j != felderyMax && i != felderxMax && j != 0 && i != 0) 
+                        {
+                            feld.feldart = "Water";
+                            feld.textur.Image = Properties.Resources.water;
+                            wasserMax--;
+                            durchlauefe--;
+                        }
+                        else
+                        {
+                            feld.feldart = "Grass";
+                            feld.textur.Image = Properties.Resources.grass;
+                        }
+                    }
+                    else if (durchlauefe <= 0)
+                    {
+                        feld.feldart = "Grass";
+                        feld.textur.Image = Properties.Resources.grass;
+                    }
+                    if (feld.feldart == "Water" && durchlauefe <= 0)
+                    {
+                        if (flag != true)
+                        {
+                            durchlauefe = 1;
+                        }
+                        flag = true;
+                        if (durchlauefe == 0)
+                        {
+                            flag = false;
+                        }
+                    }
 
-                    if(rescourcenEinteilung == 1)
+                    if (rescourcenEinteilung == 1 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Eisen(10, rescourcenAnzahl);
                     }
 
-                    if(feldtyp > 0 && feldtyp < 3) 
-                    {
-                        feld.feldart = "Grass";
-                    }
-                    else if(feldtyp == 3)
-                    {
-                        feld.feldart = "Water";
-                    }
                     feld.textur.Size = new Size(feldgroesse, feldgroesse);
                     feld.textur.Location = new Point(j * feldgroesse, i * feldgroesse);
-                    if(feld.feldart == "Grass") 
-                    {
-                        feld.textur.Image = Properties.Resources.grass;
-                    }
-                    else if(feld.feldart == "Water")
-                    {
-                        feld.textur.Image = Properties.Resources.water;
-                    }
                     feld.textur.BackColor = Color.White;
                     feld.textur.Tag = feld;
                     feld.textur.Click += new EventHandler(feld_Click);
 
                     felder[i, j] = feld;
+
                     if ((i == 1 && j == 1) || (i == 4 && j == 4))
                     {
                         Truppe truppe = new Truppe();
@@ -82,6 +105,19 @@ namespace rbss1
                     }
                     feld.position = new Point(i, j);
                     this.Controls.Add(feld.textur);
+                }
+            }
+            for (int i = 1; i < felderxMax - 1; i++)
+            {
+                for (int j = 1; j < felderyMax - 1; j++)
+                {
+                    if (felder[i, j].feldart == "Water")
+                    {
+                        felder[i - 1, j].feldart = "Water";
+                        felder[i - 1, j].textur.Image = Properties.Resources.water;
+                        felder[i, j - 1].feldart = "Water";
+                        felder[i, j - 1].textur.Image = Properties.Resources.water;
+                    }
                 }
             }
         }
@@ -188,6 +224,8 @@ namespace rbss1
                         selectedTruppe = null;
                         lastClickedFeld.textur.BackColor = Color.White;
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
+                        clickedFeld.textur.BackColor = Color.Gray;
+                        clickedFeld.textur.Image = Properties.Resources.grasstransparent;
                         return;
                     }
                     selectedTruppe.AktuellesFeld.EntferneTruppe();
