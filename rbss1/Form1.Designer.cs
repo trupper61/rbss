@@ -42,7 +42,7 @@
             this.UIInfo.BackColor = System.Drawing.Color.Transparent;
             this.UIInfo.Image = global::rbss1.Properties.Resources.UI2eisen;
             this.UIInfo.Location = new System.Drawing.Point(777, 426);
-            this.UIInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.UIInfo.Margin = new System.Windows.Forms.Padding(4);
             this.UIInfo.Name = "UIInfo";
             this.UIInfo.Size = new System.Drawing.Size(288, 94);
             this.UIInfo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -55,7 +55,7 @@
             this.UI.BackColor = System.Drawing.Color.Transparent;
             this.UI.Image = global::rbss1.Properties.Resources.UI1;
             this.UI.Location = new System.Drawing.Point(663, -4);
-            this.UI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.UI.Margin = new System.Windows.Forms.Padding(4);
             this.UI.Name = "UI";
             this.UI.Size = new System.Drawing.Size(435, 572);
             this.UI.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -87,13 +87,13 @@
             this.truppenLebenLB.Text = "Leben:";
             this.truppenLebenLB.Visible = false;
             // 
-            // TruppenSchadenLB
+            // truppenSchadenLB
             // 
             this.truppenSchadenLB.AutoSize = true;
             this.truppenSchadenLB.BackColor = System.Drawing.Color.Transparent;
             this.truppenSchadenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.truppenSchadenLB.Location = new System.Drawing.Point(774, 111);
-            this.truppenSchadenLB.Name = "TruppenSchadenLB";
+            this.truppenSchadenLB.Name = "truppenSchadenLB";
             this.truppenSchadenLB.Size = new System.Drawing.Size(105, 25);
             this.truppenSchadenLB.TabIndex = 4;
             this.truppenSchadenLB.Text = "Schaden:";
@@ -110,7 +110,7 @@
             this.Controls.Add(this.anzahlRes);
             this.Controls.Add(this.UIInfo);
             this.Controls.Add(this.UI);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).EndInit();

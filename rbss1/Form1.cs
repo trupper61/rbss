@@ -16,6 +16,7 @@ namespace rbss1
     {
         private Feld lastClickedFeld = null;
         private Truppe selectedTruppe = null;
+        private Feld[,] felder;
 
         Random random = new Random();
         Random rescourcen = new Random();
@@ -30,7 +31,8 @@ namespace rbss1
             bool flag = false;
             int felderxMax = 10;
             int felderyMax = 10;
-            Feld[,] felder = new Feld[felderxMax, felderyMax];
+            felder = new Feld[felderxMax, felderyMax];
+            
             int wasserMax = (felderxMax * felderyMax) / 2;
             int feldgroesse = 50;
             int durchlauefe = 0;
@@ -104,6 +106,7 @@ namespace rbss1
                         this.Controls.Add(stadt.textur);
                     }
                     feld.position = new Point(i, j);
+
                     this.Controls.Add(feld.textur);
                 }
             }
@@ -133,6 +136,7 @@ namespace rbss1
             {
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
+                    EntferneBewegungsbereich();
                     selectedTruppe.Angreifen(clickedTruppe);
                     selectedTruppe = null;
                     UpdateTruppenLabels(null);
@@ -142,6 +146,7 @@ namespace rbss1
                 {
                     selectedTruppe = clickedTruppe;
                     clickedTruppe.Darstellung.BackColor = Color.LightBlue;
+                    MakiereBewegungsreichweite(selectedTruppe);
 
                     if (lastClickedFeld != null)
                     {
@@ -152,6 +157,7 @@ namespace rbss1
                 }
                 else if (selectedTruppe != null)
                 {
+                    EntferneBewegungsbereich();
                     selectedTruppe = null;
                     clickedTruppe.Darstellung.BackColor = Color.Blue;
 
@@ -162,6 +168,7 @@ namespace rbss1
             else if (clickedObject is Feld clickedFeld)
             {
                 UpdateTruppenLabels(null);
+                EntferneBewegungsbereich();
                 if (clickedFeld.rescourcen != null && clickedFeld.feldart != "Water")
                 {
                     UIInfo.Image = Properties.Resources.UI2eisen;
@@ -251,6 +258,39 @@ namespace rbss1
             {
                 truppenLebenLB.Visible = false;
                 truppenSchadenLB.Visible= false;
+            }
+        }
+
+        public void MakiereBewegungsreichweite(Truppe truppe) 
+        {
+            int startX = truppe.AktuellesFeld.position.X;
+            int startY = truppe.AktuellesFeld.position.Y;
+
+            for (int i= 0; i < 10;  i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
+                    if (distanz <= truppe.Bewegungsreichweite)
+                    {
+                        if (felder[i, j].feldart == "Grass")
+                        {
+                            felder[i, j].textur.Image = Properties.Resources.grasstransparent;
+                            felder[i, j].textur.BackColor = Color.LightGreen;
+                        }
+                    }
+                }
+            }
+        }
+        public void EntferneBewegungsbereich()
+        {
+            foreach (var feld in felder)
+            {
+                if (feld.feldart == "Grass")
+                {
+                    feld.textur.BackColor = Color.White;
+                    feld.textur.Image = Properties.Resources.grass;
+                }
             }
         }
     }
