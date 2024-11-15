@@ -17,14 +17,27 @@ namespace rbss1
         private Feld lastClickedFeld = null;
         private Truppe selectedTruppe = null;
         private Feld[,] felder;
+        public int spielerMax = 2;
+
+        public static List<Spieler> spieler = new List<Spieler>
+        {
+            new Spieler(null, 0, 1),
+            new Spieler(null, 0, 2)
+        };
+
+        public static int aktuellerSpielerIndex = 0;
+
+        Spieler aktuellerSpieler = spieler[aktuellerSpielerIndex];
 
         Random random = new Random();
         Random rescourcen = new Random();
         Random rescourcenMenge = new Random();
+        Random spielAnfaenger = new Random();
         public Form1()
         {
             InitializeComponent();
             Feldgenerierung();
+            MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
         }
         public void Feldgenerierung() 
         {
@@ -92,10 +105,20 @@ namespace rbss1
 
                     felder[i, j] = feld;
 
+                    //Beispiel Truppenerstellung: Gehört Spieler 2
                     if ((i == 1 && j == 1) || (i == 4 && j == 4))
                     {
                         Truppe truppe = new Truppe();
-                        feld.SetzeTruppe(truppe);
+                        feld.SetzeTruppe(truppe, spieler[1]);
+                        truppe.Darstellung.Tag = truppe;
+                        truppe.Darstellung.Click += new EventHandler(feld_Click);
+                        this.Controls.Add(truppe.Darstellung);
+                    }
+                    //Beispiel Truppenerstellung: Gehört Spieler 1
+                    if (i == 3 && j == 3)
+                    {
+                        Truppe truppe = new Truppe();
+                        feld.SetzeTruppe(truppe, spieler[0]);
                         truppe.Darstellung.Tag = truppe;
                         truppe.Darstellung.Click += new EventHandler(feld_Click);
                         this.Controls.Add(truppe.Darstellung);
@@ -140,6 +163,11 @@ namespace rbss1
                     selectedTruppe.Angreifen(clickedTruppe);
                     selectedTruppe = null;
                     UpdateTruppenLabels(null);
+                    return;
+                }
+                if (clickedTruppe != null && clickedTruppe.Besitzer != aktuellerSpieler)
+                {
+                    MessageBox.Show("Das ist nicht deine Truppe!");
                     return;
                 }
                 if (selectedTruppe == null)
@@ -236,7 +264,7 @@ namespace rbss1
                         return;
                     }
                     selectedTruppe.AktuellesFeld.EntferneTruppe();
-                    clickedFeld.SetzeTruppe(selectedTruppe);
+                    clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
 
                     selectedTruppe.Darstellung.BackColor = Color.Blue;
                     selectedTruppe = null;
@@ -292,6 +320,20 @@ namespace rbss1
                     feld.textur.Image = Properties.Resources.grass;
                 }
             }
+        }
+
+        public void Spielerwechsel()
+        {
+            aktuellerSpielerIndex++;
+
+            if (aktuellerSpielerIndex >= spieler.Count)
+            {
+                aktuellerSpielerIndex = 0;
+                MessageBox.Show("Neue Runde beginnt");
+            }
+
+            aktuellerSpieler = spieler[aktuellerSpielerIndex];
+            MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
         }
     }
 }

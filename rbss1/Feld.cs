@@ -21,12 +21,13 @@ namespace rbss1
         {
             textur = new PictureBox();
         }
-        public void SetzeTruppe(Truppe truppe)
+        public void SetzeTruppe(Truppe truppe, Spieler spieler1)
         {
             if (truppe.AktuellesFeld != null)
             {
                 truppe.AktuellesFeld.EntferneTruppe();
             }
+            truppe.Besitzer = spieler1;
             TruppeAufFeld = truppe;
             truppe.SetzeFeld(this);
             int x = (textur.Width - truppe.Darstellung.Width) / 2;

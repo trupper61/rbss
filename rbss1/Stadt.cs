@@ -10,6 +10,7 @@ namespace rbss1
 {
     public class Stadt
     {
+        public Spieler Besitzer {  get; set; }
         public List<Feld> stadtFlaeche { get; set; }
         public Feld[,] worldMap { get; set; }
         public PictureBox textur { get; private set; }
