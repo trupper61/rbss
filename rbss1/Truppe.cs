@@ -10,6 +10,7 @@ namespace rbss1
 {
     public class Truppe
     {
+        public Spieler Besitzer {  get; set; }
         public int Bewegungsreichweite { get; private set; }
         public PictureBox Darstellung { get; private set; }
         public Feld AktuellesFeld { get; private set; }
