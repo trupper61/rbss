@@ -335,6 +335,11 @@ namespace rbss1
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Spielerwechsel();
+        }
     }
 }
 
