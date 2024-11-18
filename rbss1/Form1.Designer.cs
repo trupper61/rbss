@@ -33,7 +33,7 @@
             this.anzahlRes = new System.Windows.Forms.Label();
             this.truppenLebenLB = new System.Windows.Forms.Label();
             this.truppenSchadenLB = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.weiter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).BeginInit();
             this.SuspendLayout();
@@ -99,15 +99,15 @@
             this.truppenSchadenLB.Text = "Schaden:";
             this.truppenSchadenLB.Visible = false;
             // 
-            // button1
+            // weiter
             // 
-            this.button1.Location = new System.Drawing.Point(686, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Nächste Runde";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.weiter.Location = new System.Drawing.Point(686, 12);
+            this.weiter.Name = "weiter";
+            this.weiter.Size = new System.Drawing.Size(102, 23);
+            this.weiter.TabIndex = 5;
+            this.weiter.Text = "Nächste Runde";
+            this.weiter.UseVisualStyleBackColor = true;
+            this.weiter.Click += new System.EventHandler(this.weiter_Click);
             // 
             // Form1
             // 
@@ -115,7 +115,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.weiter);
             this.Controls.Add(this.truppenSchadenLB);
             this.Controls.Add(this.truppenLebenLB);
             this.Controls.Add(this.anzahlRes);
@@ -137,7 +137,7 @@
         private System.Windows.Forms.Label anzahlRes;
         private System.Windows.Forms.Label truppenLebenLB;
         private System.Windows.Forms.Label truppenSchadenLB;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button weiter;
     }
 }
 
