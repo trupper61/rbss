@@ -113,5 +113,11 @@
   <ItemGroup>
     <None Include="assets\UI2eisen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\melee.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stadt.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

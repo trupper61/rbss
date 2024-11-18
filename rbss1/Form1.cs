@@ -16,6 +16,7 @@ namespace rbss1
     {
         private Feld lastClickedFeld = null;
         private Truppe selectedTruppe = null;
+        private Stadt selectedStadt = null;
         private Feld[,] felder;
         public int spielerMax = 2;
         public int truppenMax = 4;
@@ -163,6 +164,15 @@ namespace rbss1
                     
                 }
             }
+            Stadt stadt = new Stadt(felder[5, 5], felder);
+            stadt.textur.Location = new Point(felder[5, 5].textur.Location.X + 5, felder[5, 5].textur.Location.Y + 5);
+
+            stadt.textur.Tag = stadt;
+            stadt.SetzeEinflussRadius();
+            felder[5, 5].StadtAufFeld = stadt;
+            stadt.textur.Click += new EventHandler(feld_Click);
+            this.Controls.Add(stadt.textur);
+            stadt.textur.BringToFront();
         }
         public void feld_Click(object sender, EventArgs e)
         {
@@ -176,10 +186,10 @@ namespace rbss1
             {
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
-                    EntferneBewegungsbereich();
+                    EntferneBewegungsbereich(null);
                     selectedTruppe.Angreifen(clickedTruppe);
                     selectedTruppe = null;
-                    UpdateTruppenLabels(null);
+                    HideUIInfo();
                     return;
                 }
                 if (clickedTruppe != null && clickedTruppe.Besitzer != aktuellerSpieler)
@@ -198,11 +208,11 @@ namespace rbss1
                         lastClickedFeld.textur.BackColor = Color.White;
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
                     }
-                    UpdateTruppenLabels(clickedTruppe);
+                    UpdateUIInfo(clickedTruppe);
                 }
                 else if (selectedTruppe != null)
                 {
-                    EntferneBewegungsbereich();
+                    EntferneBewegungsbereich(null);
                     selectedTruppe = null;
                     clickedTruppe.Darstellung.BackColor = Color.Blue;
 
@@ -211,10 +221,22 @@ namespace rbss1
                 }
                 UpdateGame(selectedTruppe);
             }
+            else if (clickedObject is Stadt clickedStadt)
+            {
+                selectedStadt = clickedStadt;
+                UpdateUIInfo(clickedStadt);
+                
+                clickedStadt.SetzeEinflussRadius();
+
+                selectedTruppe = null;
+                
+                EntferneBewegungsbereich(null);
+                return;
+            }
             else if (clickedObject is Feld clickedFeld)
             {
-                UpdateTruppenLabels(null);
-                EntferneBewegungsbereich();
+                HideUIInfo();
+                EntferneBewegungsbereich(clickedFeld);
                 if (clickedFeld.rescourcen != null && clickedFeld.feldart != "Water")
                 {
                     UIInfo.Image = Properties.Resources.UI2eisen;
@@ -236,7 +258,6 @@ namespace rbss1
                 {
                     clickedFeld.textur.BackColor = Color.Gray;
                     clickedFeld.textur.Image = Properties.Resources.grasstransparent;
-
                 }
                 else if (clickedFeld.textur.BackColor == Color.Gray)
                 {
@@ -247,21 +268,39 @@ namespace rbss1
 
                     UIInfo.Hide();
                     anzahlRes.Hide();
-
-                    if (selectedTruppe != null)
-                    {
-                        selectedTruppe.Darstellung.BackColor = Color.Blue;
-                        selectedTruppe = null;
-                    }
                 }
                 if (lastClickedFeld != null && lastClickedFeld != clickedFeld)
                 {
+                    clickedFeld.textur.BackColor = Color.Gray;
+                    clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                    
                     lastClickedFeld.textur.BackColor = Color.White;
                     lastClickedFeld.textur.Image = Properties.Resources.grass;
+                    if (clickedFeld.GehoertZuStadt)
+                    {
+                        EntferneBewegungsbereich(clickedFeld);
+
+                    }
+                    else
+                    {
+                        lastClickedFeld.textur.BackColor = Color.DarkGreen;
+                        lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                    }
+                }
+                else if (lastClickedFeld != null && lastClickedFeld == clickedFeld)
+                {
+
+                    clickedFeld.textur.BackColor = Color.White;
+                    clickedFeld.textur.Image = Properties.Resources.grass;
+                    if (clickedFeld.GehoertZuStadt)
+                    {
+                        clickedFeld.textur.BackColor = Color.DarkGreen;
+                        clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                    }
                 }
 
                 lastClickedFeld = clickedFeld;
-
+                
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
                     int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
@@ -285,6 +324,7 @@ namespace rbss1
                     clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
 
                     selectedTruppe.Darstellung.BackColor = Color.Blue;
+                    EntferneBewegungsbereich(null);
                     selectedTruppe = null;
                 }
                 UpdateGame(selectedTruppe);
@@ -292,53 +332,53 @@ namespace rbss1
 
 
         }
-        public void UpdateTruppenLabels (Truppe truppe)
-        {
-            if (truppe != null)
-            {
-                truppenLebenLB.Text = $"Leben: {truppe.Leben}";
-                truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
-                truppenLebenLB.Visible = true;
-                truppenSchadenLB.Visible = true;
-            }
-            else
-            {
-                truppenLebenLB.Visible = false;
-                truppenSchadenLB.Visible= false;
-            }
-        }
-
         public void MakiereBewegungsreichweite(Truppe truppe) 
         {
-            int startX = truppe.AktuellesFeld.position.X;
-            int startY = truppe.AktuellesFeld.position.Y;
+                int startX = truppe.AktuellesFeld.position.X;
+                int startY = truppe.AktuellesFeld.position.Y;
 
-            for (int i= 0; i < 10;  i++)
-            {
-                for (int j = 0; j < 10; j++)
+                for (int i= 0; i < 10;  i++)
                 {
-                    int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
-                    if (distanz <= truppe.Bewegungsreichweite)
+                    for (int j = 0; j < 10; j++)
                     {
-                        if (felder[i, j].feldart == "Grass")
+                        int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
+                        if (distanz <= truppe.Bewegungsreichweite)
                         {
-                            felder[i, j].textur.Image = Properties.Resources.grasstransparent;
-                            felder[i, j].textur.BackColor = Color.LightGreen;
+                            if (felder[i, j].feldart == "Grass")
+                            {
+                                felder[i, j].textur.Image = Properties.Resources.grasstransparent;
+                                felder[i, j].textur.BackColor = Color.LightGreen;
+                            }
                         }
                     }
-                }
             }
         }
-        public void EntferneBewegungsbereich()
+        public void EntferneBewegungsbereich(object ob)
         {
+            Feld stadtFeld = null;
             foreach (var feld in felder)
             {
+                if (feld == null)
+                    return;
                 if (feld.feldart == "Grass")
                 {
                     feld.textur.BackColor = Color.White;
                     feld.textur.Image = Properties.Resources.grass;
                 }
+                if (feld.StadtAufFeld != null)
+                    stadtFeld = feld;
             }
+            stadtFeld.StadtAufFeld.SetzeEinflussRadius();
+            Feld t = ob as Feld;
+            if (t != null && t.feldart != "Water" && t.GehoertZuStadt)
+            {
+                if (t == lastClickedFeld)
+                    stadtFeld.StadtAufFeld.SetzeEinflussRadius();
+                t.textur.BackColor = Color.Gray;
+                t.textur.Image = Properties.Resources.grasstransparent;
+
+            }
+            
         }
 
         public void Spielerwechsel()
@@ -381,6 +421,35 @@ namespace rbss1
             truppe.Darstellung.Click += new EventHandler(feld_Click);
             this.Controls.Add(truppe.Darstellung);
             spielerMax--;
+        public void UpdateUIInfo(Object o)
+        {
+            if (o == null)
+                return;
+            if (o is Truppe truppe)
+            {
+                ItemPB.Image = Properties.Resources.melee;
+                truppenLebenLB.Text = $"Lebel: {truppe.Leben}";
+                truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
+                titelLabel.Text = truppe.ToString();
+                truppenSchadenLB.Visible = true;
+            }
+            else if (o is Stadt stadt)
+            {
+                ItemPB.Image = Properties.Resources.stadt;
+                truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
+                titelLabel.Text = stadt.Name;
+            }
+            ItemPB.Visible = true;
+            truppenLebenLB.Visible = true;     
+            titelLabel.Visible = true;
+
+        }
+        public void HideUIInfo()
+        {
+            ItemPB.Visible = false;
+            truppenSchadenLB.Visible = false;
+            truppenLebenLB.Visible = false;
+            titelLabel.Visible = false;
         }
     }
 }

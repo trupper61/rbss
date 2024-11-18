@@ -48,5 +48,9 @@ namespace rbss1
             }
             Darstellung.Hide();
         }
+        public override string ToString()
+        {
+            return "Nahkampftrupp";
+        }
     }
 }

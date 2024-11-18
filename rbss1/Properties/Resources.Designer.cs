@@ -93,6 +93,16 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap melee {
+            get {
+                object obj = ResourceManager.GetObject("melee", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rathaus {
             get {
                 object obj = ResourceManager.GetObject("rathaus", resourceCulture);
@@ -116,6 +126,16 @@ namespace rbss1.Properties {
         internal static System.Drawing.Bitmap square {
             get {
                 object obj = ResourceManager.GetObject("square", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stadt {
+            get {
+                object obj = ResourceManager.GetObject("stadt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
