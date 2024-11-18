@@ -19,6 +19,7 @@ namespace rbss1
         private Stadt selectedStadt = null;
         private Feld[,] felder;
         public int spielerMax = 2;
+        public int truppenMax = 4;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
@@ -34,6 +35,7 @@ namespace rbss1
         Random rescourcen = new Random();
         Random rescourcenMenge = new Random();
         Random spielAnfaenger = new Random();
+        Random randomPlatzierung = new Random();
         public Form1()
         {
             InitializeComponent();
@@ -105,24 +107,43 @@ namespace rbss1
                     feld.textur.Click += new EventHandler(feld_Click);
 
                     felder[i, j] = feld;
+                    
 
                     //Beispiel Truppenerstellung: Gehört Spieler 2
-                    if ((i == 1 && j == 1) || (i == 4 && j == 4))
+
+                    //TODO : Implementierung der Spielergenerierung nach der Feldgenerierung
+                    if(i != 0 & j!= 0) 
                     {
-                        Truppe truppe = new Truppe();
-                        feld.SetzeTruppe(truppe, spieler[1]);
-                        truppe.Darstellung.Tag = truppe;
-                        truppe.Darstellung.Click += new EventHandler(feld_Click);
-                        this.Controls.Add(truppe.Darstellung);
+                        if (truppenMax > 0 && felder[i, j].feldart != "Water" && felder[i - 1, j].feldart != "Water" && felder[i, j - 1].feldart != "Water")
+                        {
+                            if (random.Next(1, 100) < 10)
+                            {
+                                TruppenPlatzierung(i, j);
+                            }
+                        }
                     }
+                    
                     //Beispiel Truppenerstellung: Gehört Spieler 1
-                    if (i == 3 && j == 3)
+
+                    /*if (i == ranomPlatzierung.Next(1, 11) && j == ranomPlatzierung.Next(1, 11))
                     {
-                        Truppe truppe = new Truppe();
-                        feld.SetzeTruppe(truppe, spieler[0]);
-                        truppe.Darstellung.Tag = truppe;
-                        truppe.Darstellung.Click += new EventHandler(feld_Click);
-                        this.Controls.Add(truppe.Darstellung);
+                        if (felder[i, j].TruppeAufFeld == null) 
+                        {
+                            if (felder[i, j].feldart != "Water")
+                            {
+                                Truppe truppe = new Truppe();
+                                feld.SetzeTruppe(truppe, spieler[0]);
+                                truppe.Darstellung.Tag = truppe;
+                                truppe.Darstellung.Click += new EventHandler(feld_Click);
+                                this.Controls.Add(truppe.Darstellung);
+                            }
+                        } 
+                    }
+                    */
+                    if (i == 5 && j == 5)
+                    {
+                        Stadt stadt = new Stadt(felder[i,j], felder);
+                        this.Controls.Add(stadt.textur);
                     }
                     feld.position = new Point(i, j);
 
@@ -140,6 +161,7 @@ namespace rbss1
                         felder[i, j - 1].feldart = "Water";
                         felder[i, j - 1].textur.Image = Properties.Resources.water;
                     }
+                    
                 }
             }
             Stadt stadt = new Stadt(felder[5, 5], felder);
@@ -197,6 +219,7 @@ namespace rbss1
                     truppenLebenLB.Visible = false;
                     truppenSchadenLB.Visible = false;
                 }
+                UpdateGame(selectedTruppe);
             }
             else if (clickedObject is Stadt clickedStadt)
             {
@@ -304,8 +327,9 @@ namespace rbss1
                     EntferneBewegungsbereich(null);
                     selectedTruppe = null;
                 }
-
+                UpdateGame(selectedTruppe);
             }
+
 
         }
         public void MakiereBewegungsreichweite(Truppe truppe) 
@@ -370,6 +394,33 @@ namespace rbss1
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
         }
+
+        private void weiter_Click(object sender, EventArgs e)
+        {
+            Spielerwechsel();
+        }
+
+        //Update, damit Aktionen inmitten der Runde registriert, und darauf reagiert werden kann.
+        public void UpdateGame(Truppe selectedTruppe) 
+        {
+            if(selectedTruppe == null) 
+            {
+                weiter.Show();
+            }
+            else 
+            {
+                weiter.Hide();
+            }
+        }
+        
+        public void TruppenPlatzierung(int i, int j) 
+        {
+            Truppe truppe = new Truppe();
+            felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, 2)]);
+            truppe.Darstellung.Tag = truppe;
+            truppe.Darstellung.Click += new EventHandler(feld_Click);
+            this.Controls.Add(truppe.Darstellung);
+            spielerMax--;
         public void UpdateUIInfo(Object o)
         {
             if (o == null)
