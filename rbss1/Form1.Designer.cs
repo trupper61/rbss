@@ -79,7 +79,7 @@
             // 
             // ItemPB
             // 
-            this.ItemPB.Image = global::rbss1.Properties.Resources.stadt;
+            this.ItemPB.Image = global::rbss1.Properties.Resources.melee;
             this.ItemPB.Location = new System.Drawing.Point(739, 102);
             this.ItemPB.Name = "ItemPB";
             this.ItemPB.Size = new System.Drawing.Size(180, 216);
