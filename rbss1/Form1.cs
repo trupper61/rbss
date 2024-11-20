@@ -108,38 +108,18 @@ namespace rbss1
 
                     felder[i, j] = feld;
 
-
-                    //Beispiel Truppenerstellung: Gehört Spieler 2
-
-                    //TODO : Implementierung der Spielergenerierung nach der Feldgenerierung
-                    if (i != 0 & j != 0)
+                    /*if (felder[i, j].feldart != "Water" && felder[i, j].TruppeAufFeld == null)
                     {
-                        if (truppenMax > 0 && felder[i, j].feldart != "Water" && felder[i - 1, j].feldart != "Water" && felder[i, j - 1].feldart != "Water")
-                        {
-                            if (random.Next(1, 100) < 10)
-                            {
-                                TruppenPlatzierung(i, j);
-                            }
-                        }
-                    }
-
-                    //Beispiel Truppenerstellung: Gehört Spieler 1
-
-                    /*if (i == ranomPlatzierung.Next(1, 11) && j == ranomPlatzierung.Next(1, 11))
-                    {
-                        if (felder[i, j].TruppeAufFeld == null) 
-                        {
-                            if (felder[i, j].feldart != "Water")
-                            {
-                                Truppe truppe = new Truppe();
-                                feld.SetzeTruppe(truppe, spieler[0]);
-                                truppe.Darstellung.Tag = truppe;
-                                truppe.Darstellung.Click += new EventHandler(feld_Click);
-                                this.Controls.Add(truppe.Darstellung);
-                            }
-                        } 
+                        Truppe truppe = new Truppe();
+                        felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, 2)]);
+                        truppe.Darstellung.Tag = truppe;
+                        truppe.Darstellung.Click += new EventHandler(feld_Click);
+                        this.Controls.Add(truppe.Darstellung);
                     }
                     */
+                    //TODO : Implementierung der Spielergenerierung nach der Feldgenerierung
+
+
                     if (i == 5 && j == 5)
                     {
                         Stadt stadts = new Stadt(felder[i, j], felder);
@@ -158,12 +138,31 @@ namespace rbss1
                     {
                         felder[i - 1, j].feldart = "Water";
                         felder[i - 1, j].textur.Image = Properties.Resources.water;
+
                         felder[i, j - 1].feldart = "Water";
                         felder[i, j - 1].textur.Image = Properties.Resources.water;
+                        
                     }
-
                 }
             }
+            for(int i = 0; i < felderxMax; i++) 
+            {
+                for(int j = 0; j < felderyMax; j++) 
+                {
+                    if(random.Next(0, 100) < 15) 
+                    {
+                        if (felder[i, j].feldart != "Water")
+                        {
+                            Truppe truppe = new Truppe();
+                            felder[i, j].SetzeTruppe(truppe, spieler[0]);
+                            truppe.Darstellung.Tag = truppe;
+                            truppe.Darstellung.Click += new EventHandler(feld_Click);
+                        }
+                    }
+                    
+                }
+            }
+
             Stadt stadt = new Stadt(felder[5, 5], felder);
             stadt.textur.Location = new Point(felder[5, 5].textur.Location.X + 5, felder[5, 5].textur.Location.Y + 5);
 
@@ -265,7 +264,7 @@ namespace rbss1
                     truppenSchadenLB.Visible = false;
                     clickedFeld.textur.BackColor = Color.White;
                     clickedFeld.textur.Image = Properties.Resources.grass;
-
+                    MessageBox.Show("Drinne!");
                     UIInfo.Hide();
                     anzahlRes.Hide();
                 }

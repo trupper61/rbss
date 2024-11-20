@@ -23,23 +23,38 @@ namespace rbss1
         {
             textur = new PictureBox();
         }
-        public void SetzeTruppe(Truppe truppe, Spieler spieler1)
+        public void SetzeTruppe(Truppe truppe, Spieler spieler)
         {
             if (truppe.AktuellesFeld != null)
             {
                 truppe.AktuellesFeld.EntferneTruppe();
             }
-            truppe.Besitzer = spieler1;
+            truppe.Besitzer = spieler;
             TruppeAufFeld = truppe;
             truppe.SetzeFeld(this);
             int x = (textur.Width - truppe.Darstellung.Width) / 2;
             int y = (textur.Height - truppe.Darstellung.Height) / 2;
             truppe.Darstellung.Location = new Point(textur.Location.X + x, textur.Location.Y + y);
+
+            if (!textur.Parent.Controls.Contains(truppe.Darstellung))
+            {
+                textur.Parent.Controls.Add(truppe.Darstellung);
+            }
+
             truppe.Darstellung.BringToFront();
+
         }
         public void EntferneTruppe()
         {
-            TruppeAufFeld = null;
+            if (TruppeAufFeld != null)
+            {
+                if (TruppeAufFeld.Darstellung.Parent != null)
+                {
+                    TruppeAufFeld.Darstellung.Parent.Controls.Remove(TruppeAufFeld.Darstellung);
+                }
+
+                TruppeAufFeld = null;
+            }
         }
     }
 }
