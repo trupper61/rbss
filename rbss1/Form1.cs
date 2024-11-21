@@ -18,18 +18,17 @@ namespace rbss1
         private Truppe selectedTruppe = null;
         private Stadt selectedStadt = null;
         private Feld[,] felder;
-        public int spielerMax = 2;
         public int truppenMax = 4;
+        public int spielerMax = 2;
+        public int stadtabstaende;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
-            new Spieler(null, 0, 1),
-            new Spieler(null, 0, 2)
         };
 
         public static int aktuellerSpielerIndex = 0;
 
-        Spieler aktuellerSpieler = spieler[aktuellerSpielerIndex];
+        public Spieler aktuellerSpieler;
 
         Random random = new Random();
         Random rescourcen = new Random();
@@ -39,15 +38,31 @@ namespace rbss1
         public Form1()
         {
             InitializeComponent();
+
+            for (int i = 0; i < spielerMax; i++)
+            {
+                spieler.Add(new Spieler(null, 0, i + 1));
+            }
+
+            if (spieler.Count > 0)
+            {
+                aktuellerSpieler = spieler[aktuellerSpielerIndex];
+            }
+
             Feldgenerierung();
+
+            
+
             MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
         }
+        
         public void Feldgenerierung()
         {
             bool flag = false;
             int felderxMax = 10;
             int felderyMax = 10;
             felder = new Feld[felderxMax, felderyMax];
+            stadtabstaende = felderxMax * felderyMax / spielerMax;
 
             int wasserMax = (felderxMax * felderyMax) / 2;
             int feldgroesse = 50;
@@ -117,7 +132,6 @@ namespace rbss1
                         this.Controls.Add(truppe.Darstellung);
                     }
                     */
-                    //TODO : Implementierung der Spielergenerierung nach der Feldgenerierung
 
 
                     if (i == 5 && j == 5)
@@ -130,6 +144,8 @@ namespace rbss1
                     this.Controls.Add(feld.textur);
                 }
             }
+
+            //Platzierung von Wasser links und über einem Wasserfeld
             for (int i = 1; i < felderxMax - 1; i++)
             {
                 for (int j = 1; j < felderyMax - 1; j++)
@@ -145,6 +161,8 @@ namespace rbss1
                     }
                 }
             }
+
+            //Truppenplatzierung
             for(int i = 0; i < felderxMax; i++) 
             {
                 for(int j = 0; j < felderyMax; j++) 
@@ -154,12 +172,27 @@ namespace rbss1
                         if (felder[i, j].feldart != "Water")
                         {
                             Truppe truppe = new Truppe();
-                            felder[i, j].SetzeTruppe(truppe, spieler[0]);
+                            felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, spielerMax)]);
                             truppe.Darstellung.Tag = truppe;
                             truppe.Darstellung.Click += new EventHandler(feld_Click);
                         }
                     }
                     
+                }
+            }
+
+            //Stadtplatzierung
+            for (int i = 0; i < felderxMax; i++)
+            {
+                for (int j = 0; j < felderyMax; j++)
+                {
+                    if (random.Next(0, 100) < 50)
+                    {
+                        if (felder[i, j].feldart != "Water")
+                        {
+                        }
+                    }
+
                 }
             }
 
