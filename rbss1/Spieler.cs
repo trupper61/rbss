@@ -13,6 +13,8 @@ namespace rbss1
         public int spielernummer {  get; set; }
         public bool zugbeendet { get; set; }
 
+        public string farbe {  get; set; }
+
         public Spieler(List<Rescourcen> rescourcenBesitz, int geld, int spielernummer) 
         {
             this.rescourcenBesitz = rescourcenBesitz;

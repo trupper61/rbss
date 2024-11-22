@@ -200,7 +200,7 @@ namespace rbss1
             stadt.textur.Location = new Point(felder[5, 5].textur.Location.X + 5, felder[5, 5].textur.Location.Y + 5);
 
             stadt.textur.Tag = stadt;
-            stadt.SetzeEinflussRadius();
+            stadt.SetzeEinflussRadius(spieler);
             felder[5, 5].StadtAufFeld = stadt;
             stadt.textur.Click += new EventHandler(feld_Click);
             this.Controls.Add(stadt.textur);
@@ -258,7 +258,7 @@ namespace rbss1
                 selectedStadt = clickedStadt;
                 UpdateUIInfo(clickedStadt);
 
-                clickedStadt.SetzeEinflussRadius();
+                clickedStadt.SetzeEinflussRadius(spieler);
 
                 selectedTruppe = null;
 
@@ -400,12 +400,12 @@ namespace rbss1
                 if (feld.StadtAufFeld != null)
                     stadtFeld = feld;
             }
-            stadtFeld.StadtAufFeld.SetzeEinflussRadius();
+            stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler);
             Feld t = ob as Feld;
             if (t != null && t.feldart != "Water" && t.GehoertZuStadt)
             {
                 if (t == lastClickedFeld)
-                    stadtFeld.StadtAufFeld.SetzeEinflussRadius();
+                    stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler);
                 t.textur.BackColor = Color.Gray;
                 t.textur.Image = Properties.Resources.grasstransparent;
 

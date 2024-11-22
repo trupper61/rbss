@@ -36,8 +36,15 @@ namespace rbss1
             };
         }
 
-        public void SetzeEinflussRadius()
+        public void SetzeEinflussRadius(List<Spieler> spieler)
         {
+            Random random = new Random();
+
+            int r = random.Next(256);
+            int g = random.Next(256);
+            int b = random.Next(256);
+            Color randomFarbe = Color.FromArgb(r, g, b);
+
             if (this.textur == null || felder == null)
             {
                 return; 
@@ -63,8 +70,7 @@ namespace rbss1
                             {
                                 stadtFlaeche.Add(felder[i, j]);
                             }
-
-                            felder[i, j].textur.BackColor = Color.DarkGreen; 
+                            felder[i, j].textur.BackColor = randomFarbe;
                             felder[i, j].textur.Image = Properties.Resources.grasstransparent;
                             felder[i, j].GehoertZuStadt = true;
                         }
