@@ -19,8 +19,7 @@ namespace rbss1
         private Stadt selectedStadt = null;
         private Feld[,] felder;
         public int truppenMax = 4;
-        public int spielerMax = 2;
-        public int stadtabstaende;
+        public int spielerMax = 4;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
@@ -62,7 +61,6 @@ namespace rbss1
             int felderxMax = 10;
             int felderyMax = 10;
             felder = new Feld[felderxMax, felderyMax];
-            stadtabstaende = felderxMax * felderyMax / spielerMax;
 
             int wasserMax = (felderxMax * felderyMax) / 2;
             int feldgroesse = 50;
@@ -123,25 +121,11 @@ namespace rbss1
 
                     felder[i, j] = feld;
 
-                    /*if (felder[i, j].feldart != "Water" && felder[i, j].TruppeAufFeld == null)
-                    {
-                        Truppe truppe = new Truppe();
-                        felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, 2)]);
-                        truppe.Darstellung.Tag = truppe;
-                        truppe.Darstellung.Click += new EventHandler(feld_Click);
-                        this.Controls.Add(truppe.Darstellung);
-                    }
-                    */
-
-
-                    if (i == 5 && j == 5)
-                    {
-                        Stadt stadts = new Stadt(felder[i, j], felder);
-                        this.Controls.Add(stadts.textur);
-                    }
+                    
                     feld.position = new Point(i, j);
 
                     this.Controls.Add(feld.textur);
+                    
                 }
             }
 
@@ -181,30 +165,8 @@ namespace rbss1
                 }
             }
 
-            //Stadtplatzierung
-            for (int i = 0; i < felderxMax; i++)
-            {
-                for (int j = 0; j < felderyMax; j++)
-                {
-                    if (random.Next(0, 100) < 50)
-                    {
-                        if (felder[i, j].feldart != "Water")
-                        {
-                        }
-                    }
+            GeneriereStaedte(felderxMax, felderyMax);
 
-                }
-            }
-
-            Stadt stadt = new Stadt(felder[5, 5], felder);
-            stadt.textur.Location = new Point(felder[5, 5].textur.Location.X + 5, felder[5, 5].textur.Location.Y + 5);
-
-            stadt.textur.Tag = stadt;
-            stadt.SetzeEinflussRadius(spieler);
-            felder[5, 5].StadtAufFeld = stadt;
-            stadt.textur.Click += new EventHandler(feld_Click);
-            this.Controls.Add(stadt.textur);
-            stadt.textur.BringToFront();
         }
         public void feld_Click(object sender, EventArgs e)
         {
@@ -256,13 +218,18 @@ namespace rbss1
             else if (clickedObject is Stadt clickedStadt)
             {
                 selectedStadt = clickedStadt;
-                UpdateUIInfo(clickedStadt);
+                if(clickedStadt != null && clickedStadt.Besitzer == aktuellerSpieler) 
+                {
+                    UpdateUIInfo(clickedStadt);
 
-                clickedStadt.SetzeEinflussRadius(spieler);
+                    clickedStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
 
-                selectedTruppe = null;
+                    selectedTruppe = null;
 
-                EntferneBewegungsbereich(null);
+                    EntferneBewegungsbereich(null);
+                    return;
+                }
+                MessageBox.Show("Das ist nicht deine Stadt!");
                 return;
             }
             else if (clickedObject is Feld clickedFeld)
@@ -400,12 +367,12 @@ namespace rbss1
                 if (feld.StadtAufFeld != null)
                     stadtFeld = feld;
             }
-            stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler);
+            stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
             Feld t = ob as Feld;
             if (t != null && t.feldart != "Water" && t.GehoertZuStadt)
             {
                 if (t == lastClickedFeld)
-                    stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler);
+                    stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
                 t.textur.BackColor = Color.Gray;
                 t.textur.Image = Properties.Resources.grasstransparent;
 
@@ -454,8 +421,8 @@ namespace rbss1
             this.Controls.Add(truppe.Darstellung);
             spielerMax--;
         }
-       public void UpdateUIInfo(Object o)
-       {
+        public void UpdateUIInfo(Object o)
+        {
             if (o == null)
                 return;
             if (o is Truppe truppe)
@@ -475,14 +442,64 @@ namespace rbss1
             ItemPB.Visible = true;
             truppenLebenLB.Visible = true;
             titelLabel.Visible = true;
-            }
-            public void HideUIInfo()
+        }
+        public void HideUIInfo()
+        {
+            ItemPB.Visible = false;
+            truppenSchadenLB.Visible = false;
+            truppenLebenLB.Visible = false;
+            titelLabel.Visible = false;
+        }
+
+        public void GeneriereStaedte(int felderxMax, int felderyMax)
+        {
+            int stadtabstand = 5;
+            List<Point> platzierteStadtPositionen = new List<Point>();
+
+            for (int spielerIndex = 0; spielerIndex < spielerMax; spielerIndex++)
             {
-                ItemPB.Visible = false;
-                truppenSchadenLB.Visible = false;
-                truppenLebenLB.Visible = false;
-                titelLabel.Visible = false;
+                bool stadtPlatziert = false;
+
+                while (!stadtPlatziert)
+                {
+                    int x = random.Next(0, felderxMax);
+                    int y = random.Next(0, felderyMax);
+
+                    if (felder[x, y].feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen))
+                    {
+
+                        Stadt neueStadt = new Stadt(felder[x, y], felder);
+                        neueStadt.Besitzer = spieler[spielerIndex];
+                        felder[x, y].StadtAufFeld = neueStadt;
+
+                        neueStadt.textur.Location = new Point(felder[x, y].textur.Location.X + 5, felder[x, y].textur.Location.Y + 5);
+                        neueStadt.textur.Tag = neueStadt;
+                        neueStadt.textur.Click += new EventHandler(feld_Click);
+                        neueStadt.SetzeEinflussRadius(spieler, spielerIndex);
+
+                        this.Controls.Add(neueStadt.textur);
+                        neueStadt.textur.BringToFront();
+
+                        platzierteStadtPositionen.Add(new Point(x, y));
+                        stadtPlatziert = true;
+                    }
+                }
             }
         }
+
+        private bool KeineStadtImUmkreis(int x, int y, int abstand, List<Point> platziertePositionen)
+        {
+            foreach (var position in platziertePositionen)
+            {
+                int distanz = Math.Abs(position.X - x) + Math.Abs(position.Y - y);
+                if (distanz < abstand)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
+}
 
