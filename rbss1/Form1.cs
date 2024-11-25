@@ -252,6 +252,7 @@ namespace rbss1
                     anzahlRes.Hide();
                     return;
                 }
+
                 if (clickedFeld.textur.BackColor == Color.White)
                 {
                     clickedFeld.textur.BackColor = Color.Gray;
@@ -284,11 +285,22 @@ namespace rbss1
                 }
                 else if (lastClickedFeld != null && lastClickedFeld == clickedFeld)
                 {
-                    UIInfo.Hide();
-                    if(!clickedFeld.GehoertZuStadt) 
+                    
+                    if (!clickedFeld.GehoertZuStadt) 
                     {
-                        clickedFeld.textur.BackColor = Color.White;
-                        clickedFeld.textur.Image = Properties.Resources.grass;
+                        if (clickedFeld.textur.BackColor == Color.White)
+                        {
+                            clickedFeld.textur.BackColor = Color.Gray;
+                            clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                            UIInfo.Show();
+                        }
+                        else if (clickedFeld.textur.BackColor == Color.Gray)
+                        {
+                            clickedFeld.textur.BackColor = Color.White;
+                            clickedFeld.textur.Image = Properties.Resources.grass;
+                            UIInfo.Hide();
+                            anzahlRes.Hide();
+                        }
                     }
                 }
 
