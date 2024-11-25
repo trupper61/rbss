@@ -210,8 +210,8 @@ namespace rbss1
                     selectedTruppe = null;
                     clickedTruppe.Darstellung.BackColor = Color.Blue;
 
-                    truppenLebenLB.Visible = false;
-                    truppenSchadenLB.Visible = false;
+                    truppenLebenLB.Hide();
+                    truppenSchadenLB.Hide();
                 }
                 UpdateGame(selectedTruppe);
             }
@@ -256,6 +256,7 @@ namespace rbss1
                 {
                     clickedFeld.textur.BackColor = Color.Gray;
                     clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                    UIInfo.Show();
                 }
                 else if (clickedFeld.textur.BackColor == Color.Gray)
                 {
@@ -263,9 +264,9 @@ namespace rbss1
                     truppenSchadenLB.Visible = false;
                     clickedFeld.textur.BackColor = Color.White;
                     clickedFeld.textur.Image = Properties.Resources.grass;
-                    MessageBox.Show("Drinne!");
                     UIInfo.Hide();
                     anzahlRes.Hide();
+                    HideUIInfo();
                 }
                 if (lastClickedFeld != null && lastClickedFeld != clickedFeld)
                 {
@@ -333,7 +334,7 @@ namespace rbss1
         {
             int startX = truppe.AktuellesFeld.position.X;
             int startY = truppe.AktuellesFeld.position.Y;
-
+            lastClickedFeld = null;
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -438,10 +439,10 @@ namespace rbss1
         }
         public void HideUIInfo()
         {
-            ItemPB.Visible = false;
-            truppenSchadenLB.Visible = false;
-            truppenLebenLB.Visible = false;
-            titelLabel.Visible = false;
+            ItemPB.Hide();
+            truppenSchadenLB.Hide();
+            truppenLebenLB.Hide();
+            titelLabel.Hide();
         }
 
         public void GeneriereStaedte(int felderxMax, int felderyMax)
