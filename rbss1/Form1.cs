@@ -256,12 +256,11 @@ namespace rbss1
                 {
                     clickedFeld.textur.BackColor = Color.Gray;
                     clickedFeld.textur.Image = Properties.Resources.grasstransparent;
-                    UIInfo.Show();
                 }
                 else if (clickedFeld.textur.BackColor == Color.Gray)
                 {
-                    truppenLebenLB.Visible = false;
-                    truppenSchadenLB.Visible = false;
+                    truppenLebenLB.Hide();
+                    truppenSchadenLB.Hide();
                     clickedFeld.textur.BackColor = Color.White;
                     clickedFeld.textur.Image = Properties.Resources.grass;
                     UIInfo.Hide();
@@ -273,27 +272,23 @@ namespace rbss1
                     clickedFeld.textur.BackColor = Color.Gray;
                     clickedFeld.textur.Image = Properties.Resources.grasstransparent;
 
-                    lastClickedFeld.textur.BackColor = Color.White;
-                    lastClickedFeld.textur.Image = Properties.Resources.grass;
-                    if (clickedFeld.GehoertZuStadt)
-                    {
-                        EntferneBewegungsbereich(clickedFeld);
-                    }
-                    else
+                    if(!lastClickedFeld.GehoertZuStadt) 
                     {
                         lastClickedFeld.textur.BackColor = Color.White;
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
                     }
+                    if (clickedFeld.GehoertZuStadt)
+                    {
+                        EntferneBewegungsbereich(clickedFeld);
+                    }
                 }
                 else if (lastClickedFeld != null && lastClickedFeld == clickedFeld)
                 {
-
-                    clickedFeld.textur.BackColor = Color.White;
-                    clickedFeld.textur.Image = Properties.Resources.grass;
-                    if (clickedFeld.GehoertZuStadt)
+                    UIInfo.Hide();
+                    if(!clickedFeld.GehoertZuStadt) 
                     {
-                        clickedFeld.textur.BackColor = Color.DarkGreen;
-                        clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                        clickedFeld.textur.BackColor = Color.White;
+                        clickedFeld.textur.Image = Properties.Resources.grass;
                     }
                 }
 
