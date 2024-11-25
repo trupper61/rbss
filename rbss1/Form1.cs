@@ -280,8 +280,8 @@ namespace rbss1
                     }
                     else
                     {
-                        lastClickedFeld.textur.BackColor = Color.DarkGreen;
-                        lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                        lastClickedFeld.textur.BackColor = Color.White;
+                        lastClickedFeld.textur.Image = Properties.Resources.grass;
                     }
                 }
                 else if (lastClickedFeld != null && lastClickedFeld == clickedFeld)
