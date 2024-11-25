@@ -543,7 +543,14 @@ namespace rbss1
             }
             else if(lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex]) 
             {
-                MessageBox.Show("Dieses Feld gehört dir nicht!");
+                if (stadtbauen.Visible == true)
+                {
+                    stadtbauen.Hide();
+                }
+                else 
+                {
+                    MessageBox.Show("Dieses Feld gehört dir nicht!");
+                }
                 return;
             }
             if(stadtbauen.Visible == false) 
