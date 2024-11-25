@@ -147,25 +147,6 @@ namespace rbss1
                 }
             }
 
-            //Truppenplatzierung
-            for(int i = 0; i < felderxMax; i++) 
-            {
-                for(int j = 0; j < felderyMax; j++) 
-                {
-                    if(random.Next(0, 100) < 15) 
-                    {
-                        if (felder[i, j].feldart != "Water")
-                        {
-                            Truppe truppe = new Truppe();
-                            felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, spielerMax)]);
-                            truppe.Darstellung.Tag = truppe;
-                            truppe.Darstellung.Click += new EventHandler(feld_Click);
-                        }
-                    }
-                    
-                }
-            }
-
             GeneriereStaedte(felderxMax, felderyMax);
 
         }
