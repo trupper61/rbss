@@ -160,6 +160,10 @@ namespace rbss1
 
             if (clickedObject is Truppe clickedTruppe)
             {
+                if(rekrutiermodus == true) 
+                {
+                    return;
+                }
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
                     EntferneBewegungsbereich(null);
@@ -325,7 +329,7 @@ namespace rbss1
             }
             if(rekrutiermodus == true) 
             {
-                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex])
+                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null)
                 {
                     Truppe truppe = new Truppe();
                     lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
