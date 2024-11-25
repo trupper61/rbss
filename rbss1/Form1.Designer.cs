@@ -39,6 +39,7 @@
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
             this.einnehmen = new System.Windows.Forms.Button();
+            this.stadtbauen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
@@ -114,6 +115,7 @@
             this.construction.Size = new System.Drawing.Size(50, 50);
             this.construction.TabIndex = 7;
             this.construction.TabStop = false;
+            this.construction.Click += new System.EventHandler(this.construction_Click);
             this.construction.MouseEnter += new System.EventHandler(this.construction_MouseEnter);
             this.construction.MouseLeave += new System.EventHandler(this.construction_MouseLeave);
             // 
@@ -164,12 +166,24 @@
             this.einnehmen.Visible = false;
             this.einnehmen.Click += new System.EventHandler(this.einnehmen_Click);
             // 
+            // stadtbauen
+            // 
+            this.stadtbauen.Location = new System.Drawing.Point(919, 63);
+            this.stadtbauen.Name = "stadtbauen";
+            this.stadtbauen.Size = new System.Drawing.Size(91, 23);
+            this.stadtbauen.TabIndex = 9;
+            this.stadtbauen.Text = "Stadt Errichten";
+            this.stadtbauen.UseVisualStyleBackColor = true;
+            this.stadtbauen.Visible = false;
+            this.stadtbauen.Click += new System.EventHandler(this.stadtbauen_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.stadtbauen);
             this.Controls.Add(this.einnehmen);
             this.Controls.Add(this.construction);
             this.Controls.Add(this.weiter);
@@ -203,6 +217,7 @@
         private System.Windows.Forms.Label titelLabel;
         private System.Windows.Forms.PictureBox construction;
         private System.Windows.Forms.Button einnehmen;
+        private System.Windows.Forms.Button stadtbauen;
     }
 }
 

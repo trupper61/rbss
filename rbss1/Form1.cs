@@ -523,7 +523,7 @@ namespace rbss1
 
         private void einnehmen_Click(object sender, EventArgs e)
         {
-            if(lastClickedFeld != null && !lastClickedFeld.GehoertZuStadt) 
+            if(lastClickedFeld != null && !lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex]) 
             {
                 lastClickedFeld.textur.BackColor = Color.Red;
                 lastClickedFeld.besitzer = spieler[aktuellerSpielerIndex];
@@ -531,6 +531,61 @@ namespace rbss1
                 return;
             }
             MessageBox.Show("Hier geht das nicht!");
+            return;
+        }
+
+        private void construction_Click(object sender, EventArgs e)
+        {
+            if(lastClickedFeld == null) 
+            {
+                MessageBox.Show("Wähle Zunächst ein Feld aus!");
+                return;
+            }
+            else if(lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex]) 
+            {
+                MessageBox.Show("Dieses Feld gehört dir nicht!");
+                return;
+            }
+            if(stadtbauen.Visible == false) 
+            {
+                stadtbauen.Show();
+            }
+            else if(stadtbauen.Visible == true) 
+            {
+                stadtbauen.Hide();
+            }
+            return;
+        }
+
+        private void stadtbauen_Click(object sender, EventArgs e)
+        {
+            if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+            {
+                MessageBox.Show("Dieses Feld gehört dir nicht!");
+                return;
+            }
+            List<Point> platzierteStadtPositionen = new List<Point>();
+            int stadtabstand = 5;
+
+            int x = lastClickedFeld.position.X;
+            int y = lastClickedFeld.position.Y;
+
+            if (lastClickedFeld.feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen)) 
+            {
+                Stadt neueStadt = new Stadt(lastClickedFeld, felder);
+                neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
+                lastClickedFeld.StadtAufFeld = neueStadt;
+
+                neueStadt.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
+                neueStadt.textur.Tag = neueStadt;
+                neueStadt.textur.Click += new EventHandler(feld_Click);
+                neueStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+
+                this.Controls.Add(neueStadt.textur);
+                neueStadt.textur.BringToFront();
+
+                platzierteStadtPositionen.Add(new Point(x, y));
+            }
             return;
         }
     }
