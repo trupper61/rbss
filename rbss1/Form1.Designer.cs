@@ -50,7 +50,7 @@
             this.anzahlRes.AutoSize = true;
             this.anzahlRes.BackColor = System.Drawing.Color.Transparent;
             this.anzahlRes.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.anzahlRes.Location = new System.Drawing.Point(626, 346);
+            this.anzahlRes.Location = new System.Drawing.Point(847, 426);
             this.anzahlRes.Name = "anzahlRes";
             this.anzahlRes.Size = new System.Drawing.Size(45, 15);
             this.anzahlRes.TabIndex = 2;

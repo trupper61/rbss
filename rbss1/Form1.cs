@@ -171,7 +171,7 @@ namespace rbss1
         public void feld_Click(object sender, EventArgs e)
         {
             var clickedObject = (sender as PictureBox).Tag;
-
+            
             UIInfo.Show();
             UIInfo.Image = Properties.Resources.UI2;
 
@@ -219,6 +219,7 @@ namespace rbss1
                     titelLabel.Hide();
                 }
                 UpdateGame(selectedTruppe);
+                lastClickedFeld = clickedTruppe.AktuellesFeld;
             }
             else if (clickedObject is Stadt clickedStadt)
             {
@@ -522,7 +523,15 @@ namespace rbss1
 
         private void einnehmen_Click(object sender, EventArgs e)
         {
-
+            if(lastClickedFeld != null && !lastClickedFeld.GehoertZuStadt) 
+            {
+                lastClickedFeld.textur.BackColor = Color.Red;
+                lastClickedFeld.besitzer = spieler[aktuellerSpielerIndex];
+                MessageBox.Show("Auf diesem Feld kann nun eine Stadt gebaut werden!");
+                return;
+            }
+            MessageBox.Show("Hier geht das nicht!");
+            return;
         }
     }
 }
