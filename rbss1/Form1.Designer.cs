@@ -34,12 +34,14 @@
             this.truppenSchadenLB = new System.Windows.Forms.Label();
             this.weiter = new System.Windows.Forms.Button();
             this.titelLabel = new System.Windows.Forms.Label();
+            this.einnehmen = new System.Windows.Forms.Button();
+            this.stadtbauen = new System.Windows.Forms.Button();
+            this.recruitSoldiers = new System.Windows.Forms.PictureBox();
             this.construction = new System.Windows.Forms.PictureBox();
             this.ItemPB = new System.Windows.Forms.PictureBox();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
-            this.einnehmen = new System.Windows.Forms.Button();
-            this.stadtbauen = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
@@ -106,6 +108,40 @@
             this.titelLabel.Text = "Titel";
             this.titelLabel.Visible = false;
             // 
+            // einnehmen
+            // 
+            this.einnehmen.Location = new System.Drawing.Point(739, 334);
+            this.einnehmen.Name = "einnehmen";
+            this.einnehmen.Size = new System.Drawing.Size(170, 23);
+            this.einnehmen.TabIndex = 8;
+            this.einnehmen.Text = "Feld Einnehmen";
+            this.einnehmen.UseVisualStyleBackColor = true;
+            this.einnehmen.Visible = false;
+            this.einnehmen.Click += new System.EventHandler(this.einnehmen_Click);
+            // 
+            // stadtbauen
+            // 
+            this.stadtbauen.Location = new System.Drawing.Point(919, 63);
+            this.stadtbauen.Name = "stadtbauen";
+            this.stadtbauen.Size = new System.Drawing.Size(91, 23);
+            this.stadtbauen.TabIndex = 9;
+            this.stadtbauen.Text = "Stadt Errichten";
+            this.stadtbauen.UseVisualStyleBackColor = true;
+            this.stadtbauen.Visible = false;
+            this.stadtbauen.Click += new System.EventHandler(this.stadtbauen_Click);
+            // 
+            // recruitSoldiers
+            // 
+            this.recruitSoldiers.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("recruitSoldiers.BackgroundImage")));
+            this.recruitSoldiers.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.recruitSoldiers.Location = new System.Drawing.Point(1015, 102);
+            this.recruitSoldiers.Name = "recruitSoldiers";
+            this.recruitSoldiers.Size = new System.Drawing.Size(50, 50);
+            this.recruitSoldiers.TabIndex = 10;
+            this.recruitSoldiers.TabStop = false;
+            this.recruitSoldiers.MouseEnter += new System.EventHandler(this.recruitSoldiers_MouseEnter);
+            this.recruitSoldiers.MouseLeave += new System.EventHandler(this.recruitSoldiers_MouseLeave);
+            // 
             // construction
             // 
             this.construction.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("construction.BackgroundImage")));
@@ -155,34 +191,13 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
-            // einnehmen
-            // 
-            this.einnehmen.Location = new System.Drawing.Point(739, 334);
-            this.einnehmen.Name = "einnehmen";
-            this.einnehmen.Size = new System.Drawing.Size(170, 23);
-            this.einnehmen.TabIndex = 8;
-            this.einnehmen.Text = "Feld Einnehmen";
-            this.einnehmen.UseVisualStyleBackColor = true;
-            this.einnehmen.Visible = false;
-            this.einnehmen.Click += new System.EventHandler(this.einnehmen_Click);
-            // 
-            // stadtbauen
-            // 
-            this.stadtbauen.Location = new System.Drawing.Point(919, 63);
-            this.stadtbauen.Name = "stadtbauen";
-            this.stadtbauen.Size = new System.Drawing.Size(91, 23);
-            this.stadtbauen.TabIndex = 9;
-            this.stadtbauen.Text = "Stadt Errichten";
-            this.stadtbauen.UseVisualStyleBackColor = true;
-            this.stadtbauen.Visible = false;
-            this.stadtbauen.Click += new System.EventHandler(this.stadtbauen_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.recruitSoldiers);
             this.Controls.Add(this.stadtbauen);
             this.Controls.Add(this.einnehmen);
             this.Controls.Add(this.construction);
@@ -196,6 +211,7 @@
             this.Controls.Add(this.UI);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).EndInit();
@@ -218,6 +234,7 @@
         private System.Windows.Forms.PictureBox construction;
         private System.Windows.Forms.Button einnehmen;
         private System.Windows.Forms.Button stadtbauen;
+        private System.Windows.Forms.PictureBox recruitSoldiers;
     }
 }
 

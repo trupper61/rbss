@@ -511,15 +511,7 @@ namespace rbss1
             return true;
         }
 
-        private void construction_MouseEnter(object sender, EventArgs e)
-        {
-            construction.BackgroundImage = Properties.Resources.constructionglow;
-        }
-
-        private void construction_MouseLeave(object sender, EventArgs e)
-        {
-            construction.BackgroundImage = Properties.Resources.construction;
-        }
+        
 
         private void einnehmen_Click(object sender, EventArgs e)
         {
@@ -600,6 +592,26 @@ namespace rbss1
                 platzierteStadtPositionen.Add(new Point(x, y));
             }
             return;
+        }
+
+        private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
+        {
+            recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
+        }
+
+        private void recruitSoldiers_MouseLeave(object sender, EventArgs e)
+        {
+            recruitSoldiers.BackgroundImage = Properties.Resources.recruit;
+        }
+
+        private void construction_MouseEnter(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.constructionglow;
+        }
+
+        private void construction_MouseLeave(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.construction;
         }
     }
 }
