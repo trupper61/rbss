@@ -18,6 +18,7 @@ namespace rbss1
         private Truppe selectedTruppe = null;
         private Stadt selectedStadt = null;
         private Feld[,] felder;
+        public bool rekrutiermodus = false;
         public int truppenMax = 4;
         public int spielerMax = 4;
 
@@ -174,7 +175,7 @@ namespace rbss1
             
             UIInfo.Show();
             UIInfo.Image = Properties.Resources.UI2;
-
+            
 
             if (clickedObject is Truppe clickedTruppe)
             {
@@ -341,8 +342,20 @@ namespace rbss1
                 }
                 UpdateGame(selectedTruppe);
             }
-
-
+            if(rekrutiermodus == true) 
+            {
+                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex])
+                {
+                    Truppe truppe = new Truppe();
+                    lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
+                    truppe.Darstellung.Tag = truppe;
+                    truppe.Darstellung.Click += new EventHandler(feld_Click);
+                }
+                else
+                {
+                    MessageBox.Show("Das geht hier nicht!");
+                }
+            }
         }
         public void MakiereBewegungsreichweite(Truppe truppe)
         {
@@ -612,6 +625,21 @@ namespace rbss1
         private void construction_MouseLeave(object sender, EventArgs e)
         {
             construction.BackgroundImage = Properties.Resources.construction;
+        }
+
+        private void recruitSoldiers_Click(object sender, EventArgs e)
+        {
+            if(rekrutiermodus == false) 
+            {
+                rekrutiermodus = true;
+                MessageBox.Show("Du kannst nun ein Feld auswählen, um darin Truppen zu Platzieren!");
+            }
+            else if(rekrutiermodus == true) 
+            {
+                rekrutiermodus = false;
+                MessageBox.Show("Rekrutiermodus ist aus!");
+            }
+            
         }
     }
 }

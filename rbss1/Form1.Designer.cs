@@ -139,6 +139,7 @@
             this.recruitSoldiers.Size = new System.Drawing.Size(50, 50);
             this.recruitSoldiers.TabIndex = 10;
             this.recruitSoldiers.TabStop = false;
+            this.recruitSoldiers.Click += new System.EventHandler(this.recruitSoldiers_Click);
             this.recruitSoldiers.MouseEnter += new System.EventHandler(this.recruitSoldiers_MouseEnter);
             this.recruitSoldiers.MouseLeave += new System.EventHandler(this.recruitSoldiers_MouseLeave);
             // 
