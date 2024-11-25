@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.anzahlRes = new System.Windows.Forms.Label();
             this.truppenLebenLB = new System.Windows.Forms.Label();
             this.truppenSchadenLB = new System.Windows.Forms.Label();
@@ -36,34 +37,12 @@
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
             this.titelLabel = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).BeginInit();
-
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // UIInfo
-            // 
-            this.UIInfo.BackColor = System.Drawing.Color.Transparent;
-            this.UIInfo.Image = global::rbss1.Properties.Resources.UI2eisen;
-            this.UIInfo.Location = new System.Drawing.Point(583, 346);
-            this.UIInfo.Name = "UIInfo";
-            this.UIInfo.Size = new System.Drawing.Size(216, 76);
-            this.UIInfo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.UIInfo.TabIndex = 1;
-            this.UIInfo.TabStop = false;
-            this.UIInfo.Visible = false;
-            // 
-            // UI
-            // 
-            this.UI.BackColor = System.Drawing.Color.Transparent;
-            this.UI.Image = global::rbss1.Properties.Resources.UI1;
-            this.UI.Location = new System.Drawing.Point(497, -3);
-            this.UI.Name = "UI";
-            this.UI.Size = new System.Drawing.Size(326, 465);
-            this.UI.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.UI.TabIndex = 0;
-            this.UI.TabStop = false;
             // 
             // anzahlRes
             // 
@@ -82,9 +61,8 @@
             this.truppenLebenLB.AutoSize = true;
             this.truppenLebenLB.BackColor = System.Drawing.Color.Transparent;
             this.truppenLebenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            //this.truppenLebenLB.Location = new System.Drawing.Point(580, 64); Test Merge conflict with other .Location
-            this.truppenLebenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenLebenLB.Location = new System.Drawing.Point(925, 157);
+            this.truppenLebenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenLebenLB.Name = "truppenLebenLB";
             this.truppenLebenLB.Size = new System.Drawing.Size(64, 20);
             this.truppenLebenLB.TabIndex = 3;
@@ -96,9 +74,8 @@
             this.truppenSchadenLB.AutoSize = true;
             this.truppenSchadenLB.BackColor = System.Drawing.Color.Transparent;
             this.truppenSchadenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            //this.truppenSchadenLB.Location = new System.Drawing.Point(580, 90); Test Merge Conflict with other .Location
-            this.truppenSchadenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenSchadenLB.Location = new System.Drawing.Point(925, 213);
+            this.truppenSchadenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenSchadenLB.Name = "truppenSchadenLB";
             this.truppenSchadenLB.Size = new System.Drawing.Size(85, 20);
             this.truppenSchadenLB.TabIndex = 4;
@@ -114,6 +91,7 @@
             this.weiter.Text = "Nächste Runde";
             this.weiter.UseVisualStyleBackColor = true;
             this.weiter.Click += new System.EventHandler(this.weiter_Click);
+            // 
             // ItemPB
             // 
             this.ItemPB.Image = global::rbss1.Properties.Resources.melee;
@@ -157,20 +135,29 @@
             this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titelLabel.Location = new System.Drawing.Point(925, 102);
             this.titelLabel.Name = "titelLabel";
-            this.titelLabel.Size = new System.Drawing.Size(41, 20);
+            this.titelLabel.Size = new System.Drawing.Size(35, 17);
             this.titelLabel.TabIndex = 6;
             this.titelLabel.Text = "Titel";
             this.titelLabel.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(1015, 52);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            //this.ClientSize = new System.Drawing.Size(800, 450); Test Merge Conflict with other Syste.Drawing Size
-            this.Controls.Add(this.weiter);
-            this.Controls.Add(this.truppenSchadenLB);
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.weiter);
             this.Controls.Add(this.titelLabel);
             this.Controls.Add(this.ItemPB);
             this.Controls.Add(this.truppenLebenLB);
@@ -183,6 +170,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,6 +186,7 @@
         private System.Windows.Forms.Button weiter;
         private System.Windows.Forms.PictureBox ItemPB;
         private System.Windows.Forms.Label titelLabel;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
