@@ -14,18 +14,17 @@ namespace rbss1
         public int spielernummer {  get; set; }
         public bool zugbeendet { get; set; }
 
-        public Color EinflussFarbe { get; private set; }
+        public Color SpielerFarbe { get; private set; }
 
-        public Spieler(List<Rescourcen> rescourcenBesitz, int geld, int spielernummer) 
+        public Spieler(List<Rescourcen> rescourcenBesitz, int geld, int spielernummer, Color SpielerFarbe) 
         {
             this.rescourcenBesitz = rescourcenBesitz;
             this.geld = geld;
             this.spielernummer = spielernummer;
-
-            Random random = new Random();
-            this.EinflussFarbe = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
-
+            this.SpielerFarbe = SpielerFarbe;
             zugbeendet = false;
         }
+
+        
     }
 }

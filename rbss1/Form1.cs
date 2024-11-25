@@ -40,7 +40,7 @@ namespace rbss1
 
             for (int i = 0; i < spielerMax; i++)
             {
-                spieler.Add(new Spieler(null, 0, i + 1));
+                spieler.Add(new Spieler(null, 0, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256))));
             }
 
             if (spieler.Count > 0)
@@ -222,10 +222,9 @@ namespace rbss1
                 {
                     UpdateUIInfo(clickedStadt);
 
-                    clickedStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+                    //clickedStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
 
                     selectedTruppe = null;
-
                     EntferneBewegungsbereich(null);
                     return;
                 }
@@ -278,7 +277,6 @@ namespace rbss1
                     if (clickedFeld.GehoertZuStadt)
                     {
                         EntferneBewegungsbereich(clickedFeld);
-
                     }
                     else
                     {
@@ -354,7 +352,6 @@ namespace rbss1
         }
         public void EntferneBewegungsbereich(object ob)
         {
-            Feld stadtFeld = null;
             foreach (var feld in felder)
             {
                 if (feld == null)
@@ -363,19 +360,15 @@ namespace rbss1
                 {
                     feld.textur.BackColor = Color.White;
                     feld.textur.Image = Properties.Resources.grass;
+                    
                 }
-                if (feld.StadtAufFeld != null)
-                    stadtFeld = feld;
             }
-            stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
-            Feld t = ob as Feld;
-            if (t != null && t.feldart != "Water" && t.GehoertZuStadt)
+            foreach (var feld in felder) 
             {
-                if (t == lastClickedFeld)
-                    stadtFeld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
-                t.textur.BackColor = Color.Gray;
-                t.textur.Image = Properties.Resources.grasstransparent;
-
+                if (feld.StadtAufFeld != null)
+                {
+                    feld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+                }
             }
 
         }
@@ -499,7 +492,6 @@ namespace rbss1
             }
             return true;
         }
-
     }
 }
 

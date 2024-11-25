@@ -53,8 +53,6 @@ namespace rbss1
             int startY = this.startFeld.position.Y; 
             int radius = 2;
 
-            Color einflussFarbe = spieler[spielerIndex].EinflussFarbe;
-
             stadtFlaeche.Clear();
 
             for (int i = 0; i < felder.GetLength(0); i++)
@@ -71,7 +69,7 @@ namespace rbss1
                             {
                                 stadtFlaeche.Add(felder[i, j]);
                             }
-                            felder[i, j].textur.BackColor = einflussFarbe;
+                            felder[i, j].textur.BackColor = Besitzer.SpielerFarbe;
                             felder[i, j].textur.Image = Properties.Resources.grasstransparent;
                             felder[i, j].GehoertZuStadt = true;
                         }
