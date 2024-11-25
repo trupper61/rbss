@@ -33,15 +33,16 @@
             this.truppenLebenLB = new System.Windows.Forms.Label();
             this.truppenSchadenLB = new System.Windows.Forms.Label();
             this.weiter = new System.Windows.Forms.Button();
+            this.titelLabel = new System.Windows.Forms.Label();
+            this.construction = new System.Windows.Forms.PictureBox();
             this.ItemPB = new System.Windows.Forms.PictureBox();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
-            this.titelLabel = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.einnehmen = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // anzahlRes
@@ -92,6 +93,30 @@
             this.weiter.UseVisualStyleBackColor = true;
             this.weiter.Click += new System.EventHandler(this.weiter_Click);
             // 
+            // titelLabel
+            // 
+            this.titelLabel.AutoSize = true;
+            this.titelLabel.BackColor = System.Drawing.Color.Transparent;
+            this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titelLabel.Location = new System.Drawing.Point(925, 102);
+            this.titelLabel.Name = "titelLabel";
+            this.titelLabel.Size = new System.Drawing.Size(35, 17);
+            this.titelLabel.TabIndex = 6;
+            this.titelLabel.Text = "Titel";
+            this.titelLabel.Visible = false;
+            // 
+            // construction
+            // 
+            this.construction.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("construction.BackgroundImage")));
+            this.construction.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.construction.Location = new System.Drawing.Point(1015, 52);
+            this.construction.Name = "construction";
+            this.construction.Size = new System.Drawing.Size(50, 50);
+            this.construction.TabIndex = 7;
+            this.construction.TabStop = false;
+            this.construction.MouseEnter += new System.EventHandler(this.construction_MouseEnter);
+            this.construction.MouseLeave += new System.EventHandler(this.construction_MouseLeave);
+            // 
             // ItemPB
             // 
             this.ItemPB.Image = global::rbss1.Properties.Resources.melee;
@@ -128,27 +153,16 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
-            // titelLabel
+            // einnehmen
             // 
-            this.titelLabel.AutoSize = true;
-            this.titelLabel.BackColor = System.Drawing.Color.Transparent;
-            this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titelLabel.Location = new System.Drawing.Point(925, 102);
-            this.titelLabel.Name = "titelLabel";
-            this.titelLabel.Size = new System.Drawing.Size(35, 17);
-            this.titelLabel.TabIndex = 6;
-            this.titelLabel.Text = "Titel";
-            this.titelLabel.Visible = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(1015, 52);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
+            this.einnehmen.Location = new System.Drawing.Point(739, 334);
+            this.einnehmen.Name = "einnehmen";
+            this.einnehmen.Size = new System.Drawing.Size(170, 23);
+            this.einnehmen.TabIndex = 8;
+            this.einnehmen.Text = "Feld Einnehmen";
+            this.einnehmen.UseVisualStyleBackColor = true;
+            this.einnehmen.Visible = false;
+            this.einnehmen.Click += new System.EventHandler(this.einnehmen_Click);
             // 
             // Form1
             // 
@@ -156,7 +170,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.einnehmen);
+            this.Controls.Add(this.construction);
             this.Controls.Add(this.weiter);
             this.Controls.Add(this.titelLabel);
             this.Controls.Add(this.ItemPB);
@@ -167,10 +182,10 @@
             this.Controls.Add(this.UI);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.construction)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,7 +201,8 @@
         private System.Windows.Forms.Button weiter;
         private System.Windows.Forms.PictureBox ItemPB;
         private System.Windows.Forms.Label titelLabel;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox construction;
+        private System.Windows.Forms.Button einnehmen;
     }
 }
 

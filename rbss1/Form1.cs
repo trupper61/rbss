@@ -203,6 +203,7 @@ namespace rbss1
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
                     }
                     UpdateUIInfo(clickedTruppe);
+                    einnehmen.Show();
                 }
                 else if (selectedTruppe != null)
                 {
@@ -210,8 +211,12 @@ namespace rbss1
                     selectedTruppe = null;
                     clickedTruppe.Darstellung.BackColor = Color.Blue;
 
+                    UpdateUIInfo(clickedTruppe);
                     truppenLebenLB.Hide();
                     truppenSchadenLB.Hide();
+                    einnehmen.Hide();
+                    ItemPB.Hide();
+                    titelLabel.Hide();
                 }
                 UpdateGame(selectedTruppe);
             }
@@ -331,6 +336,7 @@ namespace rbss1
                     selectedTruppe.Darstellung.BackColor = Color.Blue;
                     EntferneBewegungsbereich(null);
                     selectedTruppe = null;
+                    einnehmen.Hide();
                 }
                 UpdateGame(selectedTruppe);
             }
@@ -424,8 +430,11 @@ namespace rbss1
         }
         public void UpdateUIInfo(Object o)
         {
-            if (o == null)
+            if (o == null) 
+            {
+                
                 return;
+            }
             if (o is Truppe truppe)
             {
                 ItemPB.Image = Properties.Resources.melee;
@@ -440,9 +449,9 @@ namespace rbss1
                 truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
                 titelLabel.Text = stadt.Name;
             }
-            ItemPB.Visible = true;
-            truppenLebenLB.Visible = true;
-            titelLabel.Visible = true;
+            ItemPB.Show();
+            truppenLebenLB.Show();
+            titelLabel.Show();
         }
         public void HideUIInfo()
         {
@@ -499,6 +508,21 @@ namespace rbss1
                 }
             }
             return true;
+        }
+
+        private void construction_MouseEnter(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.constructionglow;
+        }
+
+        private void construction_MouseLeave(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.construction;
+        }
+
+        private void einnehmen_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
