@@ -541,13 +541,14 @@ namespace rbss1
                 MessageBox.Show("Wähle Zunächst ein Feld aus!");
                 return;
             }
-            else if(lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex]) 
+            
+            else if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
             {
                 if (stadtbauen.Visible == true)
                 {
                     stadtbauen.Hide();
                 }
-                else 
+                else
                 {
                     MessageBox.Show("Dieses Feld gehört dir nicht!");
                 }
@@ -569,6 +570,11 @@ namespace rbss1
             if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
             {
                 MessageBox.Show("Dieses Feld gehört dir nicht!");
+                return;
+            }
+            if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.textur.BackColor == spieler[aktuellerSpielerIndex].SpielerFarbe)
+            {
+                MessageBox.Show("Innerhalb eigender Gebiete kann keine weitere Stadt errichtet werden!");
                 return;
             }
             List<Point> platzierteStadtPositionen = new List<Point>();

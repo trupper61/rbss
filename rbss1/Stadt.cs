@@ -70,6 +70,7 @@ namespace rbss1
                                 stadtFlaeche.Add(felder[i, j]);
                             }
                             felder[i, j].textur.BackColor = Besitzer.SpielerFarbe;
+                            felder[i, j].besitzer = Besitzer;
                             felder[i, j].textur.Image = Properties.Resources.grasstransparent;
                             felder[i, j].GehoertZuStadt = true;
                         }
