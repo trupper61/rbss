@@ -19,12 +19,17 @@ namespace rbss1
         public Stadt stadt { get; private set; }
         public Feld[,] felder { get; set; }
         public Feld startFeld { get; set; }
+
+        
         public Stadt(Feld startFeld, Feld[,] felder)
         {
             Name = "Bremen";
             Einwohner = 100;
             this.felder = felder;
             this.startFeld = startFeld;
+
+            
+
             stadtFlaeche = new List<Feld>();
             textur = new PictureBox
             {
@@ -36,8 +41,9 @@ namespace rbss1
             };
         }
 
-        public void SetzeEinflussRadius()
+        public void SetzeEinflussRadius(List<Spieler> spieler, int spielerIndex)
         {
+
             if (this.textur == null || felder == null)
             {
                 return; 
@@ -45,7 +51,7 @@ namespace rbss1
 
             int startX = this.startFeld.position.X; 
             int startY = this.startFeld.position.Y; 
-            int radius = 2; 
+            int radius = 2;
 
             stadtFlaeche.Clear();
 
@@ -63,8 +69,8 @@ namespace rbss1
                             {
                                 stadtFlaeche.Add(felder[i, j]);
                             }
-
-                            felder[i, j].textur.BackColor = Color.DarkGreen; 
+                            felder[i, j].textur.BackColor = Besitzer.SpielerFarbe;
+                            felder[i, j].besitzer = Besitzer;
                             felder[i, j].textur.Image = Properties.Resources.grasstransparent;
                             felder[i, j].GehoertZuStadt = true;
                         }

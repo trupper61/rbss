@@ -18,18 +18,17 @@ namespace rbss1
         private Truppe selectedTruppe = null;
         private Stadt selectedStadt = null;
         private Feld[,] felder;
-        public int spielerMax = 2;
+        public bool rekrutiermodus = false;
         public int truppenMax = 4;
+        public int spielerMax = 4;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
-            new Spieler(null, 0, 1),
-            new Spieler(null, 0, 2)
         };
 
         public static int aktuellerSpielerIndex = 0;
 
-        Spieler aktuellerSpieler = spieler[aktuellerSpielerIndex];
+        public Spieler aktuellerSpieler;
 
         Random random = new Random();
         Random rescourcen = new Random();
@@ -39,9 +38,24 @@ namespace rbss1
         public Form1()
         {
             InitializeComponent();
+
+            for (int i = 0; i < spielerMax; i++)
+            {
+                spieler.Add(new Spieler(null, 0, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256))));
+            }
+
+            if (spieler.Count > 0)
+            {
+                aktuellerSpieler = spieler[aktuellerSpielerIndex];
+            }
+
             Feldgenerierung();
+
+            
+
             MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
         }
+        
         public void Feldgenerierung()
         {
             bool flag = false;
@@ -108,28 +122,15 @@ namespace rbss1
 
                     felder[i, j] = feld;
 
-                    /*if (felder[i, j].feldart != "Water" && felder[i, j].TruppeAufFeld == null)
-                    {
-                        Truppe truppe = new Truppe();
-                        felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, 2)]);
-                        truppe.Darstellung.Tag = truppe;
-                        truppe.Darstellung.Click += new EventHandler(feld_Click);
-                        this.Controls.Add(truppe.Darstellung);
-                    }
-                    */
-                    //TODO : Implementierung der Spielergenerierung nach der Feldgenerierung
-
-
-                    if (i == 5 && j == 5)
-                    {
-                        Stadt stadts = new Stadt(felder[i, j], felder);
-                        this.Controls.Add(stadts.textur);
-                    }
+                    
                     feld.position = new Point(i, j);
 
                     this.Controls.Add(feld.textur);
+                    
                 }
             }
+
+            //Platzierung von Wasser links und über einem Wasserfeld
             for (int i = 1; i < felderxMax - 1; i++)
             {
                 for (int j = 1; j < felderyMax - 1; j++)
@@ -145,44 +146,24 @@ namespace rbss1
                     }
                 }
             }
-            for(int i = 0; i < felderxMax; i++) 
-            {
-                for(int j = 0; j < felderyMax; j++) 
-                {
-                    if(random.Next(0, 100) < 15) 
-                    {
-                        if (felder[i, j].feldart != "Water")
-                        {
-                            Truppe truppe = new Truppe();
-                            felder[i, j].SetzeTruppe(truppe, spieler[0]);
-                            truppe.Darstellung.Tag = truppe;
-                            truppe.Darstellung.Click += new EventHandler(feld_Click);
-                        }
-                    }
-                    
-                }
-            }
 
-            Stadt stadt = new Stadt(felder[5, 5], felder);
-            stadt.textur.Location = new Point(felder[5, 5].textur.Location.X + 5, felder[5, 5].textur.Location.Y + 5);
+            GeneriereStaedte(felderxMax, felderyMax);
 
-            stadt.textur.Tag = stadt;
-            stadt.SetzeEinflussRadius();
-            felder[5, 5].StadtAufFeld = stadt;
-            stadt.textur.Click += new EventHandler(feld_Click);
-            this.Controls.Add(stadt.textur);
-            stadt.textur.BringToFront();
         }
         public void feld_Click(object sender, EventArgs e)
         {
             var clickedObject = (sender as PictureBox).Tag;
-
+            
             UIInfo.Show();
             UIInfo.Image = Properties.Resources.UI2;
-
+            
 
             if (clickedObject is Truppe clickedTruppe)
             {
+                if(rekrutiermodus == true) 
+                {
+                    return;
+                }
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
                     EntferneBewegungsbereich(null);
@@ -208,6 +189,7 @@ namespace rbss1
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
                     }
                     UpdateUIInfo(clickedTruppe);
+                    einnehmen.Show();
                 }
                 else if (selectedTruppe != null)
                 {
@@ -215,21 +197,30 @@ namespace rbss1
                     selectedTruppe = null;
                     clickedTruppe.Darstellung.BackColor = Color.Blue;
 
-                    truppenLebenLB.Visible = false;
-                    truppenSchadenLB.Visible = false;
+                    UpdateUIInfo(clickedTruppe);
+                    truppenLebenLB.Hide();
+                    truppenSchadenLB.Hide();
+                    einnehmen.Hide();
+                    ItemPB.Hide();
+                    titelLabel.Hide();
                 }
                 UpdateGame(selectedTruppe);
+                lastClickedFeld = clickedTruppe.AktuellesFeld;
             }
             else if (clickedObject is Stadt clickedStadt)
             {
                 selectedStadt = clickedStadt;
-                UpdateUIInfo(clickedStadt);
+                if(clickedStadt != null && clickedStadt.Besitzer == aktuellerSpieler) 
+                {
+                    UpdateUIInfo(clickedStadt);
 
-                clickedStadt.SetzeEinflussRadius();
+                    //clickedStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
 
-                selectedTruppe = null;
-
-                EntferneBewegungsbereich(null);
+                    selectedTruppe = null;
+                    EntferneBewegungsbereich(null);
+                    return;
+                }
+                MessageBox.Show("Das ist nicht deine Stadt!");
                 return;
             }
             else if (clickedObject is Feld clickedFeld)
@@ -253,6 +244,7 @@ namespace rbss1
                     anzahlRes.Hide();
                     return;
                 }
+
                 if (clickedFeld.textur.BackColor == Color.White)
                 {
                     clickedFeld.textur.BackColor = Color.Gray;
@@ -260,41 +252,47 @@ namespace rbss1
                 }
                 else if (clickedFeld.textur.BackColor == Color.Gray)
                 {
-                    truppenLebenLB.Visible = false;
-                    truppenSchadenLB.Visible = false;
+                    truppenLebenLB.Hide();
+                    truppenSchadenLB.Hide();
                     clickedFeld.textur.BackColor = Color.White;
                     clickedFeld.textur.Image = Properties.Resources.grass;
-                    MessageBox.Show("Drinne!");
                     UIInfo.Hide();
                     anzahlRes.Hide();
+                    HideUIInfo();
                 }
                 if (lastClickedFeld != null && lastClickedFeld != clickedFeld)
                 {
                     clickedFeld.textur.BackColor = Color.Gray;
                     clickedFeld.textur.Image = Properties.Resources.grasstransparent;
 
-                    lastClickedFeld.textur.BackColor = Color.White;
-                    lastClickedFeld.textur.Image = Properties.Resources.grass;
+                    if(!lastClickedFeld.GehoertZuStadt) 
+                    {
+                        lastClickedFeld.textur.BackColor = Color.White;
+                        lastClickedFeld.textur.Image = Properties.Resources.grass;
+                    }
                     if (clickedFeld.GehoertZuStadt)
                     {
                         EntferneBewegungsbereich(clickedFeld);
-
-                    }
-                    else
-                    {
-                        lastClickedFeld.textur.BackColor = Color.DarkGreen;
-                        lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
                     }
                 }
                 else if (lastClickedFeld != null && lastClickedFeld == clickedFeld)
                 {
-
-                    clickedFeld.textur.BackColor = Color.White;
-                    clickedFeld.textur.Image = Properties.Resources.grass;
-                    if (clickedFeld.GehoertZuStadt)
+                    
+                    if (!clickedFeld.GehoertZuStadt) 
                     {
-                        clickedFeld.textur.BackColor = Color.DarkGreen;
-                        clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                        if (clickedFeld.textur.BackColor == Color.White)
+                        {
+                            clickedFeld.textur.BackColor = Color.Gray;
+                            clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                            UIInfo.Show();
+                        }
+                        else if (clickedFeld.textur.BackColor == Color.Gray)
+                        {
+                            clickedFeld.textur.BackColor = Color.White;
+                            clickedFeld.textur.Image = Properties.Resources.grass;
+                            UIInfo.Hide();
+                            anzahlRes.Hide();
+                        }
                     }
                 }
 
@@ -325,17 +323,30 @@ namespace rbss1
                     selectedTruppe.Darstellung.BackColor = Color.Blue;
                     EntferneBewegungsbereich(null);
                     selectedTruppe = null;
+                    einnehmen.Hide();
                 }
                 UpdateGame(selectedTruppe);
             }
-
-
+            if(rekrutiermodus == true) 
+            {
+                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null)
+                {
+                    Truppe truppe = new Truppe();
+                    lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
+                    truppe.Darstellung.Tag = truppe;
+                    truppe.Darstellung.Click += new EventHandler(feld_Click);
+                }
+                else
+                {
+                    MessageBox.Show("Das geht hier nicht!");
+                }
+            }
         }
         public void MakiereBewegungsreichweite(Truppe truppe)
         {
             int startX = truppe.AktuellesFeld.position.X;
             int startY = truppe.AktuellesFeld.position.Y;
-
+            lastClickedFeld = null;
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -354,7 +365,6 @@ namespace rbss1
         }
         public void EntferneBewegungsbereich(object ob)
         {
-            Feld stadtFeld = null;
             foreach (var feld in felder)
             {
                 if (feld == null)
@@ -363,19 +373,15 @@ namespace rbss1
                 {
                     feld.textur.BackColor = Color.White;
                     feld.textur.Image = Properties.Resources.grass;
+                    
                 }
-                if (feld.StadtAufFeld != null)
-                    stadtFeld = feld;
             }
-            stadtFeld.StadtAufFeld.SetzeEinflussRadius();
-            Feld t = ob as Feld;
-            if (t != null && t.feldart != "Water" && t.GehoertZuStadt)
+            foreach (var feld in felder) 
             {
-                if (t == lastClickedFeld)
-                    stadtFeld.StadtAufFeld.SetzeEinflussRadius();
-                t.textur.BackColor = Color.Gray;
-                t.textur.Image = Properties.Resources.grasstransparent;
-
+                if (feld.StadtAufFeld != null)
+                {
+                    feld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+                }
             }
 
         }
@@ -421,10 +427,13 @@ namespace rbss1
             this.Controls.Add(truppe.Darstellung);
             spielerMax--;
         }
-       public void UpdateUIInfo(Object o)
-       {
-            if (o == null)
+        public void UpdateUIInfo(Object o)
+        {
+            if (o == null) 
+            {
+                
                 return;
+            }
             if (o is Truppe truppe)
             {
                 ItemPB.Image = Properties.Resources.melee;
@@ -439,17 +448,184 @@ namespace rbss1
                 truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
                 titelLabel.Text = stadt.Name;
             }
-            ItemPB.Visible = true;
-            truppenLebenLB.Visible = true;
-            titelLabel.Visible = true;
-            }
-            public void HideUIInfo()
+            ItemPB.Show();
+            truppenLebenLB.Show();
+            titelLabel.Show();
+        }
+        public void HideUIInfo()
+        {
+            ItemPB.Hide();
+            truppenSchadenLB.Hide();
+            truppenLebenLB.Hide();
+            titelLabel.Hide();
+        }
+
+        public void GeneriereStaedte(int felderxMax, int felderyMax)
+        {
+            int stadtabstand = 5;
+            List<Point> platzierteStadtPositionen = new List<Point>();
+
+            for (int spielerIndex = 0; spielerIndex < spielerMax; spielerIndex++)
             {
-                ItemPB.Visible = false;
-                truppenSchadenLB.Visible = false;
-                truppenLebenLB.Visible = false;
-                titelLabel.Visible = false;
+                bool stadtPlatziert = false;
+
+                while (!stadtPlatziert)
+                {
+                    int x = random.Next(0, felderxMax);
+                    int y = random.Next(0, felderyMax);
+
+                    if (felder[x, y].feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen))
+                    {
+
+                        Stadt neueStadt = new Stadt(felder[x, y], felder);
+                        neueStadt.Besitzer = spieler[spielerIndex];
+                        felder[x, y].StadtAufFeld = neueStadt;
+
+                        neueStadt.textur.Location = new Point(felder[x, y].textur.Location.X + 5, felder[x, y].textur.Location.Y + 5);
+                        neueStadt.textur.Tag = neueStadt;
+                        neueStadt.textur.Click += new EventHandler(feld_Click);
+                        neueStadt.SetzeEinflussRadius(spieler, spielerIndex);
+
+                        this.Controls.Add(neueStadt.textur);
+                        neueStadt.textur.BringToFront();
+
+                        platzierteStadtPositionen.Add(new Point(x, y));
+                        stadtPlatziert = true;
+                    }
+                }
             }
         }
+
+        private bool KeineStadtImUmkreis(int x, int y, int abstand, List<Point> platziertePositionen)
+        {
+            foreach (var position in platziertePositionen)
+            {
+                int distanz = Math.Abs(position.X - x) + Math.Abs(position.Y - y);
+                if (distanz < abstand)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        
+
+        private void einnehmen_Click(object sender, EventArgs e)
+        {
+            if(lastClickedFeld != null && !lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex]) 
+            {
+                lastClickedFeld.textur.BackColor = Color.Red;
+                lastClickedFeld.besitzer = spieler[aktuellerSpielerIndex];
+                MessageBox.Show("Auf diesem Feld kann nun eine Stadt gebaut werden!");
+                return;
+            }
+            MessageBox.Show("Hier geht das nicht!");
+            return;
+        }
+
+        private void construction_Click(object sender, EventArgs e)
+        {
+            if(lastClickedFeld == null) 
+            {
+                MessageBox.Show("Wähle Zunächst ein Feld aus!");
+                return;
+            }
+            
+            else if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+            {
+                if (stadtbauen.Visible == true)
+                {
+                    stadtbauen.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Dieses Feld gehört dir nicht!");
+                }
+                return;
+            }
+            if(stadtbauen.Visible == false) 
+            {
+                stadtbauen.Show();
+            }
+            else if(stadtbauen.Visible == true) 
+            {
+                stadtbauen.Hide();
+            }
+            return;
+        }
+
+        private void stadtbauen_Click(object sender, EventArgs e)
+        {
+            if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+            {
+                MessageBox.Show("Dieses Feld gehört dir nicht!");
+                return;
+            }
+            if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.textur.BackColor == spieler[aktuellerSpielerIndex].SpielerFarbe)
+            {
+                MessageBox.Show("Innerhalb eigender Gebiete kann keine weitere Stadt errichtet werden!");
+                return;
+            }
+            List<Point> platzierteStadtPositionen = new List<Point>();
+            int stadtabstand = 5;
+
+            int x = lastClickedFeld.position.X;
+            int y = lastClickedFeld.position.Y;
+
+            if (lastClickedFeld.feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen)) 
+            {
+                Stadt neueStadt = new Stadt(lastClickedFeld, felder);
+                neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
+                lastClickedFeld.StadtAufFeld = neueStadt;
+
+                neueStadt.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
+                neueStadt.textur.Tag = neueStadt;
+                neueStadt.textur.Click += new EventHandler(feld_Click);
+                neueStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+
+                this.Controls.Add(neueStadt.textur);
+                neueStadt.textur.BringToFront();
+
+                platzierteStadtPositionen.Add(new Point(x, y));
+            }
+            return;
+        }
+
+        private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
+        {
+            recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
+        }
+
+        private void recruitSoldiers_MouseLeave(object sender, EventArgs e)
+        {
+            recruitSoldiers.BackgroundImage = Properties.Resources.recruit;
+        }
+
+        private void construction_MouseEnter(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.constructionglow;
+        }
+
+        private void construction_MouseLeave(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.construction;
+        }
+
+        private void recruitSoldiers_Click(object sender, EventArgs e)
+        {
+            if(rekrutiermodus == false) 
+            {
+                rekrutiermodus = true;
+                MessageBox.Show("Du kannst nun ein Feld auswählen, um darin Truppen zu Platzieren!");
+            }
+            else if(rekrutiermodus == true) 
+            {
+                rekrutiermodus = false;
+                MessageBox.Show("Rekrutiermodus ist aus!");
+            }
+            
+        }
     }
+}
 
