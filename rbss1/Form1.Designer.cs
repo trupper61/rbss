@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.anzahlRes = new System.Windows.Forms.Label();
-            this.truppenLebenLB = new System.Windows.Forms.Label();
-            this.truppenSchadenLB = new System.Windows.Forms.Label();
-            this.weiter = new System.Windows.Forms.Button();
-            this.titelLabel = new System.Windows.Forms.Label();
-            this.einnehmen = new System.Windows.Forms.Button();
-            this.stadtbauen = new System.Windows.Forms.Button();
+            this.bewpunktanzeige = new System.Windows.Forms.Label();
             this.geldanzeige = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.recruitSoldiers = new System.Windows.Forms.PictureBox();
+            this.stadtbauen = new System.Windows.Forms.Button();
+            this.einnehmen = new System.Windows.Forms.Button();
             this.construction = new System.Windows.Forms.PictureBox();
+            this.weiter = new System.Windows.Forms.Button();
+            this.titelLabel = new System.Windows.Forms.Label();
             this.ItemPB = new System.Windows.Forms.PictureBox();
+            this.truppenLebenLB = new System.Windows.Forms.Label();
+            this.truppenSchadenLB = new System.Windows.Forms.Label();
+            this.anzahlRes = new System.Windows.Forms.Label();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
-            this.bewpunktanzeige = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
@@ -52,101 +52,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.UI)).BeginInit();
             this.SuspendLayout();
             // 
-            // anzahlRes
+            // bewpunktanzeige
             // 
-            this.anzahlRes.AutoSize = true;
-            this.anzahlRes.BackColor = System.Drawing.Color.Transparent;
-            this.anzahlRes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.anzahlRes.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.anzahlRes.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.anzahlRes.Location = new System.Drawing.Point(847, 426);
-            this.anzahlRes.Name = "anzahlRes";
-            this.anzahlRes.Size = new System.Drawing.Size(45, 15);
-            this.anzahlRes.TabIndex = 2;
-            this.anzahlRes.Text = "Anzahl: ";
-            this.anzahlRes.Visible = false;
-            // 
-            // truppenLebenLB
-            // 
-            this.truppenLebenLB.AutoSize = true;
-            this.truppenLebenLB.BackColor = System.Drawing.Color.Transparent;
-            this.truppenLebenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.truppenLebenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.truppenLebenLB.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.truppenLebenLB.Location = new System.Drawing.Point(925, 157);
-            this.truppenLebenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.truppenLebenLB.Name = "truppenLebenLB";
-            this.truppenLebenLB.Size = new System.Drawing.Size(66, 22);
-            this.truppenLebenLB.TabIndex = 3;
-            this.truppenLebenLB.Text = "Leben:";
-            this.truppenLebenLB.Visible = false;
-            // 
-            // truppenSchadenLB
-            // 
-            this.truppenSchadenLB.AutoSize = true;
-            this.truppenSchadenLB.BackColor = System.Drawing.Color.Transparent;
-            this.truppenSchadenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.truppenSchadenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.truppenSchadenLB.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.truppenSchadenLB.Location = new System.Drawing.Point(925, 213);
-            this.truppenSchadenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.truppenSchadenLB.Name = "truppenSchadenLB";
-            this.truppenSchadenLB.Size = new System.Drawing.Size(87, 22);
-            this.truppenSchadenLB.TabIndex = 4;
-            this.truppenSchadenLB.Text = "Schaden:";
-            this.truppenSchadenLB.Visible = false;
-            // 
-            // weiter
-            // 
-            this.weiter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.weiter.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.weiter.Location = new System.Drawing.Point(686, 12);
-            this.weiter.Name = "weiter";
-            this.weiter.Size = new System.Drawing.Size(102, 23);
-            this.weiter.TabIndex = 5;
-            this.weiter.Text = "Nächste Runde";
-            this.weiter.UseVisualStyleBackColor = true;
-            this.weiter.Click += new System.EventHandler(this.weiter_Click);
-            // 
-            // titelLabel
-            // 
-            this.titelLabel.AutoSize = true;
-            this.titelLabel.BackColor = System.Drawing.Color.Transparent;
-            this.titelLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titelLabel.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.titelLabel.Location = new System.Drawing.Point(925, 102);
-            this.titelLabel.Name = "titelLabel";
-            this.titelLabel.Size = new System.Drawing.Size(37, 19);
-            this.titelLabel.TabIndex = 6;
-            this.titelLabel.Text = "Titel";
-            this.titelLabel.Visible = false;
-            // 
-            // einnehmen
-            // 
-            this.einnehmen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.einnehmen.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.einnehmen.Location = new System.Drawing.Point(739, 334);
-            this.einnehmen.Name = "einnehmen";
-            this.einnehmen.Size = new System.Drawing.Size(170, 23);
-            this.einnehmen.TabIndex = 8;
-            this.einnehmen.Text = "Feld Einnehmen";
-            this.einnehmen.UseVisualStyleBackColor = true;
-            this.einnehmen.Visible = false;
-            this.einnehmen.Click += new System.EventHandler(this.einnehmen_Click);
-            // 
-            // stadtbauen
-            // 
-            this.stadtbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.stadtbauen.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.stadtbauen.Location = new System.Drawing.Point(919, 63);
-            this.stadtbauen.Name = "stadtbauen";
-            this.stadtbauen.Size = new System.Drawing.Size(91, 23);
-            this.stadtbauen.TabIndex = 9;
-            this.stadtbauen.Text = "Stadt Errichten";
-            this.stadtbauen.UseVisualStyleBackColor = true;
-            this.stadtbauen.Visible = false;
-            this.stadtbauen.Click += new System.EventHandler(this.stadtbauen_Click);
+            this.bewpunktanzeige.AutoSize = true;
+            this.bewpunktanzeige.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bewpunktanzeige.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.bewpunktanzeige.Location = new System.Drawing.Point(604, 110);
+            this.bewpunktanzeige.Name = "bewpunktanzeige";
+            this.bewpunktanzeige.Size = new System.Drawing.Size(57, 15);
+            this.bewpunktanzeige.TabIndex = 13;
+            this.bewpunktanzeige.Text = "movpoints";
             // 
             // geldanzeige
             // 
@@ -182,6 +97,32 @@
             this.recruitSoldiers.MouseEnter += new System.EventHandler(this.recruitSoldiers_MouseEnter);
             this.recruitSoldiers.MouseLeave += new System.EventHandler(this.recruitSoldiers_MouseLeave);
             // 
+            // stadtbauen
+            // 
+            this.stadtbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.stadtbauen.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.stadtbauen.Location = new System.Drawing.Point(919, 63);
+            this.stadtbauen.Name = "stadtbauen";
+            this.stadtbauen.Size = new System.Drawing.Size(91, 23);
+            this.stadtbauen.TabIndex = 9;
+            this.stadtbauen.Text = "Stadt Errichten";
+            this.stadtbauen.UseVisualStyleBackColor = true;
+            this.stadtbauen.Visible = false;
+            this.stadtbauen.Click += new System.EventHandler(this.stadtbauen_Click);
+            // 
+            // einnehmen
+            // 
+            this.einnehmen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.einnehmen.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.einnehmen.Location = new System.Drawing.Point(739, 334);
+            this.einnehmen.Name = "einnehmen";
+            this.einnehmen.Size = new System.Drawing.Size(170, 23);
+            this.einnehmen.TabIndex = 8;
+            this.einnehmen.Text = "Feld Einnehmen";
+            this.einnehmen.UseVisualStyleBackColor = true;
+            this.einnehmen.Visible = false;
+            this.einnehmen.Click += new System.EventHandler(this.einnehmen_Click);
+            // 
             // construction
             // 
             this.construction.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("construction.BackgroundImage")));
@@ -195,9 +136,35 @@
             this.construction.MouseEnter += new System.EventHandler(this.construction_MouseEnter);
             this.construction.MouseLeave += new System.EventHandler(this.construction_MouseLeave);
             // 
+            // weiter
+            // 
+            this.weiter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.weiter.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.weiter.Location = new System.Drawing.Point(686, 12);
+            this.weiter.Name = "weiter";
+            this.weiter.Size = new System.Drawing.Size(102, 23);
+            this.weiter.TabIndex = 5;
+            this.weiter.Text = "Nächste Runde";
+            this.weiter.UseVisualStyleBackColor = true;
+            this.weiter.Click += new System.EventHandler(this.weiter_Click);
+            // 
+            // titelLabel
+            // 
+            this.titelLabel.AutoSize = true;
+            this.titelLabel.BackColor = System.Drawing.Color.Transparent;
+            this.titelLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titelLabel.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.titelLabel.Location = new System.Drawing.Point(925, 102);
+            this.titelLabel.Name = "titelLabel";
+            this.titelLabel.Size = new System.Drawing.Size(37, 19);
+            this.titelLabel.TabIndex = 6;
+            this.titelLabel.Text = "Titel";
+            this.titelLabel.Visible = false;
+            // 
             // ItemPB
             // 
-            this.ItemPB.Image = global::rbss1.Properties.Resources.melee;
+            this.ItemPB.Image = global::rbss1.Properties.Resources.melee2;
             this.ItemPB.Location = new System.Drawing.Point(739, 102);
             this.ItemPB.Name = "ItemPB";
             this.ItemPB.Size = new System.Drawing.Size(180, 216);
@@ -205,6 +172,50 @@
             this.ItemPB.TabIndex = 5;
             this.ItemPB.TabStop = false;
             this.ItemPB.Visible = false;
+            // 
+            // truppenLebenLB
+            // 
+            this.truppenLebenLB.AutoSize = true;
+            this.truppenLebenLB.BackColor = System.Drawing.Color.Transparent;
+            this.truppenLebenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.truppenLebenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.truppenLebenLB.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.truppenLebenLB.Location = new System.Drawing.Point(925, 157);
+            this.truppenLebenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.truppenLebenLB.Name = "truppenLebenLB";
+            this.truppenLebenLB.Size = new System.Drawing.Size(66, 22);
+            this.truppenLebenLB.TabIndex = 3;
+            this.truppenLebenLB.Text = "Leben:";
+            this.truppenLebenLB.Visible = false;
+            // 
+            // truppenSchadenLB
+            // 
+            this.truppenSchadenLB.AutoSize = true;
+            this.truppenSchadenLB.BackColor = System.Drawing.Color.Transparent;
+            this.truppenSchadenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.truppenSchadenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.truppenSchadenLB.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.truppenSchadenLB.Location = new System.Drawing.Point(925, 213);
+            this.truppenSchadenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.truppenSchadenLB.Name = "truppenSchadenLB";
+            this.truppenSchadenLB.Size = new System.Drawing.Size(87, 22);
+            this.truppenSchadenLB.TabIndex = 4;
+            this.truppenSchadenLB.Text = "Schaden:";
+            this.truppenSchadenLB.Visible = false;
+            // 
+            // anzahlRes
+            // 
+            this.anzahlRes.AutoSize = true;
+            this.anzahlRes.BackColor = System.Drawing.Color.Transparent;
+            this.anzahlRes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.anzahlRes.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.anzahlRes.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.anzahlRes.Location = new System.Drawing.Point(847, 426);
+            this.anzahlRes.Name = "anzahlRes";
+            this.anzahlRes.Size = new System.Drawing.Size(45, 15);
+            this.anzahlRes.TabIndex = 2;
+            this.anzahlRes.Text = "Anzahl: ";
+            this.anzahlRes.Visible = false;
             // 
             // UIInfo
             // 
@@ -230,17 +241,6 @@
             this.UI.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
-            // 
-            // bewpunktanzeige
-            // 
-            this.bewpunktanzeige.AutoSize = true;
-            this.bewpunktanzeige.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bewpunktanzeige.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.bewpunktanzeige.Location = new System.Drawing.Point(604, 110);
-            this.bewpunktanzeige.Name = "bewpunktanzeige";
-            this.bewpunktanzeige.Size = new System.Drawing.Size(57, 15);
-            this.bewpunktanzeige.TabIndex = 13;
-            this.bewpunktanzeige.Text = "movpoints";
             // 
             // Form1
             // 

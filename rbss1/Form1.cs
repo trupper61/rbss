@@ -462,7 +462,7 @@ namespace rbss1
             }
             if (o is Truppe truppe)
             {
-                ItemPB.Image = Properties.Resources.melee;
+                ItemPB.Image = Properties.Resources.melee2;
                 truppenLebenLB.Text = $"Lebel: {truppe.Leben}";
                 truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
                 titelLabel.Text = truppe.ToString();
