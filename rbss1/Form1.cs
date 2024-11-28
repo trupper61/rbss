@@ -334,10 +334,14 @@ namespace rbss1
                     else 
                     {
                         MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                        selectedTruppe.Darstellung.BackColor = Color.Blue;
+                        selectedTruppe = null;
+                        EntferneBewegungsbereich(null);
                     }
                     UpdateGame(selectedTruppe);
                 }
-                    
+                
+
             }
             if(rekrutiermodus == true) 
             {
@@ -596,7 +600,7 @@ namespace rbss1
 
         private void stadtbauen_Click(object sender, EventArgs e)
         {
-            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1 && spieler[aktuellerSpielerIndex].geld >= 200) 
+            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1 && spieler[aktuellerSpielerIndex].geld >= 200 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null) 
             {
                 if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
                 {
@@ -644,9 +648,13 @@ namespace rbss1
             {
                 MessageBox.Show("Nicht genügend Geld!");
             }
-            else 
+            else if(spieler[aktuellerSpielerIndex].bewegungspunkte <= 1)
             {
                 MessageBox.Show("Nicht genügend Bewegungspunkte!");
+            }
+            else 
+            {
+                MessageBox.Show("Man kann kein Stadt auf dem selben Feld bauen, auf dem eine Truppe steht!");
             }
         }
 
