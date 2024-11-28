@@ -714,6 +714,7 @@ namespace rbss1
             {
                 rescourceinventory.Show();
                 rescourcenlabel.Show();
+                rescourcenlabel.BringToFront();
 
                 eisenInventory.Show(); eisenInventory.BringToFront();
                 eisenAnzahl.Show(); eisenAnzahl.BringToFront();
