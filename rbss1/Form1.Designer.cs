@@ -36,11 +36,15 @@
             this.titelLabel = new System.Windows.Forms.Label();
             this.einnehmen = new System.Windows.Forms.Button();
             this.stadtbauen = new System.Windows.Forms.Button();
+            this.geldanzeige = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.recruitSoldiers = new System.Windows.Forms.PictureBox();
             this.construction = new System.Windows.Forms.PictureBox();
             this.ItemPB = new System.Windows.Forms.PictureBox();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
+            this.bewpunktanzeige = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).BeginInit();
@@ -130,6 +134,27 @@
             this.stadtbauen.Visible = false;
             this.stadtbauen.Click += new System.EventHandler(this.stadtbauen_Click);
             // 
+            // geldanzeige
+            // 
+            this.geldanzeige.AutoSize = true;
+            this.geldanzeige.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.geldanzeige.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.geldanzeige.Location = new System.Drawing.Point(604, 52);
+            this.geldanzeige.Name = "geldanzeige";
+            this.geldanzeige.Size = new System.Drawing.Size(40, 15);
+            this.geldanzeige.TabIndex = 12;
+            this.geldanzeige.Text = "money";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::rbss1.Properties.Resources.data;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(534, -4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(132, 221);
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
             // recruitSoldiers
             // 
             this.recruitSoldiers.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("recruitSoldiers.BackgroundImage")));
@@ -192,12 +217,26 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
+            // bewpunktanzeige
+            // 
+            this.bewpunktanzeige.AutoSize = true;
+            this.bewpunktanzeige.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bewpunktanzeige.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.bewpunktanzeige.Location = new System.Drawing.Point(604, 110);
+            this.bewpunktanzeige.Name = "bewpunktanzeige";
+            this.bewpunktanzeige.Size = new System.Drawing.Size(57, 15);
+            this.bewpunktanzeige.TabIndex = 13;
+            this.bewpunktanzeige.Text = "movpoints";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.bewpunktanzeige);
+            this.Controls.Add(this.geldanzeige);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.recruitSoldiers);
             this.Controls.Add(this.stadtbauen);
             this.Controls.Add(this.einnehmen);
@@ -212,6 +251,7 @@
             this.Controls.Add(this.UI);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).EndInit();
@@ -236,6 +276,9 @@
         private System.Windows.Forms.Button einnehmen;
         private System.Windows.Forms.Button stadtbauen;
         private System.Windows.Forms.PictureBox recruitSoldiers;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label geldanzeige;
+        private System.Windows.Forms.Label bewpunktanzeige;
     }
 }
 

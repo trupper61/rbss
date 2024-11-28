@@ -20,6 +20,7 @@ namespace rbss1
         public Feld[,] felder { get; set; }
         public Feld startFeld { get; set; }
 
+        public int einkommen { get; set; } = 75;
         
         public Stadt(Feld startFeld, Feld[,] felder)
         {

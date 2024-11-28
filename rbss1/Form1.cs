@@ -41,7 +41,7 @@ namespace rbss1
 
             for (int i = 0; i < spielerMax; i++)
             {
-                spieler.Add(new Spieler(null, 0, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256))));
+                spieler.Add(new Spieler(null, 100, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)), null));
             }
 
             if (spieler.Count > 0)
@@ -54,6 +54,7 @@ namespace rbss1
             
 
             MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
+            UIAktualisierung();
         }
         
         public void Feldgenerierung()
@@ -329,16 +330,28 @@ namespace rbss1
             }
             if(rekrutiermodus == true) 
             {
-                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null)
+                Truppe truppe = new Truppe();
+                if (spieler[aktuellerSpielerIndex].geld >= truppe.Preis) 
                 {
-                    Truppe truppe = new Truppe();
-                    lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
-                    truppe.Darstellung.Tag = truppe;
-                    truppe.Darstellung.Click += new EventHandler(feld_Click);
+                    if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null)
+                    {
+
+                        lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
+                        truppe.Darstellung.Tag = truppe;
+                        truppe.Darstellung.Click += new EventHandler(feld_Click);
+
+                        spieler[aktuellerSpielerIndex].geld -= truppe.Preis;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Das geht hier nicht!");
+                    }
                 }
-                else
+                else 
                 {
-                    MessageBox.Show("Das geht hier nicht!");
+                    truppe = null;
+                    MessageBox.Show("Nicht genügend Geld!");
                 }
             }
         }
@@ -394,10 +407,23 @@ namespace rbss1
             {
                 aktuellerSpielerIndex = 0;
                 MessageBox.Show("Neue Runde beginnt");
+
+                //Für jede Stadt, die ein Spieler besitzt, gibt es Einkommen
+
+                foreach (var spieler in spieler)
+                {
+                    // Für jede Stadt des Spielers wird Einkommen hinzugefügt
+                    foreach (Stadt stadt in spieler.staedteBesitz)
+                    {
+                        spieler.geld += stadt.einkommen;
+                    }
+                }
             }
 
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
+
+            UIAktualisierung();
         }
 
         private void weiter_Click(object sender, EventArgs e)
@@ -479,6 +505,7 @@ namespace rbss1
 
                         Stadt neueStadt = new Stadt(felder[x, y], felder);
                         neueStadt.Besitzer = spieler[spielerIndex];
+                        spieler[spielerIndex].staedteBesitz.Add(neueStadt);
                         felder[x, y].StadtAufFeld = neueStadt;
 
                         neueStadt.textur.Location = new Point(felder[x, y].textur.Location.X + 5, felder[x, y].textur.Location.Y + 5);
@@ -577,6 +604,7 @@ namespace rbss1
             {
                 Stadt neueStadt = new Stadt(lastClickedFeld, felder);
                 neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
+                spieler[aktuellerSpielerIndex].staedteBesitz.Add(neueStadt);
                 lastClickedFeld.StadtAufFeld = neueStadt;
 
                 neueStadt.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
@@ -625,6 +653,14 @@ namespace rbss1
                 MessageBox.Show("Rekrutiermodus ist aus!");
             }
             
+        }
+
+        //Aktualiseren der UI-Elemente, welche das Geld und die Bewegungspunkte anzeigen.
+        public void UIAktualisierung() 
+        {
+            
+            geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
+            bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
         }
     }
 }

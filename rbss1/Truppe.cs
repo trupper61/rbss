@@ -16,6 +16,8 @@ namespace rbss1
         public Feld AktuellesFeld { get; private set; }
         public int Leben { get; private set; } = 100;
         public int Schaden { get; private set; } = 25;
+
+        public int Preis { get; private set; } = 100;
         public Truppe()
         {
             Bewegungsreichweite = 2;
