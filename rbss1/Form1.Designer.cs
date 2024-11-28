@@ -56,7 +56,9 @@
             // 
             this.anzahlRes.AutoSize = true;
             this.anzahlRes.BackColor = System.Drawing.Color.Transparent;
+            this.anzahlRes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.anzahlRes.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.anzahlRes.Image = global::rbss1.Properties.Resources.labelbackround;
             this.anzahlRes.Location = new System.Drawing.Point(847, 426);
             this.anzahlRes.Name = "anzahlRes";
             this.anzahlRes.Size = new System.Drawing.Size(45, 15);
@@ -68,11 +70,13 @@
             // 
             this.truppenLebenLB.AutoSize = true;
             this.truppenLebenLB.BackColor = System.Drawing.Color.Transparent;
+            this.truppenLebenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.truppenLebenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.truppenLebenLB.Image = global::rbss1.Properties.Resources.labelbackround;
             this.truppenLebenLB.Location = new System.Drawing.Point(925, 157);
             this.truppenLebenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenLebenLB.Name = "truppenLebenLB";
-            this.truppenLebenLB.Size = new System.Drawing.Size(64, 20);
+            this.truppenLebenLB.Size = new System.Drawing.Size(66, 22);
             this.truppenLebenLB.TabIndex = 3;
             this.truppenLebenLB.Text = "Leben:";
             this.truppenLebenLB.Visible = false;
@@ -81,17 +85,21 @@
             // 
             this.truppenSchadenLB.AutoSize = true;
             this.truppenSchadenLB.BackColor = System.Drawing.Color.Transparent;
+            this.truppenSchadenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.truppenSchadenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.truppenSchadenLB.Image = global::rbss1.Properties.Resources.labelbackround;
             this.truppenSchadenLB.Location = new System.Drawing.Point(925, 213);
             this.truppenSchadenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenSchadenLB.Name = "truppenSchadenLB";
-            this.truppenSchadenLB.Size = new System.Drawing.Size(85, 20);
+            this.truppenSchadenLB.Size = new System.Drawing.Size(87, 22);
             this.truppenSchadenLB.TabIndex = 4;
             this.truppenSchadenLB.Text = "Schaden:";
             this.truppenSchadenLB.Visible = false;
             // 
             // weiter
             // 
+            this.weiter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.weiter.Image = global::rbss1.Properties.Resources.labelbackround;
             this.weiter.Location = new System.Drawing.Point(686, 12);
             this.weiter.Name = "weiter";
             this.weiter.Size = new System.Drawing.Size(102, 23);
@@ -104,16 +112,20 @@
             // 
             this.titelLabel.AutoSize = true;
             this.titelLabel.BackColor = System.Drawing.Color.Transparent;
+            this.titelLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titelLabel.Image = global::rbss1.Properties.Resources.labelbackround;
             this.titelLabel.Location = new System.Drawing.Point(925, 102);
             this.titelLabel.Name = "titelLabel";
-            this.titelLabel.Size = new System.Drawing.Size(35, 17);
+            this.titelLabel.Size = new System.Drawing.Size(37, 19);
             this.titelLabel.TabIndex = 6;
             this.titelLabel.Text = "Titel";
             this.titelLabel.Visible = false;
             // 
             // einnehmen
             // 
+            this.einnehmen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.einnehmen.Image = global::rbss1.Properties.Resources.labelbackround;
             this.einnehmen.Location = new System.Drawing.Point(739, 334);
             this.einnehmen.Name = "einnehmen";
             this.einnehmen.Size = new System.Drawing.Size(170, 23);
@@ -125,6 +137,8 @@
             // 
             // stadtbauen
             // 
+            this.stadtbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.stadtbauen.Image = global::rbss1.Properties.Resources.labelbackround;
             this.stadtbauen.Location = new System.Drawing.Point(919, 63);
             this.stadtbauen.Name = "stadtbauen";
             this.stadtbauen.Size = new System.Drawing.Size(91, 23);
