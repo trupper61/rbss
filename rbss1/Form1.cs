@@ -596,7 +596,7 @@ namespace rbss1
 
         private void stadtbauen_Click(object sender, EventArgs e)
         {
-            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1) 
+            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1 && spieler[aktuellerSpielerIndex].geld >= 200) 
             {
                 if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
                 {
@@ -620,8 +620,7 @@ namespace rbss1
                     neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
                     spieler[aktuellerSpielerIndex].staedteBesitz.Add(neueStadt);
 
-                    spieler[aktuellerSpielerIndex].bewegungspunkte -= 2;
-                    UIAktualisierung();
+                    
 
                     lastClickedFeld.StadtAufFeld = neueStadt;
 
@@ -634,8 +633,16 @@ namespace rbss1
                     neueStadt.textur.BringToFront();
 
                     platzierteStadtPositionen.Add(new Point(x, y));
+
+                    spieler[aktuellerSpielerIndex].bewegungspunkte -= 2;
+                    spieler[aktuellerSpielerIndex].geld -= 200;
+                    UIAktualisierung();
                 }
                 return;
+            }
+            else if(spieler[aktuellerSpielerIndex].geld < 200)
+            {
+                MessageBox.Show("Nicht genügend Geld!");
             }
             else 
             {
