@@ -693,6 +693,39 @@ namespace rbss1
             bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
             momentanerSpieler.Text = $"Spieler {aktuellerSpielerIndex + 1}";
         }
+
+        private void rescourcenFenster_Click(object sender, EventArgs e)
+        {
+            if(rescourceinventory.Visible == true) 
+            {
+                rescourceinventory.Hide();
+                rescourcenlabel.Hide();
+
+                eisenInventory.Hide();
+                eisenAnzahl.Hide();
+                coalInventory.Hide();
+                coalAnzahl.Hide();
+                steelInventory.Hide();
+                steelAnzahl.Hide();
+                wheatInventory.Hide();
+                wheatAnzahl.Hide();
+            }
+            else 
+            {
+                rescourceinventory.Show();
+                rescourcenlabel.Show();
+
+                eisenInventory.Show(); eisenInventory.BringToFront();
+                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+                coalInventory.Show(); coalInventory.BringToFront();
+                coalAnzahl.Show(); coalAnzahl.BringToFront();
+                steelInventory.Show(); steelInventory.BringToFront();
+                steelAnzahl.Show(); steelAnzahl.BringToFront();
+                wheatInventory.Show(); wheatInventory.BringToFront();
+                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+            }
+
+        }
     }
 }
 

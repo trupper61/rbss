@@ -29,6 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.wheatAnzahl = new System.Windows.Forms.Label();
+            this.steelAnzahl = new System.Windows.Forms.Label();
+            this.wheatInventory = new System.Windows.Forms.PictureBox();
+            this.steelInventory = new System.Windows.Forms.PictureBox();
+            this.coalAnzahl = new System.Windows.Forms.Label();
+            this.coalInventory = new System.Windows.Forms.PictureBox();
+            this.eisenAnzahl = new System.Windows.Forms.Label();
+            this.eisenInventory = new System.Windows.Forms.PictureBox();
+            this.rescourcenlabel = new System.Windows.Forms.Label();
+            this.rescourceinventory = new System.Windows.Forms.PictureBox();
+            this.rescourcenFenster = new System.Windows.Forms.PictureBox();
+            this.momentanerSpieler = new System.Windows.Forms.Label();
             this.bewpunktanzeige = new System.Windows.Forms.Label();
             this.geldanzeige = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -44,7 +56,12 @@
             this.anzahlRes = new System.Windows.Forms.Label();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
-            this.momentanerSpieler = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.wheatInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.steelInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coalInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eisenInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rescourceinventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rescourcenFenster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
@@ -52,6 +69,144 @@
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).BeginInit();
             this.SuspendLayout();
+            // 
+            // wheatAnzahl
+            // 
+            this.wheatAnzahl.AutoSize = true;
+            this.wheatAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.wheatAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.wheatAnzahl.Location = new System.Drawing.Point(605, 404);
+            this.wheatAnzahl.Name = "wheatAnzahl";
+            this.wheatAnzahl.Size = new System.Drawing.Size(70, 15);
+            this.wheatAnzahl.TabIndex = 25;
+            this.wheatAnzahl.Text = "Rescourcen:";
+            this.wheatAnzahl.Visible = false;
+            // 
+            // steelAnzahl
+            // 
+            this.steelAnzahl.AutoSize = true;
+            this.steelAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.steelAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.steelAnzahl.Location = new System.Drawing.Point(604, 357);
+            this.steelAnzahl.Name = "steelAnzahl";
+            this.steelAnzahl.Size = new System.Drawing.Size(70, 15);
+            this.steelAnzahl.TabIndex = 24;
+            this.steelAnzahl.Text = "Rescourcen:";
+            this.steelAnzahl.Visible = false;
+            // 
+            // wheatInventory
+            // 
+            this.wheatInventory.BackgroundImage = global::rbss1.Properties.Resources.wheatinventory;
+            this.wheatInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.wheatInventory.Location = new System.Drawing.Point(557, 390);
+            this.wheatInventory.Name = "wheatInventory";
+            this.wheatInventory.Size = new System.Drawing.Size(42, 39);
+            this.wheatInventory.TabIndex = 23;
+            this.wheatInventory.TabStop = false;
+            this.wheatInventory.Visible = false;
+            // 
+            // steelInventory
+            // 
+            this.steelInventory.BackgroundImage = global::rbss1.Properties.Resources.stahlinventory1;
+            this.steelInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.steelInventory.Location = new System.Drawing.Point(557, 345);
+            this.steelInventory.Name = "steelInventory";
+            this.steelInventory.Size = new System.Drawing.Size(42, 39);
+            this.steelInventory.TabIndex = 22;
+            this.steelInventory.TabStop = false;
+            this.steelInventory.Visible = false;
+            // 
+            // coalAnzahl
+            // 
+            this.coalAnzahl.AutoSize = true;
+            this.coalAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.coalAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.coalAnzahl.Location = new System.Drawing.Point(605, 314);
+            this.coalAnzahl.Name = "coalAnzahl";
+            this.coalAnzahl.Size = new System.Drawing.Size(70, 15);
+            this.coalAnzahl.TabIndex = 21;
+            this.coalAnzahl.Text = "Rescourcen:";
+            this.coalAnzahl.Visible = false;
+            // 
+            // coalInventory
+            // 
+            this.coalInventory.BackgroundImage = global::rbss1.Properties.Resources.coalinventory1;
+            this.coalInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.coalInventory.Location = new System.Drawing.Point(557, 300);
+            this.coalInventory.Name = "coalInventory";
+            this.coalInventory.Size = new System.Drawing.Size(42, 39);
+            this.coalInventory.TabIndex = 20;
+            this.coalInventory.TabStop = false;
+            this.coalInventory.Visible = false;
+            // 
+            // eisenAnzahl
+            // 
+            this.eisenAnzahl.AutoSize = true;
+            this.eisenAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.eisenAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.eisenAnzahl.Location = new System.Drawing.Point(605, 266);
+            this.eisenAnzahl.Name = "eisenAnzahl";
+            this.eisenAnzahl.Size = new System.Drawing.Size(70, 15);
+            this.eisenAnzahl.TabIndex = 19;
+            this.eisenAnzahl.Text = "Rescourcen:";
+            this.eisenAnzahl.Visible = false;
+            // 
+            // eisenInventory
+            // 
+            this.eisenInventory.BackgroundImage = global::rbss1.Properties.Resources.ironinventory;
+            this.eisenInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.eisenInventory.Location = new System.Drawing.Point(557, 255);
+            this.eisenInventory.Name = "eisenInventory";
+            this.eisenInventory.Size = new System.Drawing.Size(42, 39);
+            this.eisenInventory.TabIndex = 18;
+            this.eisenInventory.TabStop = false;
+            this.eisenInventory.Visible = false;
+            // 
+            // rescourcenlabel
+            // 
+            this.rescourcenlabel.AutoSize = true;
+            this.rescourcenlabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rescourcenlabel.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.rescourcenlabel.Location = new System.Drawing.Point(574, 229);
+            this.rescourcenlabel.Name = "rescourcenlabel";
+            this.rescourcenlabel.Size = new System.Drawing.Size(70, 15);
+            this.rescourcenlabel.TabIndex = 17;
+            this.rescourcenlabel.Text = "Rescourcen:";
+            this.rescourcenlabel.Visible = false;
+            // 
+            // rescourceinventory
+            // 
+            this.rescourceinventory.BackgroundImage = global::rbss1.Properties.Resources.labelbackround;
+            this.rescourceinventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.rescourceinventory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rescourceinventory.Location = new System.Drawing.Point(534, 213);
+            this.rescourceinventory.Name = "rescourceinventory";
+            this.rescourceinventory.Size = new System.Drawing.Size(132, 253);
+            this.rescourceinventory.TabIndex = 16;
+            this.rescourceinventory.TabStop = false;
+            this.rescourceinventory.Visible = false;
+            // 
+            // rescourcenFenster
+            // 
+            this.rescourcenFenster.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.rescourcenFenster.Location = new System.Drawing.Point(1015, 151);
+            this.rescourcenFenster.Name = "rescourcenFenster";
+            this.rescourcenFenster.Size = new System.Drawing.Size(50, 50);
+            this.rescourcenFenster.TabIndex = 15;
+            this.rescourcenFenster.TabStop = false;
+            this.rescourcenFenster.Click += new System.EventHandler(this.rescourcenFenster_Click);
+            // 
+            // momentanerSpieler
+            // 
+            this.momentanerSpieler.AutoSize = true;
+            this.momentanerSpieler.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.momentanerSpieler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.momentanerSpieler.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.momentanerSpieler.Location = new System.Drawing.Point(590, 157);
+            this.momentanerSpieler.Name = "momentanerSpieler";
+            this.momentanerSpieler.Size = new System.Drawing.Size(103, 15);
+            this.momentanerSpieler.TabIndex = 14;
+            this.momentanerSpieler.Text = "Momentaner Spieler";
             // 
             // bewpunktanzeige
             // 
@@ -243,24 +398,23 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
-            // momentanerSpieler
-            // 
-            this.momentanerSpieler.AutoSize = true;
-            this.momentanerSpieler.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.momentanerSpieler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.momentanerSpieler.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.momentanerSpieler.Location = new System.Drawing.Point(590, 157);
-            this.momentanerSpieler.Name = "momentanerSpieler";
-            this.momentanerSpieler.Size = new System.Drawing.Size(103, 15);
-            this.momentanerSpieler.TabIndex = 14;
-            this.momentanerSpieler.Text = "Momentaner Spieler";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.wheatAnzahl);
+            this.Controls.Add(this.steelAnzahl);
+            this.Controls.Add(this.wheatInventory);
+            this.Controls.Add(this.steelInventory);
+            this.Controls.Add(this.coalAnzahl);
+            this.Controls.Add(this.coalInventory);
+            this.Controls.Add(this.eisenAnzahl);
+            this.Controls.Add(this.eisenInventory);
+            this.Controls.Add(this.rescourcenlabel);
+            this.Controls.Add(this.rescourceinventory);
+            this.Controls.Add(this.rescourcenFenster);
             this.Controls.Add(this.momentanerSpieler);
             this.Controls.Add(this.bewpunktanzeige);
             this.Controls.Add(this.geldanzeige);
@@ -279,6 +433,12 @@
             this.Controls.Add(this.UI);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.wheatInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.steelInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coalInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eisenInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rescourceinventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rescourcenFenster)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).EndInit();
@@ -308,6 +468,17 @@
         private System.Windows.Forms.Label geldanzeige;
         private System.Windows.Forms.Label bewpunktanzeige;
         private System.Windows.Forms.Label momentanerSpieler;
+        private System.Windows.Forms.PictureBox rescourcenFenster;
+        private System.Windows.Forms.PictureBox rescourceinventory;
+        private System.Windows.Forms.Label rescourcenlabel;
+        private System.Windows.Forms.PictureBox eisenInventory;
+        private System.Windows.Forms.Label eisenAnzahl;
+        private System.Windows.Forms.PictureBox coalInventory;
+        private System.Windows.Forms.Label coalAnzahl;
+        private System.Windows.Forms.PictureBox steelInventory;
+        private System.Windows.Forms.PictureBox wheatInventory;
+        private System.Windows.Forms.Label steelAnzahl;
+        private System.Windows.Forms.Label wheatAnzahl;
     }
 }
 
