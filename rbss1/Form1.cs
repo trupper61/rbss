@@ -661,6 +661,7 @@ namespace rbss1
             
             geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
             bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
+            momentanerSpieler.Text = $"Spieler {aktuellerSpielerIndex + 1}";
         }
     }
 }

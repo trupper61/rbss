@@ -44,6 +44,7 @@
             this.anzahlRes = new System.Windows.Forms.Label();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
+            this.momentanerSpieler = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
@@ -242,12 +243,25 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
+            // momentanerSpieler
+            // 
+            this.momentanerSpieler.AutoSize = true;
+            this.momentanerSpieler.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.momentanerSpieler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.momentanerSpieler.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.momentanerSpieler.Location = new System.Drawing.Point(590, 157);
+            this.momentanerSpieler.Name = "momentanerSpieler";
+            this.momentanerSpieler.Size = new System.Drawing.Size(103, 15);
+            this.momentanerSpieler.TabIndex = 14;
+            this.momentanerSpieler.Text = "Momentaner Spieler";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.momentanerSpieler);
             this.Controls.Add(this.bewpunktanzeige);
             this.Controls.Add(this.geldanzeige);
             this.Controls.Add(this.pictureBox1);
@@ -293,6 +307,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label geldanzeige;
         private System.Windows.Forms.Label bewpunktanzeige;
+        private System.Windows.Forms.Label momentanerSpieler;
     }
 }
 
