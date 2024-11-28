@@ -301,32 +301,43 @@ namespace rbss1
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
-                    int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
-                    int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
-                    int zielx = clickedFeld.textur.Location.X / 50;
-                    int ziely = clickedFeld.textur.Location.Y / 50;
-
-                    int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
-
-                    if (distanz > selectedTruppe.Bewegungsreichweite)
+                    if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0) 
                     {
-                        selectedTruppe.Darstellung.BackColor = Color.Blue;
-                        selectedTruppe = null;
-                        lastClickedFeld.textur.BackColor = Color.White;
-                        lastClickedFeld.textur.Image = Properties.Resources.grass;
-                        clickedFeld.textur.BackColor = Color.Gray;
-                        clickedFeld.textur.Image = Properties.Resources.grasstransparent;
-                        return;
-                    }
-                    selectedTruppe.AktuellesFeld.EntferneTruppe();
-                    clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
+                        int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
+                        int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
+                        int zielx = clickedFeld.textur.Location.X / 50;
+                        int ziely = clickedFeld.textur.Location.Y / 50;
 
-                    selectedTruppe.Darstellung.BackColor = Color.Blue;
-                    EntferneBewegungsbereich(null);
-                    selectedTruppe = null;
-                    einnehmen.Hide();
+                        int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
+
+                        if (distanz > selectedTruppe.Bewegungsreichweite)
+                        {
+                            selectedTruppe.Darstellung.BackColor = Color.Blue;
+                            selectedTruppe = null;
+                            lastClickedFeld.textur.BackColor = Color.White;
+                            lastClickedFeld.textur.Image = Properties.Resources.grass;
+                            clickedFeld.textur.BackColor = Color.Gray;
+                            clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                            return;
+                        }
+                        selectedTruppe.AktuellesFeld.EntferneTruppe();
+                        clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
+
+                        spieler[aktuellerSpielerIndex].bewegungspunkte -= 1;
+                        UIAktualisierung();
+
+                        selectedTruppe.Darstellung.BackColor = Color.Blue;
+                        EntferneBewegungsbereich(null);
+                        selectedTruppe = null;
+                        einnehmen.Hide();
+                    }
+                    else 
+                    {
+                        MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                    }
+                    UpdateGame(selectedTruppe);
                 }
-                UpdateGame(selectedTruppe);
+                    
             }
             if(rekrutiermodus == true) 
             {
@@ -416,6 +427,7 @@ namespace rbss1
                     foreach (Stadt stadt in spieler.staedteBesitz)
                     {
                         spieler.geld += stadt.einkommen;
+                        spieler.bewegungspunkte = 3;
                     }
                 }
             }
@@ -584,40 +596,51 @@ namespace rbss1
 
         private void stadtbauen_Click(object sender, EventArgs e)
         {
-            if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1) 
             {
-                MessageBox.Show("Dieses Feld gehört dir nicht!");
+                if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+                {
+                    MessageBox.Show("Dieses Feld gehört dir nicht!");
+                    return;
+                }
+                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.textur.BackColor == spieler[aktuellerSpielerIndex].SpielerFarbe)
+                {
+                    MessageBox.Show("Innerhalb eigender Gebiete kann keine weitere Stadt errichtet werden!");
+                    return;
+                }
+                List<Point> platzierteStadtPositionen = new List<Point>();
+                int stadtabstand = 5;
+
+                int x = lastClickedFeld.position.X;
+                int y = lastClickedFeld.position.Y;
+
+                if (lastClickedFeld.feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen))
+                {
+                    Stadt neueStadt = new Stadt(lastClickedFeld, felder);
+                    neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].staedteBesitz.Add(neueStadt);
+
+                    spieler[aktuellerSpielerIndex].bewegungspunkte -= 2;
+                    UIAktualisierung();
+
+                    lastClickedFeld.StadtAufFeld = neueStadt;
+
+                    neueStadt.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
+                    neueStadt.textur.Tag = neueStadt;
+                    neueStadt.textur.Click += new EventHandler(feld_Click);
+                    neueStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+
+                    this.Controls.Add(neueStadt.textur);
+                    neueStadt.textur.BringToFront();
+
+                    platzierteStadtPositionen.Add(new Point(x, y));
+                }
                 return;
             }
-            if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.textur.BackColor == spieler[aktuellerSpielerIndex].SpielerFarbe)
+            else 
             {
-                MessageBox.Show("Innerhalb eigender Gebiete kann keine weitere Stadt errichtet werden!");
-                return;
+                MessageBox.Show("Nicht genügend Bewegungspunkte!");
             }
-            List<Point> platzierteStadtPositionen = new List<Point>();
-            int stadtabstand = 5;
-
-            int x = lastClickedFeld.position.X;
-            int y = lastClickedFeld.position.Y;
-
-            if (lastClickedFeld.feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen)) 
-            {
-                Stadt neueStadt = new Stadt(lastClickedFeld, felder);
-                neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
-                spieler[aktuellerSpielerIndex].staedteBesitz.Add(neueStadt);
-                lastClickedFeld.StadtAufFeld = neueStadt;
-
-                neueStadt.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
-                neueStadt.textur.Tag = neueStadt;
-                neueStadt.textur.Click += new EventHandler(feld_Click);
-                neueStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
-
-                this.Controls.Add(neueStadt.textur);
-                neueStadt.textur.BringToFront();
-
-                platzierteStadtPositionen.Add(new Point(x, y));
-            }
-            return;
         }
 
         private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
