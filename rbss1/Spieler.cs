@@ -18,10 +18,11 @@ namespace rbss1
 
         public Color SpielerFarbe { get; private set; }
 
-        public Spieler(List<Rescourcen> rescourcenBesitz, int geld, int spielernummer, Color SpielerFarbe, List<Stadt> staedteBesitz) 
+        public Spieler(List<Rescourcen> rescourcenBesitz, int geld, int bewegungspunkte,int spielernummer, Color SpielerFarbe, List<Stadt> staedteBesitz) 
         {
             this.rescourcenBesitz = rescourcenBesitz;
             this.geld = geld;
+            this.bewegungspunkte = bewegungspunkte;
             this.spielernummer = spielernummer;
             this.SpielerFarbe = SpielerFarbe;
             this.staedteBesitz = new List<Stadt>();

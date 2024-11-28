@@ -41,7 +41,7 @@ namespace rbss1
 
             for (int i = 0; i < spielerMax; i++)
             {
-                spieler.Add(new Spieler(null, 100, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)), null));
+                spieler.Add(new Spieler(null, 150, 3, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)), null));
             }
 
             if (spieler.Count > 0)
