@@ -790,26 +790,29 @@ namespace rbss1
             bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
             momentanerSpieler.Text = $"Spieler {aktuellerSpielerIndex + 1}";
 
-            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+            if(rescourceinventory.Visible == true) 
+            {
+                spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
 
-            rescourceinventory.Show();
-            rescourcenlabel.Show();
-            rescourcenlabel.BringToFront();
+                rescourceinventory.Show();
+                rescourcenlabel.Show();
+                rescourcenlabel.BringToFront();
 
-            eisenInventory.Show(); eisenInventory.BringToFront();
-            eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+                eisenInventory.Show(); eisenInventory.BringToFront();
+                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+
+                coalInventory.Show(); coalInventory.BringToFront();
+                coalAnzahl.Show(); coalAnzahl.BringToFront();
+
+                steelInventory.Show(); steelInventory.BringToFront();
+                steelAnzahl.Show(); steelAnzahl.BringToFront();
+
+                wheatInventory.Show(); wheatInventory.BringToFront();
+                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+            }
             eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
-
-            coalInventory.Show(); coalInventory.BringToFront();
-            coalAnzahl.Show(); coalAnzahl.BringToFront();
             coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
-
-            steelInventory.Show(); steelInventory.BringToFront();
-            steelAnzahl.Show(); steelAnzahl.BringToFront();
             steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
-
-            wheatInventory.Show(); wheatInventory.BringToFront();
-            wheatAnzahl.Show(); wheatAnzahl.BringToFront();
             wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
         }
 
@@ -830,6 +833,30 @@ namespace rbss1
                 wheatInventory.Hide();
                 wheatAnzahl.Hide();
             }
+            else 
+            {
+                spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+
+                rescourceinventory.Show();
+                rescourcenlabel.Show();
+                rescourcenlabel.BringToFront();
+
+                eisenInventory.Show(); eisenInventory.BringToFront();
+                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+
+                coalInventory.Show(); coalInventory.BringToFront();
+                coalAnzahl.Show(); coalAnzahl.BringToFront();
+
+                steelInventory.Show(); steelInventory.BringToFront();
+                steelAnzahl.Show(); steelAnzahl.BringToFront();
+
+                wheatInventory.Show(); wheatInventory.BringToFront();
+                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+            }
+            eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
+            coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
+            steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
+            wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
         }
 
         
