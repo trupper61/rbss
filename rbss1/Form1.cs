@@ -18,6 +18,7 @@ namespace rbss1
         private Truppe selectedTruppe = null;
         private Stadt selectedStadt = null;
         private Feld[,] felder;
+        private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
         public int truppenMax = 4;
         public int spielerMax = 4;
@@ -113,14 +114,17 @@ namespace rbss1
                     if (rescourcenEinteilung == 1 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Eisen(10, rescourcenAnzahl);
+                        feld.rescourcen.Eisen = rescourcenAnzahl;
                     }
                     if (rescourcenEinteilung == 2 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Kohle(10, rescourcenAnzahl);
+                        feld.rescourcen.Kohle = rescourcenAnzahl;
                     }
                     if (rescourcenEinteilung == 3 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Weizen(10, rescourcenAnzahl);
+                        feld.rescourcen.Weizen = rescourcenAnzahl;
                     }
 
                     feld.textur.Size = new Size(feldgroesse, feldgroesse);
@@ -130,8 +134,8 @@ namespace rbss1
                     feld.textur.Click += new EventHandler(feld_Click);
 
                     felder[i, j] = feld;
+                    alleFelder.Add(feld);
 
-                    
                     feld.position = new Point(i, j);
 
                     this.Controls.Add(feld.textur);
@@ -255,7 +259,7 @@ namespace rbss1
                             UIInfo.Image = Properties.Resources.UI2weizen;
                             break;
                         default:
-                            UIInfo.Image = Properties.Resources.UI2; // Kein Bild, falls unbekannte Ressource
+                            UIInfo.Image = Properties.Resources.UI2;
                             break;
                     }
                 }
@@ -463,6 +467,7 @@ namespace rbss1
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
+            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
             UIAktualisierung();
         }
 
@@ -728,7 +733,8 @@ namespace rbss1
 
         private void rescourcenFenster_Click(object sender, EventArgs e)
         {
-            if(rescourceinventory.Visible == true) 
+            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+            if (rescourceinventory.Visible == true) 
             {
                 rescourceinventory.Hide();
                 rescourcenlabel.Hide();
@@ -750,12 +756,19 @@ namespace rbss1
 
                 eisenInventory.Show(); eisenInventory.BringToFront();
                 eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+                eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
+
                 coalInventory.Show(); coalInventory.BringToFront();
                 coalAnzahl.Show(); coalAnzahl.BringToFront();
+                coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
+
                 steelInventory.Show(); steelInventory.BringToFront();
                 steelAnzahl.Show(); steelAnzahl.BringToFront();
+                steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
+
                 wheatInventory.Show(); wheatInventory.BringToFront();
                 wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+                wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
             }
 
         }
