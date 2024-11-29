@@ -323,6 +323,16 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap wheat {
+            get {
+                object obj = ResourceManager.GetObject("wheat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap wheatinventory {
             get {
                 object obj = ResourceManager.GetObject("wheatinventory", resourceCulture);

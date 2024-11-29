@@ -42,7 +42,7 @@ namespace rbss1
 
             for (int i = 0; i < spielerMax; i++)
             {
-                spieler.Add(new Spieler(null, 150, 3, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)), null));
+                spieler.Add(new Spieler(null, 150, 3, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)), null, null));
             }
 
             if (spieler.Count > 0)
@@ -455,20 +455,25 @@ namespace rbss1
 
                 foreach (var spieler in spieler)
                 {
+                    spieler.bewegungspunkte = 3;
+
                     // Für jede Stadt des Spielers wird Einkommen hinzugefügt
                     foreach (Stadt stadt in spieler.staedteBesitz)
                     {
                         spieler.geld += stadt.einkommen;
-                        spieler.bewegungspunkte = 3;
                     }
+                    foreach (Farm farm in spieler.farmBesitz) 
+                    {
+                        spieler.rescourcenBesitz.Weizen += farm.weizenEinkommen;
+                    } 
                 }
             }
 
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
-            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
             UIAktualisierung();
+            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
         }
 
         private void weiter_Click(object sender, EventArgs e)
@@ -609,6 +614,7 @@ namespace rbss1
                 if (stadtbauen.Visible == true)
                 {
                     stadtbauen.Hide();
+                    farmbauen.Hide();
                 }
                 else
                 {
@@ -619,10 +625,12 @@ namespace rbss1
             if(stadtbauen.Visible == false) 
             {
                 stadtbauen.Show();
+                farmbauen.Show();
             }
             else if(stadtbauen.Visible == true) 
             {
                 stadtbauen.Hide();
+                farmbauen.Hide();
             }
             return;
         }
@@ -687,6 +695,58 @@ namespace rbss1
             }
         }
 
+        private void farmbauen_Click(object sender, EventArgs e)
+        {
+            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0 && spieler[aktuellerSpielerIndex].geld >= 100 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null)
+            {
+                if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+                {
+                    MessageBox.Show("Dieses Feld gehört dir nicht!");
+                    return;
+                }
+                List<Point> platzierteFarmPositionen = new List<Point>();
+
+                int x = lastClickedFeld.position.X;
+                int y = lastClickedFeld.position.Y;
+
+                if (lastClickedFeld.feldart == "Grass")
+                {
+                    Farm neueFarm = new Farm(lastClickedFeld, felder);
+                    neueFarm.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].farmBesitz.Add(neueFarm);
+
+
+
+                    lastClickedFeld.FarmAufFeld = neueFarm;
+
+                    neueFarm.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
+                    neueFarm.textur.Tag = neueFarm;
+
+                    this.Controls.Add(neueFarm.textur);
+                    neueFarm.textur.BringToFront();
+
+                    platzierteFarmPositionen.Add(new Point(x, y));
+
+                    spieler[aktuellerSpielerIndex].bewegungspunkte -= 1;
+                    spieler[aktuellerSpielerIndex].geld -= 100;
+                    UIAktualisierung();
+                }
+                return;
+            }
+            else if (spieler[aktuellerSpielerIndex].geld < 100)
+            {
+                MessageBox.Show("Nicht genügend Geld!");
+            }
+            else if (spieler[aktuellerSpielerIndex].bewegungspunkte < 1)
+            {
+                MessageBox.Show("Nicht genügend Bewegungspunkte!");
+            }
+            else
+            {
+                MessageBox.Show("Man kann keine Farm auf dem selben Feld bauen, auf dem eine Truppe steht!");
+            }
+
+        }
         private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
         {
             recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
@@ -729,12 +789,34 @@ namespace rbss1
             geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
             bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
             momentanerSpieler.Text = $"Spieler {aktuellerSpielerIndex + 1}";
+
+            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+
+            rescourceinventory.Show();
+            rescourcenlabel.Show();
+            rescourcenlabel.BringToFront();
+
+            eisenInventory.Show(); eisenInventory.BringToFront();
+            eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+            eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
+
+            coalInventory.Show(); coalInventory.BringToFront();
+            coalAnzahl.Show(); coalAnzahl.BringToFront();
+            coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
+
+            steelInventory.Show(); steelInventory.BringToFront();
+            steelAnzahl.Show(); steelAnzahl.BringToFront();
+            steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
+
+            wheatInventory.Show(); wheatInventory.BringToFront();
+            wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+            wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
         }
 
         private void rescourcenFenster_Click(object sender, EventArgs e)
         {
-            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
-            if (rescourceinventory.Visible == true) 
+            UIAktualisierung();
+            if (rescourceinventory.Visible == true)
             {
                 rescourceinventory.Hide();
                 rescourcenlabel.Hide();
@@ -748,30 +830,9 @@ namespace rbss1
                 wheatInventory.Hide();
                 wheatAnzahl.Hide();
             }
-            else 
-            {
-                rescourceinventory.Show();
-                rescourcenlabel.Show();
-                rescourcenlabel.BringToFront();
-
-                eisenInventory.Show(); eisenInventory.BringToFront();
-                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
-                eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
-
-                coalInventory.Show(); coalInventory.BringToFront();
-                coalAnzahl.Show(); coalAnzahl.BringToFront();
-                coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
-
-                steelInventory.Show(); steelInventory.BringToFront();
-                steelAnzahl.Show(); steelAnzahl.BringToFront();
-                steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
-
-                wheatInventory.Show(); wheatInventory.BringToFront();
-                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
-                wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
-            }
-
         }
+
+        
     }
 }
 

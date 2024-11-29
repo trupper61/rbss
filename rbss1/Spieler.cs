@@ -16,17 +16,19 @@ namespace rbss1
         public int spielernummer {  get; set; }
         public bool zugbeendet { get; set; }
         public List<Stadt> staedteBesitz { get; set; }
+        public List<Farm> farmBesitz { get; set; }
 
         public Color SpielerFarbe { get; private set; }
 
-        public Spieler(Rescourcen rescourcenBesitz, int geld, int bewegungspunkte,int spielernummer, Color SpielerFarbe, List<Stadt> staedteBesitz) 
+        public Spieler(Rescourcen rescourcenBesitz, int geld, int bewegungspunkte,int spielernummer, Color SpielerFarbe, List<Stadt> staedteBesitz, List<Farm> farmBesitz) 
         {
-            this.rescourcenBesitz = rescourcenBesitz;
+            this.rescourcenBesitz = new Rescourcen();
             this.geld = geld;
             this.bewegungspunkte = bewegungspunkte;
             this.spielernummer = spielernummer;
             this.SpielerFarbe = SpielerFarbe;
             this.staedteBesitz = new List<Stadt>();
+            this.farmBesitz = new List<Farm>();
             zugbeendet = false;
         }
 

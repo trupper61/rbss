@@ -56,6 +56,7 @@
             this.anzahlRes = new System.Windows.Forms.Label();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
+            this.farmbauen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.wheatInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steelInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.coalInventory)).BeginInit();
@@ -398,12 +399,26 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
+            // farmbauen
+            // 
+            this.farmbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.farmbauen.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.farmbauen.Location = new System.Drawing.Point(822, 63);
+            this.farmbauen.Name = "farmbauen";
+            this.farmbauen.Size = new System.Drawing.Size(91, 23);
+            this.farmbauen.TabIndex = 26;
+            this.farmbauen.Text = "Farm Errichten";
+            this.farmbauen.UseVisualStyleBackColor = true;
+            this.farmbauen.Visible = false;
+            this.farmbauen.Click += new System.EventHandler(this.farmbauen_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.farmbauen);
             this.Controls.Add(this.wheatAnzahl);
             this.Controls.Add(this.steelAnzahl);
             this.Controls.Add(this.wheatInventory);
@@ -479,6 +494,7 @@
         private System.Windows.Forms.PictureBox wheatInventory;
         private System.Windows.Forms.Label steelAnzahl;
         private System.Windows.Forms.Label wheatAnzahl;
+        private System.Windows.Forms.Button farmbauen;
     }
 }
 
