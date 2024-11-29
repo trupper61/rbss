@@ -74,7 +74,7 @@ namespace rbss1
                 {
                     Feld feld = new Feld();
 
-                    int rescourcenEinteilung = rescourcen.Next(0, 2);
+                    int rescourcenEinteilung = rescourcen.Next(0, 6);
                     int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
 
                     if (wasserMax > 0 && random.Next(1, 100) < 10 || durchlauefe > 0)
@@ -113,6 +113,14 @@ namespace rbss1
                     if (rescourcenEinteilung == 1 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Eisen(10, rescourcenAnzahl);
+                    }
+                    if (rescourcenEinteilung == 2 && feld.feldart == "Grass")
+                    {
+                        feld.rescourcen = new Kohle(10, rescourcenAnzahl);
+                    }
+                    if (rescourcenEinteilung == 3 && feld.feldart == "Grass")
+                    {
+                        feld.rescourcen = new Weizen(10, rescourcenAnzahl);
                     }
 
                     feld.textur.Size = new Size(feldgroesse, feldgroesse);
@@ -234,6 +242,22 @@ namespace rbss1
                     anzahlRes.Show();
                     anzahlRes.Text = clickedFeld.rescourcen.ToString();
                     anzahlRes.BringToFront();
+
+                    switch (clickedFeld.rescourcen.name)
+                    {
+                        case "Eisen":
+                            UIInfo.Image = Properties.Resources.UI2eisen;
+                            break;
+                        case "Kohle":
+                            UIInfo.Image = Properties.Resources.UI2kohle;
+                            break;
+                        case "Weizen":
+                            UIInfo.Image = Properties.Resources.UI2weizen;
+                            break;
+                        default:
+                            UIInfo.Image = Properties.Resources.UI2; // Kein Bild, falls unbekannte Ressource
+                            break;
+                    }
                 }
                 else
                 {

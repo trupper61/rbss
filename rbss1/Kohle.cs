@@ -9,7 +9,7 @@ namespace rbss1
     internal class Kohle : Rescourcen
     {
         public Kohle(int wert, int anzahl)
-            : base(wert, anzahl)
+            : base(wert, anzahl, "Kohle")
         {
 
         }

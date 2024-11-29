@@ -8,12 +8,15 @@ namespace rbss1
 {
     public class Rescourcen
     {
-        private int wert {  get; set; }
-        private int anzahl { get; set; }
-        public Rescourcen(int wert, int anzahl) 
+        public int wert {  get; set; }
+        public int anzahl { get; set; }
+
+        public string name { get; set; }
+        public Rescourcen(int wert, int anzahl, string name) 
         {
             this.wert = wert;
             this.anzahl = anzahl;
+            this.name = name;
         }
 
         public override string ToString()

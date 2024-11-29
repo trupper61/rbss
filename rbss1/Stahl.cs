@@ -8,8 +8,8 @@ namespace rbss1
 {
     internal class Stahl : Rescourcen
     {
-        public Stahl(int wert, int anzahl)
-            : base(wert, anzahl)
+        public Stahl(int wert, int anzahl) 
+            : base(wert, anzahl, "Stahl")
         {
 
         }

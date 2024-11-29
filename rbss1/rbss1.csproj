@@ -155,5 +155,11 @@
   <ItemGroup>
     <None Include="assets\wheatinventory.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\UI2kohle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\UI2weizen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

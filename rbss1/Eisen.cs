@@ -9,7 +9,7 @@ namespace rbss1
     internal class Eisen : Rescourcen
     {
         public Eisen(int wert, int anzahl) 
-            : base(wert, anzahl)
+            : base(wert, anzahl, "Eisen")
         {
 
         }
