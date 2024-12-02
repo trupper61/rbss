@@ -8,7 +8,7 @@ namespace rbss1
 {
     internal class Weizen : Rescourcen
     {
-        public Weizen(int wert, int anzahl) 
+        public Weizen(int wert, int anzahl)
             : base(wert, anzahl, "Weizen")
         {
 

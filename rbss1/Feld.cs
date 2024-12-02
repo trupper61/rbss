@@ -42,9 +42,7 @@ namespace rbss1
             {
                 textur.Parent.Controls.Add(truppe.textur);
             }
-
             truppe.textur.BringToFront();
-
         }
         public void EntferneTruppe()
         {
@@ -54,10 +52,8 @@ namespace rbss1
                 {
                     TruppeAufFeld.textur.Parent.Controls.Remove(TruppeAufFeld.textur);
                 }
-
                 TruppeAufFeld = null;
             }
         }
-
     }
 }

@@ -68,7 +68,6 @@
     <Compile Include="Rescourcen.cs" />
     <Compile Include="Spieler.cs" />
     <Compile Include="Stadt.cs" />
-    <Compile Include="Stahl.cs" />
     <Compile Include="Truppe.cs" />
     <Compile Include="Weizen.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -133,36 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ranged_character.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\data.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\labelbackround.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\melee2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\ironinventory.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\coalinventory.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\stahlinventory.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\wheatinventory.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\UI2kohle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\UI2weizen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\wheat.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
