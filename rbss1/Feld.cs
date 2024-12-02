@@ -33,25 +33,26 @@ namespace rbss1
             truppe.Besitzer = spieler;
             TruppeAufFeld = truppe;
             truppe.SetzeFeld(this);
-            int x = (textur.Width - truppe.Darstellung.Width) / 2;
-            int y = (textur.Height - truppe.Darstellung.Height) / 2;
-            truppe.Darstellung.Location = new Point(textur.Location.X + x, textur.Location.Y + y);
+            spieler.truppen.Add(truppe);
+            int x = (textur.Width - truppe.textur.Width) / 2;
+            int y = (textur.Height - truppe.textur.Height) / 2;
+            truppe.textur.Location = new Point(textur.Location.X + x, textur.Location.Y + y);
 
-            if (!textur.Parent.Controls.Contains(truppe.Darstellung))
+            if (!textur.Parent.Controls.Contains(truppe.textur))
             {
-                textur.Parent.Controls.Add(truppe.Darstellung);
+                textur.Parent.Controls.Add(truppe.textur);
             }
 
-            truppe.Darstellung.BringToFront();
+            truppe.textur.BringToFront();
 
         }
         public void EntferneTruppe()
         {
             if (TruppeAufFeld != null)
             {
-                if (TruppeAufFeld.Darstellung.Parent != null)
+                if (TruppeAufFeld.textur.Parent != null)
                 {
-                    TruppeAufFeld.Darstellung.Parent.Controls.Remove(TruppeAufFeld.Darstellung);
+                    TruppeAufFeld.textur.Parent.Controls.Remove(TruppeAufFeld.textur);
                 }
 
                 TruppeAufFeld = null;

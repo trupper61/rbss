@@ -8,39 +8,29 @@ using System.Windows.Forms;
 
 namespace rbss1
 {
-    public class Truppe
+    public abstract class Truppe
     {
         public Spieler Besitzer {  get; set; }
-        public int Bewegungsreichweite { get; private set; }
-        public PictureBox Darstellung { get; private set; }
-        public Feld AktuellesFeld { get; private set; }
-        public int Leben { get; private set; } = 100;
-        public int Schaden { get; private set; } = 25;
-
         public int Preis { get; private set; } = 100;
+        public int Bewegungsreichweite { get;  set; }
+        public PictureBox textur { get;  set; }
+        public Feld AktuellesFeld { get; set; }
+        public int Leben { get; set; }
+        public int Schaden { get; set; }
         public Truppe()
         {
-            Bewegungsreichweite = 2;
-            Darstellung = new PictureBox
+            Leben = 100;
+            textur = new PictureBox
             {
-                Size = new Size(40, 40),
-                BackColor = Color.Blue
+                Size = new Size(50, 50),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                BackgroundImage = Properties.Resources.grasstransparent
             };
         }
         public void SetzeFeld(Feld neuesFeld)
         {
             AktuellesFeld = neuesFeld;
-        }
-        public void Angreifen(Truppe targetTruppe)
-        {
-            if (targetTruppe == null) return;
-
-            targetTruppe.Leben -= this.Schaden;
-
-            if (targetTruppe.Leben <= 0)
-            {
-                targetTruppe.EntferneTruppe();
-            }
+            textur.BackColor = Besitzer.SpielerFarbe;
         }
         public void EntferneTruppe()
         {
@@ -48,11 +38,10 @@ namespace rbss1
             {
                 AktuellesFeld.EntferneTruppe();
             }
-            Darstellung.Hide();
+            textur.Hide();
+            Besitzer.truppen.Remove(this);
         }
-        public override string ToString()
-        {
-            return "Nahkampftrupp";
-        }
+        public abstract override string ToString();
+        public abstract void Angreifen(Truppe targetTruppe);
     }
 }

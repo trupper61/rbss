@@ -55,7 +55,7 @@
             this.truppenSchadenLB = new System.Windows.Forms.Label();
             this.anzahlRes = new System.Windows.Forms.Label();
             this.UIInfo = new System.Windows.Forms.PictureBox();
-            this.UI = new System.Windows.Forms.PictureBox();
+            this.UI = new System.Windows.Forms.PictureBox
             this.farmbauen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.wheatInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steelInventory)).BeginInit();
@@ -64,6 +64,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.rescourceinventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rescourcenFenster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.truppeComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSoldiers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.construction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).BeginInit();
@@ -82,6 +84,16 @@
             this.wheatAnzahl.TabIndex = 25;
             this.wheatAnzahl.Text = "Rescourcen:";
             this.wheatAnzahl.Visible = false;
+            this.anzahlRes.AutoSize = true;
+            this.anzahlRes.BackColor = System.Drawing.Color.Transparent;
+            this.anzahlRes.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.anzahlRes.Location = new System.Drawing.Point(1129, 524);
+            this.anzahlRes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.anzahlRes.Name = "anzahlRes";
+            this.anzahlRes.Size = new System.Drawing.Size(53, 17);
+            this.anzahlRes.TabIndex = 2;
+            this.anzahlRes.Text = "Anzahl: ";
+            this.anzahlRes.Visible = false;
             // 
             // steelAnzahl
             // 
@@ -94,6 +106,15 @@
             this.steelAnzahl.TabIndex = 24;
             this.steelAnzahl.Text = "Rescourcen:";
             this.steelAnzahl.Visible = false;
+            this.truppenLebenLB.AutoSize = true;
+            this.truppenLebenLB.BackColor = System.Drawing.Color.Transparent;
+            this.truppenLebenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.truppenLebenLB.Location = new System.Drawing.Point(1233, 193);
+            this.truppenLebenLB.Name = "truppenLebenLB";
+            this.truppenLebenLB.Size = new System.Drawing.Size(79, 25);
+            this.truppenLebenLB.TabIndex = 3;
+            this.truppenLebenLB.Text = "Leben:";
+            this.truppenLebenLB.Visible = false;
             // 
             // wheatInventory
             // 
@@ -105,6 +126,15 @@
             this.wheatInventory.TabIndex = 23;
             this.wheatInventory.TabStop = false;
             this.wheatInventory.Visible = false;
+            this.truppenSchadenLB.AutoSize = true;
+            this.truppenSchadenLB.BackColor = System.Drawing.Color.Transparent;
+            this.truppenSchadenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.truppenSchadenLB.Location = new System.Drawing.Point(1233, 262);
+            this.truppenSchadenLB.Name = "truppenSchadenLB";
+            this.truppenSchadenLB.Size = new System.Drawing.Size(105, 25);
+            this.truppenSchadenLB.TabIndex = 4;
+            this.truppenSchadenLB.Text = "Schaden:";
+            this.truppenSchadenLB.Visible = false;
             // 
             // steelInventory
             // 
@@ -116,6 +146,14 @@
             this.steelInventory.TabIndex = 22;
             this.steelInventory.TabStop = false;
             this.steelInventory.Visible = false;
+            this.weiter.Location = new System.Drawing.Point(915, 15);
+            this.weiter.Margin = new System.Windows.Forms.Padding(4);
+            this.weiter.Name = "weiter";
+            this.weiter.Size = new System.Drawing.Size(136, 28);
+            this.weiter.TabIndex = 5;
+            this.weiter.Text = "Nächste Runde";
+            this.weiter.UseVisualStyleBackColor = true;
+            this.weiter.Click += new System.EventHandler(this.weiter_Click);
             // 
             // coalAnzahl
             // 
@@ -128,6 +166,16 @@
             this.coalAnzahl.TabIndex = 21;
             this.coalAnzahl.Text = "Rescourcen:";
             this.coalAnzahl.Visible = false;
+            this.titelLabel.AutoSize = true;
+            this.titelLabel.BackColor = System.Drawing.Color.Transparent;
+            this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titelLabel.Location = new System.Drawing.Point(1233, 126);
+            this.titelLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.titelLabel.Name = "titelLabel";
+            this.titelLabel.Size = new System.Drawing.Size(41, 20);
+            this.titelLabel.TabIndex = 6;
+            this.titelLabel.Text = "Titel";
+            this.titelLabel.Visible = false;
             // 
             // coalInventory
             // 
@@ -139,6 +187,15 @@
             this.coalInventory.TabIndex = 20;
             this.coalInventory.TabStop = false;
             this.coalInventory.Visible = false;
+            this.einnehmen.Location = new System.Drawing.Point(985, 411);
+            this.einnehmen.Margin = new System.Windows.Forms.Padding(4);
+            this.einnehmen.Name = "einnehmen";
+            this.einnehmen.Size = new System.Drawing.Size(227, 28);
+            this.einnehmen.TabIndex = 8;
+            this.einnehmen.Text = "Feld Einnehmen";
+            this.einnehmen.UseVisualStyleBackColor = true;
+            this.einnehmen.Visible = false;
+            this.einnehmen.Click += new System.EventHandler(this.einnehmen_Click);
             // 
             // eisenAnzahl
             // 
@@ -240,14 +297,24 @@
             this.pictureBox1.Size = new System.Drawing.Size(132, 221);
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
+            this.stadtbauen.Location = new System.Drawing.Point(1225, 78);
+            this.stadtbauen.Margin = new System.Windows.Forms.Padding(4);
+            this.stadtbauen.Name = "stadtbauen";
+            this.stadtbauen.Size = new System.Drawing.Size(121, 28);
+            this.stadtbauen.TabIndex = 9;
+            this.stadtbauen.Text = "Stadt Errichten";
+            this.stadtbauen.UseVisualStyleBackColor = true;
+            this.stadtbauen.Visible = false;
+            this.stadtbauen.Click += new System.EventHandler(this.stadtbauen_Click);
             // 
             // recruitSoldiers
             // 
             this.recruitSoldiers.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("recruitSoldiers.BackgroundImage")));
             this.recruitSoldiers.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.recruitSoldiers.Location = new System.Drawing.Point(1015, 102);
+            this.recruitSoldiers.Location = new System.Drawing.Point(1353, 126);
+            this.recruitSoldiers.Margin = new System.Windows.Forms.Padding(4);
             this.recruitSoldiers.Name = "recruitSoldiers";
-            this.recruitSoldiers.Size = new System.Drawing.Size(50, 50);
+            this.recruitSoldiers.Size = new System.Drawing.Size(67, 62);
             this.recruitSoldiers.TabIndex = 10;
             this.recruitSoldiers.TabStop = false;
             this.recruitSoldiers.Click += new System.EventHandler(this.recruitSoldiers_Click);
@@ -284,9 +351,10 @@
             // 
             this.construction.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("construction.BackgroundImage")));
             this.construction.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.construction.Location = new System.Drawing.Point(1015, 52);
+            this.construction.Location = new System.Drawing.Point(1353, 64);
+            this.construction.Margin = new System.Windows.Forms.Padding(4);
             this.construction.Name = "construction";
-            this.construction.Size = new System.Drawing.Size(50, 50);
+            this.construction.Size = new System.Drawing.Size(67, 62);
             this.construction.TabIndex = 7;
             this.construction.TabStop = false;
             this.construction.Click += new System.EventHandler(this.construction_Click);
@@ -321,10 +389,11 @@
             // 
             // ItemPB
             // 
-            this.ItemPB.Image = global::rbss1.Properties.Resources.melee2;
-            this.ItemPB.Location = new System.Drawing.Point(739, 102);
+            this.ItemPB.Image = global::rbss1.Properties.Resources.ranged;
+            this.ItemPB.Location = new System.Drawing.Point(972, 126);
+            this.ItemPB.Margin = new System.Windows.Forms.Padding(4);
             this.ItemPB.Name = "ItemPB";
-            this.ItemPB.Size = new System.Drawing.Size(180, 216);
+            this.ItemPB.Size = new System.Drawing.Size(240, 264);
             this.ItemPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ItemPB.TabIndex = 5;
             this.ItemPB.TabStop = false;
@@ -378,10 +447,10 @@
             // 
             this.UIInfo.BackColor = System.Drawing.Color.Transparent;
             this.UIInfo.Image = global::rbss1.Properties.Resources.UI2eisen;
-            this.UIInfo.Location = new System.Drawing.Point(777, 426);
-            this.UIInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.UIInfo.Location = new System.Drawing.Point(1036, 524);
+            this.UIInfo.Margin = new System.Windows.Forms.Padding(5);
             this.UIInfo.Name = "UIInfo";
-            this.UIInfo.Size = new System.Drawing.Size(288, 94);
+            this.UIInfo.Size = new System.Drawing.Size(384, 116);
             this.UIInfo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UIInfo.TabIndex = 1;
             this.UIInfo.TabStop = false;
@@ -391,10 +460,10 @@
             // 
             this.UI.BackColor = System.Drawing.Color.Transparent;
             this.UI.Image = global::rbss1.Properties.Resources.UI1;
-            this.UI.Location = new System.Drawing.Point(663, -4);
-            this.UI.Margin = new System.Windows.Forms.Padding(4);
+            this.UI.Location = new System.Drawing.Point(884, -5);
+            this.UI.Margin = new System.Windows.Forms.Padding(5);
             this.UI.Name = "UI";
-            this.UI.Size = new System.Drawing.Size(435, 572);
+            this.UI.Size = new System.Drawing.Size(580, 704);
             this.UI.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
@@ -411,10 +480,17 @@
             this.farmbauen.UseVisualStyleBackColor = true;
             this.farmbauen.Visible = false;
             this.farmbauen.Click += new System.EventHandler(this.farmbauen_Click);
+            // truppeComboBox
+            // 
+            this.truppeComboBox.FormattingEnabled = true;
+            this.truppeComboBox.Location = new System.Drawing.Point(1036, 78);
+            this.truppeComboBox.Name = "truppeComboBox";
+            this.truppeComboBox.Size = new System.Drawing.Size(121, 24);
+            this.truppeComboBox.TabIndex = 11;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 554);
@@ -434,6 +510,7 @@
             this.Controls.Add(this.bewpunktanzeige);
             this.Controls.Add(this.geldanzeige);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.truppeComboBox);
             this.Controls.Add(this.recruitSoldiers);
             this.Controls.Add(this.stadtbauen);
             this.Controls.Add(this.einnehmen);
@@ -446,6 +523,7 @@
             this.Controls.Add(this.anzahlRes);
             this.Controls.Add(this.UIInfo);
             this.Controls.Add(this.UI);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.wheatInventory)).EndInit();
@@ -495,6 +573,8 @@
         private System.Windows.Forms.Label steelAnzahl;
         private System.Windows.Forms.Label wheatAnzahl;
         private System.Windows.Forms.Button farmbauen;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ComboBox truppeComboBox;
     }
 }
 
