@@ -121,7 +121,7 @@
   <data name="recruitSoldiers.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAADL1t+KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAA/7JJREFUeF6M/eV/HMu6pYt6mm1ZssBiZmZmZmZmlixZMlu2JRllWWacuJj2Xrv7
+        vAAADrwBlbxySQAA/7JJREFUeF6M/eV/HMu6pYt6mm1ZssBiZmZmZmZmlixZMlu2JRllWWacuJj2Xrv7
         nNP3frj/3bjPm1XlqQW7T394fhEZGRkZmZUZ4x1JdeL++qruzw/r07UBfd3s1KeNDn1aa9X7lWa9WWyE
         GijX64UyHS2U6OV8kV7OFOrlVIEej2RqpytBO92JDveNniSHe91putOZqZttabrRkqLtZiNZ18lfrYvX
         ak20lisjtVAWrtmiUE3lh2imMExzxRGaKQnXVGG4xvPDNJwZrKGMIA1lhWo0O1xjOZGkURrLjtZojhHr
@@ -17443,4 +17443,7 @@
         ivmdqOPZaKsMWD3tXUlOjv0PIRVaN/Uo0h0AAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

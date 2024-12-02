@@ -48,12 +48,14 @@
   <ItemGroup>
     <Compile Include="Eisen.cs" />
     <Compile Include="Feld.cs" />
+    <Compile Include="Fernkaempfer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Nahkaempfer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -120,16 +122,13 @@
     <None Include="Resources\melee.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\construction.png" />
+    <None Include="Resources\melee_character.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\constructionglow.png" />
+    <None Include="Resources\ranged.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\recruit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\recruitglow.png" />
+    <None Include="Resources\ranged_character.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,6 +13,7 @@ namespace rbss1
         public int geld {  get; set; }
         public int spielernummer {  get; set; }
         public bool zugbeendet { get; set; }
+        public List<Truppe> truppen { get; set; }
 
         public Color SpielerFarbe { get; private set; }
 
@@ -23,6 +24,7 @@ namespace rbss1
             this.spielernummer = spielernummer;
             this.SpielerFarbe = SpielerFarbe;
             zugbeendet = false;
+            truppen = new List<Truppe>();
         }
 
         

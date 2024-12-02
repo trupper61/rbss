@@ -21,6 +21,7 @@ namespace rbss1
         public bool rekrutiermodus = false;
         public int truppenMax = 4;
         public int spielerMax = 4;
+        public string truppeZumErstellen;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
@@ -50,8 +51,7 @@ namespace rbss1
             }
 
             Feldgenerierung();
-
-            
+            InitialisiereComboBox();
 
             MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
         }
@@ -180,7 +180,6 @@ namespace rbss1
                 if (selectedTruppe == null)
                 {
                     selectedTruppe = clickedTruppe;
-                    clickedTruppe.Darstellung.BackColor = Color.LightBlue;
                     MakiereBewegungsreichweite(selectedTruppe);
 
                     if (lastClickedFeld != null)
@@ -195,7 +194,6 @@ namespace rbss1
                 {
                     EntferneBewegungsbereich(null);
                     selectedTruppe = null;
-                    clickedTruppe.Darstellung.BackColor = Color.Blue;
 
                     UpdateUIInfo(clickedTruppe);
                     truppenLebenLB.Hide();
@@ -213,8 +211,6 @@ namespace rbss1
                 if(clickedStadt != null && clickedStadt.Besitzer == aktuellerSpieler) 
                 {
                     UpdateUIInfo(clickedStadt);
-
-                    //clickedStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
 
                     selectedTruppe = null;
                     EntferneBewegungsbereich(null);
@@ -309,7 +305,6 @@ namespace rbss1
 
                     if (distanz > selectedTruppe.Bewegungsreichweite)
                     {
-                        selectedTruppe.Darstellung.BackColor = Color.Blue;
                         selectedTruppe = null;
                         lastClickedFeld.textur.BackColor = Color.White;
                         lastClickedFeld.textur.Image = Properties.Resources.grass;
@@ -320,7 +315,6 @@ namespace rbss1
                     selectedTruppe.AktuellesFeld.EntferneTruppe();
                     clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
 
-                    selectedTruppe.Darstellung.BackColor = Color.Blue;
                     EntferneBewegungsbereich(null);
                     selectedTruppe = null;
                     einnehmen.Hide();
@@ -329,12 +323,22 @@ namespace rbss1
             }
             if(rekrutiermodus == true) 
             {
-                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null)
+                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
                 {
-                    Truppe truppe = new Truppe();
-                    lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
-                    truppe.Darstellung.Tag = truppe;
-                    truppe.Darstellung.Click += new EventHandler(feld_Click);
+                    if (truppeZumErstellen == "Nahkämpfer")
+                    {
+                        Nahkaempfer truppe = new Nahkaempfer();
+                        lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
+                        truppe.textur.Tag = truppe;
+                        truppe.textur.Click += new EventHandler(feld_Click);
+                    }
+                    else if (truppeZumErstellen == "Fernkämpfer")
+                    {
+                        Fernkaempfer truppe = new Fernkaempfer();
+                        lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
+                        truppe.textur.Tag = truppe;
+                        truppe.textur.Click += new EventHandler(feld_Click);
+                    }
                 }
                 else
                 {
@@ -420,11 +424,12 @@ namespace rbss1
 
         public void TruppenPlatzierung(int i, int j)
         {
-            Truppe truppe = new Truppe();
+            Nahkaempfer truppe = new Nahkaempfer();
             felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, 2)]);
-            truppe.Darstellung.Tag = truppe;
-            truppe.Darstellung.Click += new EventHandler(feld_Click);
-            this.Controls.Add(truppe.Darstellung);
+            truppe.textur.Tag = truppe;
+            
+            truppe.textur.Click += new EventHandler(feld_Click);
+            this.Controls.Add(truppe.textur);
             spielerMax--;
         }
         public void UpdateUIInfo(Object o)
@@ -436,7 +441,10 @@ namespace rbss1
             }
             if (o is Truppe truppe)
             {
-                ItemPB.Image = Properties.Resources.melee;
+                if (truppe is Nahkaempfer)
+                    ItemPB.Image = Properties.Resources.melee;
+                else if (truppe is Fernkaempfer)
+                    ItemPB.Image = Properties.Resources.ranged;
                 truppenLebenLB.Text = $"Lebel: {truppe.Leben}";
                 truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
                 titelLabel.Text = truppe.ToString();
@@ -616,15 +624,43 @@ namespace rbss1
         {
             if(rekrutiermodus == false) 
             {
+                truppeComboBox.Visible = true;
                 rekrutiermodus = true;
                 MessageBox.Show("Du kannst nun ein Feld auswählen, um darin Truppen zu Platzieren!");
             }
             else if(rekrutiermodus == true) 
             {
+                truppeComboBox.Visible = false;
                 rekrutiermodus = false;
                 MessageBox.Show("Rekrutiermodus ist aus!");
             }
             
+        }
+
+        private void ItemPB_Click(object sender, EventArgs e)
+        {
+
+        }
+        public void InitialisiereComboBox()
+        {
+            
+            truppeComboBox.Items.Add(new { Typ = "Nahkämpfer" });
+            truppeComboBox.Items.Add(new { Typ = "Fernkämpfer" });
+            truppeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            truppeComboBox.Size = new Size(150, 30);
+            truppeComboBox.Location = new Point(10, 50);
+            truppeComboBox.SelectedIndexChanged += TruppenComboBox_SelectedIndexChanged;
+        }
+        public void TruppenComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox combobox = sender as ComboBox;
+            if (combobox.SelectedItem != null)
+            {
+                var selectedTruppe = combobox.SelectedItem as dynamic;
+                string truppeTyp = selectedTruppe.Typ;
+                truppeZumErstellen = truppeTyp;
+            }
+             
         }
     }
 }
