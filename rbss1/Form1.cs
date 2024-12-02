@@ -469,6 +469,16 @@ namespace rbss1
                     {
                         feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                     }
+                    if(feld.rescourcen.Weizen != 0) 
+                    {
+                        foreach(var spieler in spieler) 
+                        {
+                            foreach(Stadt stadt in spieler.staedteBesitz) 
+                            {
+                                
+                            }
+                        }
+                    }
                 }
             }
 
