@@ -469,6 +469,7 @@ namespace rbss1
                     {
                         feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                     }
+                    // TODO: Städte kosten Weizen pro Runde
                     if(feld.rescourcen.Weizen != 0) 
                     {
                         foreach(var spieler in spieler) 
