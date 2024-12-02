@@ -29,11 +29,10 @@ namespace rbss1
             if (truppe.AktuellesFeld != null)
             {
                 truppe.AktuellesFeld.EntferneTruppe();
-            }
+            } 
             truppe.Besitzer = spieler;
             TruppeAufFeld = truppe;
             truppe.SetzeFeld(this);
-            spieler.truppen.Add(truppe);
             int x = (textur.Width - truppe.textur.Width) / 2;
             int y = (textur.Height - truppe.textur.Height) / 2;
             truppe.textur.Location = new Point(textur.Location.X + x, textur.Location.Y + y);
@@ -53,6 +52,16 @@ namespace rbss1
                     TruppeAufFeld.textur.Parent.Controls.Remove(TruppeAufFeld.textur);
                 }
                 TruppeAufFeld = null;
+            }
+        }
+        public void EntferneStadt()
+        {
+            if (StadtAufFeld != null)
+            {
+                if (StadtAufFeld.textur.Parent != null)
+                {
+                    StadtAufFeld.textur.Parent.Controls.Remove(StadtAufFeld.textur);
+                }
             }
         }
     }

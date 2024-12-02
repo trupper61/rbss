@@ -229,6 +229,16 @@ namespace rbss1
                     EntferneBewegungsbereich(null);
                     return;
                 }
+                else if (clickedStadt != null && selectedTruppe != null)
+                {
+                    EntferneBewegungsbereich(null);
+                    selectedTruppe.Angreifen(clickedStadt);
+                    selectedTruppe = null;
+                    HideUIInfo();
+                    EntferneBewegungsbereich(null);
+                    Console.WriteLine(clickedStadt.Leben.ToString());
+                    return;
+                }
                 MessageBox.Show("Das ist nicht deine Stadt!");
                 return;
             }
@@ -360,12 +370,6 @@ namespace rbss1
                         EntferneBewegungsbereich(null);
                     }
                     UpdateGame(selectedTruppe);
-                    selectedTruppe.AktuellesFeld.EntferneTruppe();
-                    clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
-
-                    EntferneBewegungsbereich(null);
-                    selectedTruppe = null;
-                    einnehmen.Hide();
                 }
 
 
@@ -874,7 +878,6 @@ namespace rbss1
                 truppeComboBox.Items.Add(new { Typ = "Fernkämpfer" });
                 truppeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
                 truppeComboBox.Size = new Size(150, 30);
-                truppeComboBox.Location = new Point(10, 50);
                 truppeComboBox.SelectedIndexChanged += TruppenComboBox_SelectedIndexChanged;
             }
             public void TruppenComboBox_SelectedIndexChanged(object sender, EventArgs e)
