@@ -16,6 +16,7 @@ namespace rbss1
         public string feldart {  get; set; }
         public Point position { get; set; }
         public Stadt StadtAufFeld { get; set; }
+        public Farm FarmAufFeld { get; set; }
         public bool GehoertZuStadt { get; set; } = false;
         public Rescourcen rescourcen { get; set; }
         public Spieler besitzer {  get; set; }

@@ -11,6 +11,7 @@ namespace rbss1
     public abstract class Truppe
     {
         public Spieler Besitzer {  get; set; }
+        public int Preis { get; private set; } = 100;
         public int Bewegungsreichweite { get;  set; }
         public PictureBox textur { get;  set; }
         public Feld AktuellesFeld { get; set; }

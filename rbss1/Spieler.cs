@@ -1,4 +1,5 @@
-﻿using System;
+﻿using rbss1.Properties;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,24 +10,41 @@ namespace rbss1
 {
     public class Spieler
     {
-        public List<Rescourcen> rescourcenBesitz {  get; set; }
+        public Rescourcen rescourcenBesitz {  get; set; }
         public int geld {  get; set; }
+        public int bewegungspunkte { get; set; }
         public int spielernummer {  get; set; }
         public bool zugbeendet { get; set; }
+        public List<Stadt> staedteBesitz { get; set; }
+        public List<Farm> farmBesitz { get; set; }
         public List<Truppe> truppen { get; set; }
 
         public Color SpielerFarbe { get; private set; }
 
-        public Spieler(List<Rescourcen> rescourcenBesitz, int geld, int spielernummer, Color SpielerFarbe) 
+        public Spieler(Rescourcen rescourcenBesitz, int geld, int bewegungspunkte,int spielernummer, Color SpielerFarbe, List<Stadt> staedteBesitz, List<Farm> farmBesitz) 
         {
-            this.rescourcenBesitz = rescourcenBesitz;
+            this.rescourcenBesitz = new Rescourcen();
             this.geld = geld;
+            this.bewegungspunkte = bewegungspunkte;
             this.spielernummer = spielernummer;
             this.SpielerFarbe = SpielerFarbe;
+            this.staedteBesitz = new List<Stadt>();
+            this.farmBesitz = new List<Farm>();
             zugbeendet = false;
             truppen = new List<Truppe>();
         }
 
-        
+        public void UpdateRessourcen(List<Feld> alleFelder)
+        {
+            rescourcenBesitz = new Rescourcen();
+
+            foreach (var feld in alleFelder)
+            {
+                if (feld.besitzer == this && feld.rescourcen != null)
+                {
+                    rescourcenBesitz.Add(feld.rescourcen);
+                }
+            }
+        }
     }
 }

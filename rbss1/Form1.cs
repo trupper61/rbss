@@ -18,6 +18,7 @@ namespace rbss1
         private Truppe selectedTruppe = null;
         private Stadt selectedStadt = null;
         private Feld[,] felder;
+        private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
         public int truppenMax = 4;
         public int spielerMax = 4;
@@ -42,7 +43,7 @@ namespace rbss1
 
             for (int i = 0; i < spielerMax; i++)
             {
-                spieler.Add(new Spieler(null, 0, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256))));
+                spieler.Add(new Spieler(null, 150, 3, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)), null, null));
             }
 
             if (spieler.Count > 0)
@@ -54,6 +55,7 @@ namespace rbss1
             InitialisiereComboBox();
 
             MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
+            UIAktualisierung();
         }
         
         public void Feldgenerierung()
@@ -73,7 +75,7 @@ namespace rbss1
                 {
                     Feld feld = new Feld();
 
-                    int rescourcenEinteilung = rescourcen.Next(0, 2);
+                    int rescourcenEinteilung = rescourcen.Next(0, 6);
                     int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
 
                     if (wasserMax > 0 && random.Next(1, 100) < 10 || durchlauefe > 0)
@@ -112,6 +114,17 @@ namespace rbss1
                     if (rescourcenEinteilung == 1 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Eisen(10, rescourcenAnzahl);
+                        feld.rescourcen.Eisen = rescourcenAnzahl;
+                    }
+                    if (rescourcenEinteilung == 2 && feld.feldart == "Grass")
+                    {
+                        feld.rescourcen = new Kohle(10, rescourcenAnzahl);
+                        feld.rescourcen.Kohle = rescourcenAnzahl;
+                    }
+                    if (rescourcenEinteilung == 3 && feld.feldart == "Grass")
+                    {
+                        feld.rescourcen = new Weizen(10, rescourcenAnzahl);
+                        feld.rescourcen.Weizen = rescourcenAnzahl;
                     }
 
                     feld.textur.Size = new Size(feldgroesse, feldgroesse);
@@ -121,8 +134,8 @@ namespace rbss1
                     feld.textur.Click += new EventHandler(feld_Click);
 
                     felder[i, j] = feld;
+                    alleFelder.Add(feld);
 
-                    
                     feld.position = new Point(i, j);
 
                     this.Controls.Add(feld.textur);
@@ -229,6 +242,22 @@ namespace rbss1
                     anzahlRes.Show();
                     anzahlRes.Text = clickedFeld.rescourcen.ToString();
                     anzahlRes.BringToFront();
+
+                    switch (clickedFeld.rescourcen.name)
+                    {
+                        case "Eisen":
+                            UIInfo.Image = Properties.Resources.UI2eisen;
+                            break;
+                        case "Kohle":
+                            UIInfo.Image = Properties.Resources.UI2kohle;
+                            break;
+                        case "Weizen":
+                            UIInfo.Image = Properties.Resources.UI2weizen;
+                            break;
+                        default:
+                            UIInfo.Image = Properties.Resources.UI2;
+                            break;
+                    }
                 }
                 else
                 {
@@ -296,22 +325,44 @@ namespace rbss1
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
-                    int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
-                    int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
-                    int zielx = clickedFeld.textur.Location.X / 50;
-                    int ziely = clickedFeld.textur.Location.Y / 50;
-
-                    int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
-
-                    if (distanz > selectedTruppe.Bewegungsreichweite)
+                    if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0) 
                     {
+                        int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
+                        int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
+                        int zielx = clickedFeld.textur.Location.X / 50;
+                        int ziely = clickedFeld.textur.Location.Y / 50;
+
+                        int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
+
+                        if (distanz > selectedTruppe.Bewegungsreichweite)
+                        {
+                            selectedTruppe.Darstellung.BackColor = Color.Blue;
+                            selectedTruppe = null;
+                            lastClickedFeld.textur.BackColor = Color.White;
+                            lastClickedFeld.textur.Image = Properties.Resources.grass;
+                            clickedFeld.textur.BackColor = Color.Gray;
+                            clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                            return;
+                        }
+                        selectedTruppe.AktuellesFeld.EntferneTruppe();
+                        clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
+
+                        spieler[aktuellerSpielerIndex].bewegungspunkte -= 1;
+                        UIAktualisierung();
+
+                        selectedTruppe.Darstellung.BackColor = Color.Blue;
+                        EntferneBewegungsbereich(null);
                         selectedTruppe = null;
-                        lastClickedFeld.textur.BackColor = Color.White;
-                        lastClickedFeld.textur.Image = Properties.Resources.grass;
-                        clickedFeld.textur.BackColor = Color.Gray;
-                        clickedFeld.textur.Image = Properties.Resources.grasstransparent;
-                        return;
+                        einnehmen.Hide();
                     }
+                    else 
+                    {
+                        MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                        selectedTruppe.Darstellung.BackColor = Color.Blue;
+                        selectedTruppe = null;
+                        EntferneBewegungsbereich(null);
+                    }
+                    UpdateGame(selectedTruppe);
                     selectedTruppe.AktuellesFeld.EntferneTruppe();
                     clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
 
@@ -319,30 +370,40 @@ namespace rbss1
                     selectedTruppe = null;
                     einnehmen.Hide();
                 }
-                UpdateGame(selectedTruppe);
+                
+
             }
             if(rekrutiermodus == true) 
             {
-                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
+                Truppe truppe = new Truppe();
+                if (spieler[aktuellerSpielerIndex].geld >= truppe.Preis) 
                 {
-                    if (truppeZumErstellen == "Nahkämpfer")
-                    {
+ 
+                  if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
+                  {
+                      if (truppeZumErstellen == "Nahkämpfer")
+                      {
                         Nahkaempfer truppe = new Nahkaempfer();
                         lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
                         truppe.textur.Tag = truppe;
+                        spieler[aktuellerSpielerIndex].geld -= truppe.Preis;
                         truppe.textur.Click += new EventHandler(feld_Click);
-                    }
-                    else if (truppeZumErstellen == "Fernkämpfer")
-                    {
+                        UIAktualisierung();
+                      }
+                      else if (truppeZumErstellen == "Fernkämpfer")
+                      {
                         Fernkaempfer truppe = new Fernkaempfer();
                         lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
                         truppe.textur.Tag = truppe;
+                        spieler[aktuellerSpielerIndex].geld -= truppe.Preis;
                         truppe.textur.Click += new EventHandler(feld_Click);
+                        UIAktualisierung();
                     }
                 }
-                else
+                else 
                 {
-                    MessageBox.Show("Das geht hier nicht!");
+                    truppe = null;
+                    MessageBox.Show("Nicht genügend Geld!");
                 }
             }
         }
@@ -398,10 +459,30 @@ namespace rbss1
             {
                 aktuellerSpielerIndex = 0;
                 MessageBox.Show("Neue Runde beginnt");
+
+                //Für jede Stadt, die ein Spieler besitzt, gibt es Einkommen
+
+                foreach (var spieler in spieler)
+                {
+                    spieler.bewegungspunkte = 3;
+
+                    // Für jede Stadt des Spielers wird Einkommen hinzugefügt
+                    foreach (Stadt stadt in spieler.staedteBesitz)
+                    {
+                        spieler.geld += stadt.einkommen;
+                    }
+                    foreach (Farm farm in spieler.farmBesitz) 
+                    {
+                        spieler.rescourcenBesitz.Weizen += farm.weizenEinkommen;
+                    } 
+                }
             }
 
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
+
+            UIAktualisierung();
+            spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
         }
 
         private void weiter_Click(object sender, EventArgs e)
@@ -487,6 +568,7 @@ namespace rbss1
 
                         Stadt neueStadt = new Stadt(felder[x, y], felder);
                         neueStadt.Besitzer = spieler[spielerIndex];
+                        spieler[spielerIndex].staedteBesitz.Add(neueStadt);
                         felder[x, y].StadtAufFeld = neueStadt;
 
                         neueStadt.textur.Location = new Point(felder[x, y].textur.Location.X + 5, felder[x, y].textur.Location.Y + 5);
@@ -545,6 +627,7 @@ namespace rbss1
                 if (stadtbauen.Visible == true)
                 {
                     stadtbauen.Hide();
+                    farmbauen.Hide();
                 }
                 else
                 {
@@ -555,51 +638,128 @@ namespace rbss1
             if(stadtbauen.Visible == false) 
             {
                 stadtbauen.Show();
+                farmbauen.Show();
             }
             else if(stadtbauen.Visible == true) 
             {
                 stadtbauen.Hide();
+                farmbauen.Hide();
             }
             return;
         }
 
         private void stadtbauen_Click(object sender, EventArgs e)
         {
-            if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1 && spieler[aktuellerSpielerIndex].geld >= 200 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null) 
             {
-                MessageBox.Show("Dieses Feld gehört dir nicht!");
+                if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+                {
+                    MessageBox.Show("Dieses Feld gehört dir nicht!");
+                    return;
+                }
+                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.textur.BackColor == spieler[aktuellerSpielerIndex].SpielerFarbe)
+                {
+                    MessageBox.Show("Innerhalb eigender Gebiete kann keine weitere Stadt errichtet werden!");
+                    return;
+                }
+                List<Point> platzierteStadtPositionen = new List<Point>();
+                int stadtabstand = 5;
+
+                int x = lastClickedFeld.position.X;
+                int y = lastClickedFeld.position.Y;
+
+                if (lastClickedFeld.feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen))
+                {
+                    Stadt neueStadt = new Stadt(lastClickedFeld, felder);
+                    neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].staedteBesitz.Add(neueStadt);
+
+                    
+
+                    lastClickedFeld.StadtAufFeld = neueStadt;
+
+                    neueStadt.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
+                    neueStadt.textur.Tag = neueStadt;
+                    neueStadt.textur.Click += new EventHandler(feld_Click);
+                    neueStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+
+                    this.Controls.Add(neueStadt.textur);
+                    neueStadt.textur.BringToFront();
+
+                    platzierteStadtPositionen.Add(new Point(x, y));
+
+                    spieler[aktuellerSpielerIndex].bewegungspunkte -= 2;
+                    spieler[aktuellerSpielerIndex].geld -= 200;
+                    UIAktualisierung();
+                }
                 return;
             }
-            if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.textur.BackColor == spieler[aktuellerSpielerIndex].SpielerFarbe)
+            else if(spieler[aktuellerSpielerIndex].geld < 200)
             {
-                MessageBox.Show("Innerhalb eigender Gebiete kann keine weitere Stadt errichtet werden!");
-                return;
+                MessageBox.Show("Nicht genügend Geld!");
             }
-            List<Point> platzierteStadtPositionen = new List<Point>();
-            int stadtabstand = 5;
-
-            int x = lastClickedFeld.position.X;
-            int y = lastClickedFeld.position.Y;
-
-            if (lastClickedFeld.feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen)) 
+            else if(spieler[aktuellerSpielerIndex].bewegungspunkte <= 1)
             {
-                Stadt neueStadt = new Stadt(lastClickedFeld, felder);
-                neueStadt.Besitzer = spieler[aktuellerSpielerIndex];
-                lastClickedFeld.StadtAufFeld = neueStadt;
-
-                neueStadt.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
-                neueStadt.textur.Tag = neueStadt;
-                neueStadt.textur.Click += new EventHandler(feld_Click);
-                neueStadt.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
-
-                this.Controls.Add(neueStadt.textur);
-                neueStadt.textur.BringToFront();
-
-                platzierteStadtPositionen.Add(new Point(x, y));
+                MessageBox.Show("Nicht genügend Bewegungspunkte!");
             }
-            return;
+            else 
+            {
+                MessageBox.Show("Man kann kein Stadt auf dem selben Feld bauen, auf dem eine Truppe steht!");
+            }
         }
 
+        private void farmbauen_Click(object sender, EventArgs e)
+        {
+            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0 && spieler[aktuellerSpielerIndex].geld >= 100 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null)
+            {
+                if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+                {
+                    MessageBox.Show("Dieses Feld gehört dir nicht!");
+                    return;
+                }
+                List<Point> platzierteFarmPositionen = new List<Point>();
+
+                int x = lastClickedFeld.position.X;
+                int y = lastClickedFeld.position.Y;
+
+                if (lastClickedFeld.feldart == "Grass")
+                {
+                    Farm neueFarm = new Farm(lastClickedFeld, felder);
+                    neueFarm.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].farmBesitz.Add(neueFarm);
+
+
+
+                    lastClickedFeld.FarmAufFeld = neueFarm;
+
+                    neueFarm.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
+                    neueFarm.textur.Tag = neueFarm;
+
+                    this.Controls.Add(neueFarm.textur);
+                    neueFarm.textur.BringToFront();
+
+                    platzierteFarmPositionen.Add(new Point(x, y));
+
+                    spieler[aktuellerSpielerIndex].bewegungspunkte -= 1;
+                    spieler[aktuellerSpielerIndex].geld -= 100;
+                    UIAktualisierung();
+                }
+                return;
+            }
+            else if (spieler[aktuellerSpielerIndex].geld < 100)
+            {
+                MessageBox.Show("Nicht genügend Geld!");
+            }
+            else if (spieler[aktuellerSpielerIndex].bewegungspunkte < 1)
+            {
+                MessageBox.Show("Nicht genügend Bewegungspunkte!");
+            }
+            else
+            {
+                MessageBox.Show("Man kann keine Farm auf dem selben Feld bauen, auf dem eine Truppe steht!");
+            }
+
+        }
         private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
         {
             recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
@@ -636,14 +796,84 @@ namespace rbss1
             }
             
         }
-
-        private void ItemPB_Click(object sender, EventArgs e)
-        {
-
-        }
-        public void InitialisiereComboBox()
+        //Aktualiseren der UI-Elemente, welche das Geld und die Bewegungspunkte anzeigen.
+        public void UIAktualisierung() 
         {
             
+            geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
+            bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
+            momentanerSpieler.Text = $"Spieler {aktuellerSpielerIndex + 1}";
+
+            if(rescourceinventory.Visible == true) 
+            {
+                spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+
+                rescourceinventory.Show();
+                rescourcenlabel.Show();
+                rescourcenlabel.BringToFront();
+
+                eisenInventory.Show(); eisenInventory.BringToFront();
+                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+
+                coalInventory.Show(); coalInventory.BringToFront();
+                coalAnzahl.Show(); coalAnzahl.BringToFront();
+
+                steelInventory.Show(); steelInventory.BringToFront();
+                steelAnzahl.Show(); steelAnzahl.BringToFront();
+
+                wheatInventory.Show(); wheatInventory.BringToFront();
+                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+            }
+            eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
+            coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
+            steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
+            wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
+        }
+
+        private void rescourcenFenster_Click(object sender, EventArgs e)
+        {
+            UIAktualisierung();
+            if (rescourceinventory.Visible == true)
+            {
+                rescourceinventory.Hide();
+                rescourcenlabel.Hide();
+
+                eisenInventory.Hide();
+                eisenAnzahl.Hide();
+                coalInventory.Hide();
+                coalAnzahl.Hide();
+                steelInventory.Hide();
+                steelAnzahl.Hide();
+                wheatInventory.Hide();
+                wheatAnzahl.Hide();
+            }
+            else 
+            {
+                spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+
+                rescourceinventory.Show();
+                rescourcenlabel.Show();
+                rescourcenlabel.BringToFront();
+
+                eisenInventory.Show(); eisenInventory.BringToFront();
+                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+
+                coalInventory.Show(); coalInventory.BringToFront();
+                coalAnzahl.Show(); coalAnzahl.BringToFront();
+
+                steelInventory.Show(); steelInventory.BringToFront();
+                steelAnzahl.Show(); steelAnzahl.BringToFront();
+
+                wheatInventory.Show(); wheatInventory.BringToFront();
+                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+            }
+            eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
+            coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
+            steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
+            wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
+        }
+        public void InitialisiereComboBox()
+       {     
             truppeComboBox.Items.Add(new { Typ = "Nahkämpfer" });
             truppeComboBox.Items.Add(new { Typ = "Fernkämpfer" });
             truppeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;

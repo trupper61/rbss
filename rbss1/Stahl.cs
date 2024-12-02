@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace rbss1
 {
-    internal class Eisen : Rescourcen
+    internal class Stahl : Rescourcen
     {
-        public Eisen(int wert, int anzahl) 
-            : base(wert, anzahl, "Eisen")
+        public Stahl(int wert, int anzahl) 
+            : base(wert, anzahl, "Stahl")
         {
 
         }
 
         public override string ToString()
         {
-            return $"Eisen: {base.ToString()}";
+            return $"Stahl: {base.ToString()}";
         }
     }
 }

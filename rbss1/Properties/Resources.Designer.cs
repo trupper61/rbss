@@ -63,6 +63,26 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap coalinventory {
+            get {
+                object obj = ResourceManager.GetObject("coalinventory", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap coalinventory1 {
+            get {
+                object obj = ResourceManager.GetObject("coalinventory1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap construction {
             get {
                 object obj = ResourceManager.GetObject("construction", resourceCulture);
@@ -76,6 +96,16 @@ namespace rbss1.Properties {
         internal static System.Drawing.Bitmap constructionglow {
             get {
                 object obj = ResourceManager.GetObject("constructionglow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap data {
+            get {
+                object obj = ResourceManager.GetObject("data", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,6 +143,26 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ironinventory {
+            get {
+                object obj = ResourceManager.GetObject("ironinventory", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap labelbackround {
+            get {
+                object obj = ResourceManager.GetObject("labelbackround", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap melee {
             get {
                 object obj = ResourceManager.GetObject("melee", resourceCulture);
@@ -123,6 +173,9 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap melee2 {
+            get {
+                object obj = ResourceManager.GetObject("melee2", resourceCulture);
         internal static System.Drawing.Bitmap melee_character {
             get {
                 object obj = ResourceManager.GetObject("melee_character", resourceCulture);
@@ -138,14 +191,14 @@ namespace rbss1.Properties {
                 object obj = ResourceManager.GetObject("ranged", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
-        }
-        
+        }     
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap ranged_character {
             get {
                 object obj = ResourceManager.GetObject("ranged_character", resourceCulture);
+
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,6 +266,26 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap stahlinventory {
+            get {
+                object obj = ResourceManager.GetObject("stahlinventory", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stahlinventory1 {
+            get {
+                object obj = ResourceManager.GetObject("stahlinventory1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI1 {
             get {
                 object obj = ResourceManager.GetObject("UI1", resourceCulture);
@@ -243,9 +316,49 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI2kohle {
+            get {
+                object obj = ResourceManager.GetObject("UI2kohle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI2weizen {
+            get {
+                object obj = ResourceManager.GetObject("UI2weizen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap water {
             get {
                 object obj = ResourceManager.GetObject("water", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wheat {
+            get {
+                object obj = ResourceManager.GetObject("wheat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wheatinventory {
+            get {
+                object obj = ResourceManager.GetObject("wheatinventory", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
