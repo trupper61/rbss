@@ -360,12 +360,6 @@ namespace rbss1
                         EntferneBewegungsbereich(null);
                     }
                     UpdateGame(selectedTruppe);
-                    selectedTruppe.AktuellesFeld.EntferneTruppe();
-                    clickedFeld.SetzeTruppe(selectedTruppe, aktuellerSpieler);
-
-                    EntferneBewegungsbereich(null);
-                    selectedTruppe = null;
-                    einnehmen.Hide();
                 }
 
 
@@ -467,9 +461,13 @@ namespace rbss1
                         {
                             spieler.geld += stadt.einkommen;
                         }
-                        foreach (Farm farm in spieler.farmBesitz)
+                        
+                    }
+                    foreach (var feld in alleFelder)
+                    {
+                        if (feld.FarmAufFeld != null)
                         {
-                            spieler.rescourcenBesitz.Weizen += farm.weizenEinkommen;
+                            feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                         }
                     }
                 }
@@ -706,6 +704,16 @@ namespace rbss1
 
             private void farmbauen_Click(object sender, EventArgs e)
             {
+                if(lastClickedFeld.rescourcen == null) 
+                {
+                    MessageBox.Show("Man kann nur Farms auf Felder Bauen, die Weizen enthalten!");
+                    return;
+                }
+                else if(lastClickedFeld.rescourcen.Weizen == 0) 
+                {
+                    MessageBox.Show("Man kann nur Farms auf Felder Bauen, die Weizen enthalten!");
+                    return;
+                }
                 if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0 && spieler[aktuellerSpielerIndex].geld >= 100 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null)
                 {
                     if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])

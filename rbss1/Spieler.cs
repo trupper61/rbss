@@ -23,8 +23,8 @@ namespace rbss1
 
         public Spieler(Rescourcen rescourcenBesitz, int geld, int bewegungspunkte,int spielernummer, Color SpielerFarbe, List<Stadt> staedteBesitz, List<Farm> farmBesitz) 
         {
-            this.rescourcenBesitz = new Rescourcen();
-            this.geld = geld;
+            this.rescourcenBesitz = new Rescourcen(0, 0, null);
+            this.geld = 1100000;
             this.bewegungspunkte = bewegungspunkte;
             this.spielernummer = spielernummer;
             this.SpielerFarbe = SpielerFarbe;
