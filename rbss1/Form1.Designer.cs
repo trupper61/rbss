@@ -425,10 +425,11 @@
             // truppeComboBox
             // 
             this.truppeComboBox.FormattingEnabled = true;
-            this.truppeComboBox.Location = new System.Drawing.Point(1268, 76);
+            this.truppeComboBox.Location = new System.Drawing.Point(1249, 61);
             this.truppeComboBox.Name = "truppeComboBox";
             this.truppeComboBox.Size = new System.Drawing.Size(121, 24);
             this.truppeComboBox.TabIndex = 11;
+            this.truppeComboBox.Visible = false;
             // 
             // Form1
             // 

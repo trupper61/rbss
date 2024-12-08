@@ -17,12 +17,22 @@ namespace rbss1
         }
         public override void Angreifen(Truppe targetTruppe)
         {
-            if (targetTruppe == null || targetTruppe.Besitzer.truppen.Contains(targetTruppe))
+            if (targetTruppe == null || targetTruppe.Besitzer == Besitzer)
                 return;
             targetTruppe.Leben -= Schaden;
             if (targetTruppe.Leben <= 0)
             {
                 targetTruppe.EntferneTruppe();
+            }
+        }
+        public override void Angreifen(Stadt targetStadt)
+        {
+            if (targetStadt == null || Besitzer.staedteBesitz.Contains(targetStadt))
+                return;
+            targetStadt.Leben -= Schaden;
+            if (targetStadt.Leben <= 0)
+            {
+                targetStadt.EntferneStadt();
             }
         }
         public override string ToString()

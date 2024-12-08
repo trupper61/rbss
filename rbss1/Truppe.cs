@@ -39,9 +39,9 @@ namespace rbss1
                 AktuellesFeld.EntferneTruppe();
             }
             textur.Hide();
-            Besitzer.truppen.Remove(this);
         }
         public abstract override string ToString();
         public abstract void Angreifen(Truppe targetTruppe);
+        public abstract void Angreifen(Stadt targetStadt);
     }
 }

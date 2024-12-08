@@ -21,6 +21,7 @@ namespace rbss1
         public Feld startFeld { get; set; }
 
         public int einkommen { get; set; } = 75;
+        public int Leben { get; set; }
         
         public Stadt(Feld startFeld, Feld[,] felder)
         {
@@ -29,7 +30,7 @@ namespace rbss1
             this.felder = felder;
             this.startFeld = startFeld;
 
-            
+            Leben = 200;
 
             stadtFlaeche = new List<Feld>();
             textur = new PictureBox
@@ -70,6 +71,8 @@ namespace rbss1
                             {
                                 stadtFlaeche.Add(felder[i, j]);
                             }
+                            if (Besitzer == null)
+                                return;
                             felder[i, j].textur.BackColor = Besitzer.SpielerFarbe;
                             felder[i, j].besitzer = Besitzer;
                             felder[i, j].textur.Image = Properties.Resources.grasstransparent;
@@ -85,6 +88,12 @@ namespace rbss1
         }
         public void EntferneStadt()
         {
+            if (stadt != null)
+            {
+                startFeld.EntferneStadt();
+            }
+            Besitzer = null;
+            this.textur.Hide();
             this.stadt = null;
         }
     }

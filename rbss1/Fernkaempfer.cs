@@ -20,7 +20,7 @@ namespace rbss1
         }
         public override void Angreifen(Truppe targetTruppe)
         {
-            if (targetTruppe != null || targetTruppe.Besitzer.truppen.Contains(targetTruppe))
+            if (targetTruppe != null || targetTruppe.Besitzer == Besitzer)
                 return;
             int distanz = Math.Abs(AktuellesFeld.position.X - targetTruppe.AktuellesFeld.position.X) + Math.Abs(AktuellesFeld.position.Y - targetTruppe.AktuellesFeld.position.Y);
             if (distanz <= Reichweite)
@@ -32,6 +32,10 @@ namespace rbss1
                     targetTruppe.EntferneTruppe();
                 }
             }
+        }
+        public override void Angreifen(Stadt targetStadt)
+        {
+            throw new NotImplementedException();
         }
         public override string ToString()
         {
