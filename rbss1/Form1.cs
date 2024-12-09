@@ -463,20 +463,34 @@ namespace rbss1
                     }
 
                 }
+                int weizenspielerBesitz = 0;
+
                 foreach (var feld in alleFelder)
                 {
+                    
                     if (feld.FarmAufFeld != null)
                     {
                         feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                     }
                     // TODO: Städte kosten Weizen pro Runde
-                    if(feld.rescourcen.Weizen != 0) 
+                    
+                    
+                }
+                foreach (var spieler in spieler)
+                {
+                    int abziehbarVar = spieler.staedteBesitz.Count;
+                    foreach (var feld in alleFelder)
                     {
-                        foreach(var spieler in spieler) 
+                        if (feld.besitzer == spieler)
                         {
-                            foreach(Stadt stadt in spieler.staedteBesitz) 
+
+                            if (feld.rescourcen != null)
                             {
-                                
+                                if (abziehbarVar != 0)
+                                {
+                                    feld.rescourcen.Weizen -= 10;
+                                    abziehbarVar--;
+                                }
                             }
                         }
                     }
@@ -486,6 +500,10 @@ namespace rbss1
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
+            if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
+            {
+                MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
+            }
             UIAktualisierung();
             spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
         }
