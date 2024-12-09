@@ -447,6 +447,10 @@ namespace rbss1
 
             if (aktuellerSpielerIndex >= spieler.Count)
             {
+                if(Gewinnueberpruefung() == true) 
+                {
+                    return;
+                }
                 aktuellerSpielerIndex = 0;
                 MessageBox.Show("Neue Runde beginnt");
 
@@ -924,6 +928,24 @@ namespace rbss1
                 truppeZumErstellen = truppeTyp;
             }
 
+        }
+
+        public bool Gewinnueberpruefung() 
+        {
+            foreach(var Spieler in spieler) 
+            {
+                if(Spieler.staedteBesitz.Count == 0) 
+                {
+                    MessageBox.Show("Spieler ist Raus!");
+                    spieler.Remove(Spieler);
+                }
+                if(spieler.Count == 1) 
+                {
+                    MessageBox.Show($"Spieler {Spieler.ToString()} hat gewonnen!");
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
