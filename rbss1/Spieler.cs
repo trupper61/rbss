@@ -11,24 +11,27 @@ namespace rbss1
     public class Spieler
     {
         public Rescourcen rescourcenBesitz {  get; set; }
-        public int geld { get; set; } 
+        public int geld {  get; set; }
         public int bewegungspunkte { get; set; }
         public int spielernummer {  get; set; }
         public bool zugbeendet { get; set; }
         public List<Stadt> staedteBesitz { get; set; }
         public List<Farm> farmBesitz { get; set; }
+        public List<Truppe> truppen { get; set; }
+
         public Color SpielerFarbe { get; private set; }
 
         public Spieler(Rescourcen rescourcenBesitz, int geld, int bewegungspunkte,int spielernummer, Color SpielerFarbe, List<Stadt> staedteBesitz, List<Farm> farmBesitz) 
         {
-            this.rescourcenBesitz = new Rescourcen();
-            this.geld = 10000000;
+            this.rescourcenBesitz = new Rescourcen(0, 0, null);
+            this.geld = 1100000;
             this.bewegungspunkte = bewegungspunkte;
             this.spielernummer = spielernummer;
             this.SpielerFarbe = SpielerFarbe;
             this.staedteBesitz = new List<Stadt>();
             this.farmBesitz = new List<Farm>();
             zugbeendet = false;
+            truppen = new List<Truppe>();
         }
 
         public void UpdateRessourcen(List<Feld> alleFelder)
