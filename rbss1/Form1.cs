@@ -467,7 +467,6 @@ namespace rbss1
                     }
 
                 }
-                int weizenspielerBesitz = 0;
 
                 foreach (var feld in alleFelder)
                 {
