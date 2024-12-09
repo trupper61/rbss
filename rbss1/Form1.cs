@@ -465,7 +465,6 @@ namespace rbss1
                     {
                         spieler.geld += stadt.einkommen;
                     }
-
                 }
 
                 foreach (var feld in alleFelder)
@@ -475,9 +474,6 @@ namespace rbss1
                     {
                         feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                     }
-                    // TODO: Städte kosten Weizen pro Runde
-                    
-                    
                 }
                 foreach (var spieler in spieler)
                 {
