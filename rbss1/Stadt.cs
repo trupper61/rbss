@@ -36,16 +36,16 @@ namespace rbss1
             textur = new PictureBox
             {
                 Size = new Size(40, 40),
-                BackColor = Color.Green,
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                Image = Properties.Resources.rathaus
+                Image = Properties.Resources.rathaus,
+                BackgroundImage = Properties.Resources.grasstransparent
 
             };
         }
 
         public void SetzeEinflussRadius(List<Spieler> spieler, int spielerIndex)
         {
-
+            
             if (this.textur == null || felder == null)
             {
                 return; 
@@ -56,7 +56,7 @@ namespace rbss1
             int radius = 2;
 
             stadtFlaeche.Clear();
-
+            Console.WriteLine($"Startfeld: {startFeld.position.X}, {startFeld.position.Y}");
             for (int i = 0; i < felder.GetLength(0); i++)
             {
                 for (int j = 0; j < felder.GetLength(1); j++)
@@ -69,6 +69,7 @@ namespace rbss1
                         {
                             if (!stadtFlaeche.Contains(felder[i, j]))
                             {
+                                Console.WriteLine($"Feld hinzugefügt: {i}, {j}");
                                 stadtFlaeche.Add(felder[i, j]);
                             }
                             if (Besitzer == null)

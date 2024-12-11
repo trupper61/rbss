@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.truppeComboBox = new System.Windows.Forms.ComboBox();
+            this.recruitSquad = new System.Windows.Forms.PictureBox();
+            this.farmbauen = new System.Windows.Forms.Button();
             this.wheatAnzahl = new System.Windows.Forms.Label();
             this.steelAnzahl = new System.Windows.Forms.Label();
             this.wheatInventory = new System.Windows.Forms.PictureBox();
@@ -56,9 +60,7 @@
             this.anzahlRes = new System.Windows.Forms.Label();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
-            this.farmbauen = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.truppeComboBox = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.recruitSquad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wheatInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steelInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.coalInventory)).BeginInit();
@@ -72,6 +74,42 @@
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).BeginInit();
             this.SuspendLayout();
+            // 
+            // truppeComboBox
+            // 
+            this.truppeComboBox.FormattingEnabled = true;
+            this.truppeComboBox.Location = new System.Drawing.Point(1249, 61);
+            this.truppeComboBox.Name = "truppeComboBox";
+            this.truppeComboBox.Size = new System.Drawing.Size(121, 24);
+            this.truppeComboBox.TabIndex = 11;
+            this.truppeComboBox.Visible = false;
+            // 
+            // recruitSquad
+            // 
+            this.recruitSquad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("recruitSquad.BackgroundImage")));
+            this.recruitSquad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.recruitSquad.Image = global::rbss1.Properties.Resources.recruit_squad;
+            this.recruitSquad.Location = new System.Drawing.Point(1389, 237);
+            this.recruitSquad.Margin = new System.Windows.Forms.Padding(4);
+            this.recruitSquad.Name = "recruitSquad";
+            this.recruitSquad.Size = new System.Drawing.Size(67, 62);
+            this.recruitSquad.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.recruitSquad.TabIndex = 29;
+            this.recruitSquad.TabStop = false;
+            this.recruitSquad.Click += new System.EventHandler(this.recruitSquad_Click);
+            // 
+            // farmbauen
+            // 
+            this.farmbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.farmbauen.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.farmbauen.Location = new System.Drawing.Point(1054, 61);
+            this.farmbauen.Name = "farmbauen";
+            this.farmbauen.Size = new System.Drawing.Size(91, 23);
+            this.farmbauen.TabIndex = 26;
+            this.farmbauen.Text = "Farm Errichten";
+            this.farmbauen.UseVisualStyleBackColor = true;
+            this.farmbauen.Visible = false;
+            this.farmbauen.Click += new System.EventHandler(this.farmbauen_Click);
             // 
             // wheatAnzahl
             // 
@@ -192,7 +230,7 @@
             // rescourcenFenster
             // 
             this.rescourcenFenster.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.rescourcenFenster.Location = new System.Drawing.Point(1406, 242);
+            this.rescourcenFenster.Location = new System.Drawing.Point(1409, 312);
             this.rescourcenFenster.Name = "rescourcenFenster";
             this.rescourcenFenster.Size = new System.Drawing.Size(50, 50);
             this.rescourcenFenster.TabIndex = 15;
@@ -329,11 +367,12 @@
             // 
             // ItemPB
             // 
-            this.ItemPB.Image = global::rbss1.Properties.Resources.ranged;
-            this.ItemPB.Location = new System.Drawing.Point(944, 76);
+            this.ItemPB.BackgroundImage = global::rbss1.Properties.Resources.ui_wood;
+            this.ItemPB.Image = global::rbss1.Properties.Resources.squad_wappen;
+            this.ItemPB.Location = new System.Drawing.Point(982, 126);
             this.ItemPB.Margin = new System.Windows.Forms.Padding(4);
             this.ItemPB.Name = "ItemPB";
-            this.ItemPB.Size = new System.Drawing.Size(240, 264);
+            this.ItemPB.Size = new System.Drawing.Size(169, 198);
             this.ItemPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ItemPB.TabIndex = 5;
             this.ItemPB.TabStop = false;
@@ -409,34 +448,13 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
-            // farmbauen
-            // 
-            this.farmbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.farmbauen.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.farmbauen.Location = new System.Drawing.Point(1054, 61);
-            this.farmbauen.Name = "farmbauen";
-            this.farmbauen.Size = new System.Drawing.Size(91, 23);
-            this.farmbauen.TabIndex = 26;
-            this.farmbauen.Text = "Farm Errichten";
-            this.farmbauen.UseVisualStyleBackColor = true;
-            this.farmbauen.Visible = false;
-            this.farmbauen.Click += new System.EventHandler(this.farmbauen_Click);
-            // 
-            // truppeComboBox
-            // 
-            this.truppeComboBox.FormattingEnabled = true;
-            this.truppeComboBox.Location = new System.Drawing.Point(1249, 61);
-            this.truppeComboBox.Name = "truppeComboBox";
-            this.truppeComboBox.Size = new System.Drawing.Size(121, 24);
-            this.truppeComboBox.TabIndex = 11;
-            this.truppeComboBox.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1471, 617);
+            this.Controls.Add(this.recruitSquad);
             this.Controls.Add(this.farmbauen);
             this.Controls.Add(this.wheatAnzahl);
             this.Controls.Add(this.steelAnzahl);
@@ -469,6 +487,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.recruitSquad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wheatInventory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.steelInventory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.coalInventory)).EndInit();
@@ -504,7 +523,6 @@
         private System.Windows.Forms.Label geldanzeige;
         private System.Windows.Forms.Label bewpunktanzeige;
         private System.Windows.Forms.Label momentanerSpieler;
-        private System.Windows.Forms.PictureBox rescourcenFenster;
         private System.Windows.Forms.PictureBox rescourceinventory;
         private System.Windows.Forms.Label rescourcenlabel;
         private System.Windows.Forms.PictureBox eisenInventory;
@@ -518,6 +536,8 @@
         private System.Windows.Forms.Button farmbauen;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ComboBox truppeComboBox;
+        private System.Windows.Forms.PictureBox recruitSquad;
+        private System.Windows.Forms.PictureBox rescourcenFenster;
     }
 }
 

@@ -233,9 +233,39 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap recruit_squad {
+            get {
+                object obj = ResourceManager.GetObject("recruit-squad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap recruitglow {
             get {
                 object obj = ResourceManager.GetObject("recruitglow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap squad {
+            get {
+                object obj = ResourceManager.GetObject("squad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap squad_wappen {
+            get {
+                object obj = ResourceManager.GetObject("squad-wappen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -286,6 +316,16 @@ namespace rbss1.Properties {
         internal static System.Drawing.Bitmap stahlinventory1 {
             get {
                 object obj = ResourceManager.GetObject("stahlinventory1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ui_wood {
+            get {
+                object obj = ResourceManager.GetObject("ui-wood", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

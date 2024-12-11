@@ -32,6 +32,10 @@ namespace rbss1
             AktuellesFeld = neuesFeld;
             textur.BackColor = Besitzer.SpielerFarbe;
         }
+        public int BerechneDistanz(Feld ziel)
+        {
+            return Math.Abs(AktuellesFeld.position.X - ziel.position.X) + Math.Abs(AktuellesFeld.position.Y - ziel.position.Y);
+        }
         public void EntferneTruppe()
         {
             if (AktuellesFeld != null)
@@ -40,8 +44,15 @@ namespace rbss1
             }
             textur.Hide();
         }
+        public void NehmeSchaden(int schaden)
+        {
+            Leben -= schaden;
+            if (Leben <= 0)
+                EntferneTruppe();
+        }
         public abstract override string ToString();
         public abstract void Angreifen(Truppe targetTruppe);
         public abstract void Angreifen(Stadt targetStadt);
+        public abstract void Angreifen(Squad targetSquad);
     }
 }
