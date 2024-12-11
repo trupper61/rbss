@@ -118,83 +118,71 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="stadt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stadt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="recruitglow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\recruitglow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UI1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\UI1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-	<data name="UI2eisen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-		<value>..\assets\UI2eisen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-	</data>
-  <data name="melee_character" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\melee_character.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ranged" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ranged.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="recruitglow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\recruitglow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="water" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UI2eisen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\UI2eisen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="grass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\grass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="water" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="grasstransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\grasstransparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UI2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\UI2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="coalinventory" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\coalinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-	<data name="constructionglow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-		<value>..\assets\constructionglow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-	</data>
-  <data name="constructionglow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\constructionglow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="construction" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\construction.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="melee" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\melee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="recruit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\recruit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="square" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\square.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="melee2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\melee2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-	<data name="coalinventory1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-		<value>..\assets\coalinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-	</data>
-  <data name="rathaus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\rathaus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="squar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\squar2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UI2kohle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\UI2kohle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="water" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\UI2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="melee" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\melee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="stahlinventory1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\stahlinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\UI1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="coalinventory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\coalinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ranged" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ranged.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="data" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\data.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stahlinventory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\stahlinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="grass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\grass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ironinventory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\ironinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="coalinventory1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\coalinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="squad-wappen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\squad-wappen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ranged_character" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ranged_character.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rathaus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\rathaus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="recruit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\recruit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="constructionglow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\constructionglow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="labelbackround" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\labelbackround.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stadt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stadt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="wheatinventory" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\wheatinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -202,40 +190,37 @@
   <data name="square" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\square.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="rathaus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\rathaus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ironinventory" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\ironinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="squar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\squar2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="data" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\data.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="construction" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\construction.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="iron" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\iron.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stahlinventory" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\stahlinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="stahlinventory1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\stahlinventory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UI2kohle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\UI2kohle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="wheat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\wheat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UI2weizen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\UI2weizen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-	<data name="wheat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-		<value>..\assets\wheat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-	</data>
-	<data name="iron" type="System.Resources.ResXFileRef, System.Windows.Forms">
-		<value>..\assets\iron.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-	</data>
-  <data name="ranged_character" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ranged_character.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="squad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\squad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="melee_character" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\melee_character.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui-wood" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ui-wood.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="grasstransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\grasstransparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="melee2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\melee2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI2eisen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\UI2eisen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="recruit-squad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\recruit-squad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

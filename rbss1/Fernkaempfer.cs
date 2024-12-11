@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,20 +23,28 @@ namespace rbss1
         {
             if (targetTruppe != null || targetTruppe.Besitzer == Besitzer)
                 return;
-            int distanz = Math.Abs(AktuellesFeld.position.X - targetTruppe.AktuellesFeld.position.X) + Math.Abs(AktuellesFeld.position.Y - targetTruppe.AktuellesFeld.position.Y);
+            int distanz = BerechneDistanz(targetTruppe.AktuellesFeld);
             if (distanz <= Reichweite)
             {
-                targetTruppe.Leben -= Schaden;
-
-                if (targetTruppe.Leben <= 0)
-                {
-                    targetTruppe.EntferneTruppe();
-                }
+                targetTruppe.NehmeSchaden(Schaden);
             }
         }
         public override void Angreifen(Stadt targetStadt)
         {
-            throw new NotImplementedException();
+            if (targetStadt != null || targetStadt.Besitzer == Besitzer)
+                return;
+            int distanz = BerechneDistanz(targetStadt.startFeld);
+            if (distanz <= Reichweite)
+            {
+                targetStadt.Leben -= Schaden;
+                if (targetStadt.Leben <= 0)
+                    targetStadt.EntferneStadt();
+            }
+        }
+        public override void Angreifen(Squad targetSquad)
+        {
+            if (targetSquad != null || targetSquad.Besitzer == Besitzer)
+                return;
         }
         public override string ToString()
         {

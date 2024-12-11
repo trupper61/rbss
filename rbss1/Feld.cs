@@ -11,8 +11,8 @@ namespace rbss1
     public class Feld
     {
         public PictureBox textur { get; set; }
-        public Truppe TruppeAufFeld { get; private set; }
-
+        public Truppe TruppeAufFeld { get;  set; }
+        public Squad SquadAufFeld { get; set; }
         public string feldart {  get; set; }
         public Point position { get; set; }
         public Stadt StadtAufFeld { get; set; }
@@ -22,6 +22,8 @@ namespace rbss1
         public Spieler besitzer {  get; set; }
         public Feld() 
         {
+            TruppeAufFeld = null;
+            SquadAufFeld = null;
             textur = new PictureBox();
         }
         public void SetzeTruppe(Truppe truppe, Spieler spieler)

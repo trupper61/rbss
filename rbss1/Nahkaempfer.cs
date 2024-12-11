@@ -19,11 +19,7 @@ namespace rbss1
         {
             if (targetTruppe == null || targetTruppe.Besitzer == Besitzer)
                 return;
-            targetTruppe.Leben -= Schaden;
-            if (targetTruppe.Leben <= 0)
-            {
-                targetTruppe.EntferneTruppe();
-            }
+            targetTruppe.NehmeSchaden(Schaden);
         }
         public override void Angreifen(Stadt targetStadt)
         {
@@ -34,6 +30,12 @@ namespace rbss1
             {
                 targetStadt.EntferneStadt();
             }
+        }
+        public override void Angreifen(Squad targetSquad)
+        {
+            if (targetSquad == null || Besitzer == targetSquad.Besitzer)
+                return;
+            targetSquad.NehmeSchaden(Schaden);
         }
         public override string ToString()
         {
