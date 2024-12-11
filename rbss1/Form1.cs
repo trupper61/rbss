@@ -298,7 +298,7 @@ namespace rbss1
                     MessageBox.Show("Das ist nicht deine Stadt!");
                     return;
                 }
-            
+
             }
             else if (clickedObject is Feld clickedFeld)
             {
@@ -353,7 +353,7 @@ namespace rbss1
                     UIInfo.Hide();
                     anzahlRes.Hide();
 
-                    lastClickedFeld = null; 
+                    lastClickedFeld = null;
                     return;
                 }
 
@@ -435,39 +435,39 @@ namespace rbss1
             }
             if (rekrutiermodus == true)
             {
-                    if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
+                if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
+                {
+                    if (truppeZumErstellen == "Nahkämpfer")
                     {
-                        if (truppeZumErstellen == "Nahkämpfer")
-                        {
-                            Nahkaempfer truppe = new Nahkaempfer();
-                            if (!(spieler[aktuellerSpielerIndex].geld >= truppe.Preis))
-                                return;
-                            lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
-                            truppe.textur.Tag = truppe;
-                            spieler[aktuellerSpielerIndex].geld -= truppe.Preis;
-                            truppe.textur.Click += new EventHandler(feld_Click);
-                            UIAktualisierung();
-                        }
-                        else if (truppeZumErstellen == "Fernkämpfer")
-                        {
-                            Fernkaempfer truppe = new Fernkaempfer();
-                            if (!(spieler[aktuellerSpielerIndex].geld >= truppe.Preis))
-                                return;
-                            lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
-                            truppe.textur.Tag = truppe;
-                            spieler[aktuellerSpielerIndex].geld -= truppe.Preis;
-                            truppe.textur.Click += new EventHandler(feld_Click);
-                            UIAktualisierung();
-                        }
+                        Nahkaempfer truppe = new Nahkaempfer();
+                        if (!(spieler[aktuellerSpielerIndex].geld >= truppe.Preis))
+                            return;
+                        lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
+                        truppe.textur.Tag = truppe;
+                        spieler[aktuellerSpielerIndex].geld -= truppe.Preis;
+                        truppe.textur.Click += new EventHandler(feld_Click);
+                        UIAktualisierung();
                     }
-                    else
+                    else if (truppeZumErstellen == "Fernkämpfer")
                     {
-                        MessageBox.Show("Nicht genügend Geld!");
+                        Fernkaempfer truppe = new Fernkaempfer();
+                        if (!(spieler[aktuellerSpielerIndex].geld >= truppe.Preis))
+                            return;
+                        lastClickedFeld.SetzeTruppe(truppe, spieler[aktuellerSpielerIndex]);
+                        truppe.textur.Tag = truppe;
+                        spieler[aktuellerSpielerIndex].geld -= truppe.Preis;
+                        truppe.textur.Click += new EventHandler(feld_Click);
+                        UIAktualisierung();
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Nicht genügend Geld!");
+                }
             }
-            public void MakiereBewegungsreichweite(object o)
-            {
+        }
+        public void MakiereBewegungsreichweite(object o)
+        {
             if (o == null)
                 return;
             Feld aktuellesFeld = null;
@@ -477,7 +477,7 @@ namespace rbss1
                 aktuellesFeld = truppe.AktuellesFeld;
                 bewegungsreichweite = truppe.Bewegungsreichweite;
             }
-            else if(o is Squad squad)
+            else if (o is Squad squad)
             {
                 aktuellesFeld = squad.AktuellesFeld;
                 bewegungsreichweite = squad.Bewegungsreichweite;
@@ -487,22 +487,18 @@ namespace rbss1
 
             int startX = aktuellesFeld.position.X;
             int startY = aktuellesFeld.position.Y;
-            
-                lastClickedFeld = null;
-                for (int i = 0; i < 10; i++)
 
+            lastClickedFeld = null;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
                 {
                     int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
+                    if (distanz <= bewegungsreichweite)
 
-                        if (felder[i, j].feldart == "Grass")
-
-                        int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
-                        if (distanz <= bewegungsreichweite)
-
-                        {
-                            felder[i, j].textur.Image = Properties.Resources.grasstransparent;
-                            felder[i, j].textur.BackColor = Color.LightGreen;
-                        }
+                    {
+                        felder[i, j].textur.Image = Properties.Resources.grasstransparent;
+                        felder[i, j].textur.BackColor = Color.LightGreen;
                     }
                 }
             }
@@ -536,7 +532,7 @@ namespace rbss1
 
             if (aktuellerSpielerIndex >= spieler.Count)
             {
-                if(Gewinnueberpruefung() == true) 
+                if (Gewinnueberpruefung() == true)
                 {
                     return;
                 }
@@ -558,7 +554,7 @@ namespace rbss1
 
                 foreach (var feld in alleFelder)
                 {
-                    
+
                     if (feld.FarmAufFeld != null)
                     {
                         feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
@@ -628,34 +624,27 @@ namespace rbss1
         {
             if (o == null)
             {
-
                 return;
             }
             if (o is Truppe truppe)
             {
-                if (o == null)
-                {
-                    return;
-                }
-                if (o is Truppe truppe)
-                {
-                    if (truppe is Nahkaempfer)
-                        ItemPB.Image = Properties.Resources.melee;
-                    else if (truppe is Fernkaempfer)
-                        ItemPB.Image = Properties.Resources.ranged;
-                    truppenLebenLB.Text = $"Lebel: {truppe.Leben}";
-                    truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
-                    titelLabel.Text = truppe.ToString();
-                    truppenSchadenLB.Visible = true;
-                }
-                else if (o is Stadt stadt)
-                {
-                    ItemPB.Image = Properties.Resources.stadt;
+                if (truppe is Nahkaempfer)
+                    ItemPB.Image = Properties.Resources.melee;
+                else if (truppe is Fernkaempfer)
+                    ItemPB.Image = Properties.Resources.ranged;
+                truppenLebenLB.Text = $"Lebel: {truppe.Leben}";
+                truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
+                titelLabel.Text = truppe.ToString();
+                truppenSchadenLB.Visible = true;
+            }
+            else if (o is Stadt stadt)
+            {
+                ItemPB.Image = Properties.Resources.stadt;
                 ItemPB.BackgroundImage = Properties.Resources.ui_wood;
-                    truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
-                    titelLabel.Text = stadt.Name;
-                }
-                else if (o is Squad squad)
+                truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
+                titelLabel.Text = stadt.Name;
+            }
+            else if (o is Squad squad)
             {
                 truppenLebenLB.Text = $"Leben: {squad.Gesamtleben}";
                 truppenSchadenLB.Text = $"Schaden: {squad.Gesamtschaden}";
@@ -663,20 +652,12 @@ namespace rbss1
                 ItemPB.Image = Properties.Resources.squad_wappen;
                 titelLabel.Text = squad.ToString();
             }
-                ItemPB.Show();
-                truppenLebenLB.Show();
-                titelLabel.Show();
-            }
-            else if (o is Stadt stadt)
-            {
-                ItemPB.Image = Properties.Resources.stadt;
-                truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
-                titelLabel.Text = stadt.Name;
-            }
             ItemPB.Show();
             truppenLebenLB.Show();
             titelLabel.Show();
         }
+
+
         public void HideUIInfo()
         {
             ItemPB.Hide();
@@ -1039,16 +1020,16 @@ namespace rbss1
 
         }
 
-        public bool Gewinnueberpruefung() 
+        public bool Gewinnueberpruefung()
         {
-            foreach(var Spieler in spieler) 
+            foreach (var Spieler in spieler)
             {
-                if(Spieler.staedteBesitz.Count == 0) 
+                if (Spieler.staedteBesitz.Count == 0)
                 {
                     MessageBox.Show("Spieler ist Raus!");
                     spieler.Remove(Spieler);
                 }
-                if(spieler.Count == 1) 
+                if (spieler.Count == 1)
                 {
                     MessageBox.Show($"Spieler {Spieler.ToString()} hat gewonnen!");
                     return true;
@@ -1111,7 +1092,7 @@ namespace rbss1
                 Location = new Point(10, 260),
                 Size = new Size(120, 30)
             };
-            nahkaempferButton.Click += (btnSender,btnE) =>
+            nahkaempferButton.Click += (btnSender, btnE) =>
             {
                 Truppe neueTruppe = new Nahkaempfer();
                 truppenAnzeige.Items.Add(neueTruppe.ToString());
@@ -1150,7 +1131,7 @@ namespace rbss1
                 Feld freiesFeld = new Feld();
                 foreach (Feld feld in ziel)
                 {
-                    if(feld != null && feld.feldart == "Grass" && feld.TruppeAufFeld == null && feld.SquadAufFeld == null)
+                    if (feld != null && feld.feldart == "Grass" && feld.TruppeAufFeld == null && feld.SquadAufFeld == null)
                     {
                         freiesFeld = feld;
                         break;
@@ -1207,6 +1188,8 @@ namespace rbss1
             squadErstellenPanel.BringToFront();
         }
     }
-    }
 }
+    
+    
+
 

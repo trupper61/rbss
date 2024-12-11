@@ -69,7 +69,6 @@ namespace rbss1
         }
         public void BewegeZu(Feld zielFeld)
         {
-
                 AktuellesFeld.TruppeAufFeld = null;
                 SetzeFeld(zielFeld);
                 zielFeld.SquadAufFeld = this;
