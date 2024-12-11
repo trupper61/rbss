@@ -12,10 +12,10 @@ namespace rbss1
         public int anzahl { get; set; }
         public string name { get; set; }
 
-        public int Eisen { get; set; } = 0;
-        public int Kohle { get; set; } = 0;
-        public int Weizen { get; set; } = 0;
-        public int Stahl { get; set; } = 0;
+        public int Eisen { get; set; }
+        public int Kohle { get; set; }
+        public int Weizen { get; set; }
+        public int Stahl { get; set; }
         public Rescourcen(int wert = 0, int anzahl = 0, string name = null) 
         {
             this.wert = wert;
