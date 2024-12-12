@@ -497,8 +497,11 @@ namespace rbss1
                     if (distanz <= bewegungsreichweite)
 
                     {
-                        felder[i, j].textur.Image = Properties.Resources.grasstransparent;
-                        felder[i, j].textur.BackColor = Color.LightGreen;
+                        if (felder[i, j].feldart != "Water") 
+                        {
+                            felder[i, j].textur.Image = Properties.Resources.grasstransparent;
+                            felder[i, j].textur.BackColor = Color.LightGreen;
+                        }
                     }
                 }
             }
