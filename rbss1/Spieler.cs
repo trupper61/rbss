@@ -17,6 +17,7 @@ namespace rbss1
         public bool zugbeendet { get; set; }
         public List<Stadt> staedteBesitz { get; set; }
         public List<Farm> farmBesitz { get; set; }
+        public List<Stahlwerk> stahlwerkBesitz { get; set; }
         public List<Truppe> truppen { get; set; }
 
         public Color SpielerFarbe { get; private set; }
@@ -30,6 +31,7 @@ namespace rbss1
             this.SpielerFarbe = SpielerFarbe;
             this.staedteBesitz = new List<Stadt>();
             this.farmBesitz = new List<Farm>();
+            this.stahlwerkBesitz = new List<Stahlwerk>();
             zugbeendet = false;
             truppen = new List<Truppe>();
         }

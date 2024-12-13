@@ -562,6 +562,17 @@ namespace rbss1
                     {
                         feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                     }
+                    if (feld.StahlwerkAufFeld != null)
+                    {
+                        if(feld.rescourcen == null) 
+                        {
+                            feld.rescourcen = new Stahl(10, feld.StahlwerkAufFeld.StahlEinkommen);
+                        }
+                        else 
+                        {
+                            feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                        }
+                    }
                 }
                 foreach (var spieler in spieler)
                 {
@@ -748,6 +759,7 @@ namespace rbss1
                 {
                     stadtbauen.Hide();
                     farmbauen.Hide();
+                    stahlwerkbauen.Hide();
                 }
                 else
                 {
@@ -759,11 +771,13 @@ namespace rbss1
             {
                 stadtbauen.Show();
                 farmbauen.Show();
+                stahlwerkbauen.Show();
             }
             else if (stadtbauen.Visible == true)
             {
                 stadtbauen.Hide();
                 farmbauen.Hide();
+                stahlwerkbauen.Hide();
             }
             return;
         }
@@ -780,6 +794,11 @@ namespace rbss1
                 if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.textur.BackColor == spieler[aktuellerSpielerIndex].SpielerFarbe)
                 {
                     MessageBox.Show("Innerhalb eigender Gebiete kann keine weitere Stadt errichtet werden!");
+                    return;
+                }
+                if(lastClickedFeld.StahlwerkAufFeld != null || lastClickedFeld.FarmAufFeld != null || lastClickedFeld.StadtAufFeld != null) 
+                {
+                    MessageBox.Show("Man kann keine Gebäude auf andere Bauen!");
                     return;
                 }
                 List<Point> platzierteStadtPositionen = new List<Point>();
@@ -840,6 +859,11 @@ namespace rbss1
                 MessageBox.Show("Man kann nur Farms auf Felder Bauen, die Weizen enthalten!");
                 return;
             }
+            if(lastClickedFeld.FarmAufFeld != null) 
+            {
+                MessageBox.Show("Man kann keine Gebäude auf andere Bauen!");
+                return;
+            }
             if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0 && spieler[aktuellerSpielerIndex].geld >= 100 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null)
             {
                 if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
@@ -889,6 +913,68 @@ namespace rbss1
                 MessageBox.Show("Man kann keine Farm auf dem selben Feld bauen, auf dem eine Truppe steht!");
             }
 
+        }
+
+        private void stahlwerkbauen_Click(object sender, EventArgs e)
+        {
+            if (lastClickedFeld.rescourcen != null)
+            {
+                MessageBox.Show("Man kann nur Stahlwerke auf Felder Bauen, die keine Rescourcen enthalten!");
+                return;
+            }
+            if (lastClickedFeld.StahlwerkAufFeld != null)
+            {
+                MessageBox.Show("Man kann keine Gebäude auf andere Bauen!");
+                return;
+            }
+            if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0 && spieler[aktuellerSpielerIndex].geld >= 100 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null)
+            {
+                if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
+                {
+                    MessageBox.Show("Dieses Feld gehört dir nicht!");
+                    return;
+                }
+                List<Point> platzierteStahlPositionen = new List<Point>();
+
+                int x = lastClickedFeld.position.X;
+                int y = lastClickedFeld.position.Y;
+
+                if (lastClickedFeld.feldart == "Grass")
+                {
+                    Stahlwerk neueStahlwerke = new Stahlwerk(lastClickedFeld, felder);
+                    neueStahlwerke.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].stahlwerkBesitz.Add(neueStahlwerke);
+
+
+
+                    lastClickedFeld.StahlwerkAufFeld = neueStahlwerke;
+
+                    neueStahlwerke.textur.Location = new Point(lastClickedFeld.textur.Location.X + 5, lastClickedFeld.textur.Location.Y + 5);
+                    neueStahlwerke.textur.Tag = neueStahlwerke;
+
+                    this.Controls.Add(neueStahlwerke.textur);
+                    neueStahlwerke.textur.BringToFront();
+
+                    platzierteStahlPositionen.Add(new Point(x, y));
+
+                    spieler[aktuellerSpielerIndex].bewegungspunkte -= 1;
+                    spieler[aktuellerSpielerIndex].geld -= 100;
+                    UIAktualisierung();
+                }
+                return;
+            }
+            else if (spieler[aktuellerSpielerIndex].geld < 100)
+            {
+                MessageBox.Show("Nicht genügend Geld!");
+            }
+            else if (spieler[aktuellerSpielerIndex].bewegungspunkte < 1)
+            {
+                MessageBox.Show("Nicht genügend Bewegungspunkte!");
+            }
+            else
+            {
+                MessageBox.Show("Man kann keine Farm auf dem selben Feld bauen, auf dem eine Truppe steht!");
+            }
         }
         private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
         {
@@ -1190,6 +1276,8 @@ namespace rbss1
             Controls.Add(squadErstellenPanel);
             squadErstellenPanel.BringToFront();
         }
+
+        
     }
 }
     

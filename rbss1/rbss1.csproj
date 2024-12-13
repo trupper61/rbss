@@ -69,6 +69,8 @@
     <Compile Include="Spieler.cs" />
     <Compile Include="Squad.cs" />
     <Compile Include="Stadt.cs" />
+    <Compile Include="Stahl.cs" />
+    <Compile Include="Stahlwerk.cs" />
     <Compile Include="Truppe.cs" />
     <Compile Include="Weizen.cs" />
     <EmbeddedResource Include="Form1.resx">
