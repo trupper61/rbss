@@ -540,6 +540,7 @@ namespace rbss1
                     return;
                 }
                 aktuellerSpielerIndex = 0;
+                aktuellerSpieler = spieler[aktuellerSpielerIndex];
                 MessageBox.Show("Neue Runde beginnt");
 
                 //Für jede Stadt, die ein Spieler besitzt, gibt es Einkommen
@@ -564,19 +565,29 @@ namespace rbss1
                     }
                     if (feld.StahlwerkAufFeld != null)
                     {
-                        if(feld.rescourcen == null) 
+                        if(aktuellerSpieler.rescourcenBesitz.Eisen > 0 && aktuellerSpieler.rescourcenBesitz.Kohle > 0) 
                         {
-                            feld.rescourcen = new Stahl(10, feld.StahlwerkAufFeld.StahlEinkommen);
+                            if (feld.rescourcen == null)
+                            {
+                                feld.rescourcen = new Stahl(10, feld.StahlwerkAufFeld.StahlEinkommen);
+                            }
+                            else
+                            {
+                                feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                            }
                         }
                         else 
                         {
-                            feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                            MessageBox.Show("Die Stahlwerke können nicht mehr Arbeiten! Schaffe Kohle und Eisen an!");
                         }
                     }
                 }
                 foreach (var spieler in spieler)
                 {
+                    int abziehbarResVar = spieler.stahlwerkBesitz.Count;
+
                     int abziehbarVar = spieler.staedteBesitz.Count;
+
                     foreach (var feld in alleFelder)
                     {
                         if (feld.besitzer == spieler)
@@ -588,6 +599,18 @@ namespace rbss1
                                 {
                                     feld.rescourcen.Weizen -= 10;
                                     abziehbarVar--;
+                                }
+                            }
+                            if(aktuellerSpieler.rescourcenBesitz.Eisen > 0 && aktuellerSpieler.rescourcenBesitz.Kohle > 0) 
+                            {
+                                if (feld.rescourcen != null)
+                                {
+                                    if (abziehbarResVar != 0)
+                                    {
+                                        feld.rescourcen.Kohle -= 10;
+                                        feld.rescourcen.Eisen -= 10;
+                                        abziehbarResVar--;
+                                    }
                                 }
                             }
                         }
