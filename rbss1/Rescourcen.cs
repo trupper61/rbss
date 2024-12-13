@@ -35,6 +35,7 @@ namespace rbss1
                 Eisen += neueRessourcen.Eisen;
                 Kohle += neueRessourcen.Kohle;
                 Weizen += neueRessourcen.Weizen;
+                Stahl += neueRessourcen.Stahl;
             }
         }
     }
