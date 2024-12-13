@@ -182,8 +182,8 @@ namespace rbss1
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
                     EntferneBewegungsbereich(null);
-                    selectedTruppe.Angreifen(clickedTruppe);
-                    ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                    if (selectedTruppe.Angreifen(clickedTruppe))
+                        ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                     selectedTruppe = null;
                     HideUIInfo();
                     return;
@@ -191,8 +191,8 @@ namespace rbss1
                 if (selectedSquad != null)
                 {
                     EntferneBewegungsbereich(null);
-                    selectedSquad.Angreifen(clickedTruppe);
-                    ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                    if(selectedSquad.Angreifen(clickedTruppe))
+                        ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                     selectedSquad = null;
                     HideUIInfo();
                     return;
@@ -236,8 +236,8 @@ namespace rbss1
                 if (selectedSquad != null && selectedSquad != clickedSquad)
                 {
                     EntferneBewegungsbereich(null);
-                    selectedSquad.Angreifen(clickedSquad);
-                    ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
+                    if(selectedSquad.Angreifen(clickedSquad))
+                        ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
                     selectedSquad = null;
                     HideUIInfo();
                     return;
@@ -246,8 +246,8 @@ namespace rbss1
                 if (selectedTruppe != null)
                 {
                     EntferneBewegungsbereich(null);
-                    selectedTruppe.Angreifen(clickedSquad);
-                    ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
+                    if (selectedTruppe.Angreifen(clickedSquad))
+                        ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
                     selectedTruppe = null;
                     HideUIInfo();
                     return;
@@ -280,16 +280,16 @@ namespace rbss1
                     if (selectedTruppe != null)
                     {
                         EntferneBewegungsbereich(null);
-                        selectedTruppe.Angreifen(clickedStadt);
-                        ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                        if (selectedTruppe.Angreifen(clickedStadt))
+                            ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                         selectedTruppe = null;
                         HideUIInfo();
                         return;
                     }
                     else if (selectedSquad != null)
                     {
-                        selectedSquad.Angreifen(clickedStadt);
-                        ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
+                        if (selectedSquad.Angreifen(clickedStadt))
+                            ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
                         selectedSquad = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);

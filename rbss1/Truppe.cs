@@ -51,8 +51,8 @@ namespace rbss1
                 EntferneTruppe();
         }
         public abstract override string ToString();
-        public abstract void Angreifen(Truppe targetTruppe);
-        public abstract void Angreifen(Stadt targetStadt);
-        public abstract void Angreifen(Squad targetSquad);
+        public abstract bool Angreifen(Truppe targetTruppe);
+        public abstract bool Angreifen(Stadt targetStadt);
+        public abstract bool Angreifen(Squad targetSquad);
     }
 }

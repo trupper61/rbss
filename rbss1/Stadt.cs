@@ -97,5 +97,13 @@ namespace rbss1
             this.textur.Hide();
             this.stadt = null;
         }
+        public void NehmeSchaden(int schaden)
+        {
+            Leben -= schaden;
+            if (Leben <= 0)
+            {
+                EntferneStadt();
+            }
+        }
     }
 }

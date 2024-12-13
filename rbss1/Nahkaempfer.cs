@@ -15,27 +15,26 @@ namespace rbss1
             textur.Image = Properties.Resources.melee_character;
 
         }
-        public override void Angreifen(Truppe targetTruppe)
+        public override bool Angreifen(Truppe targetTruppe)
         {
-            if (targetTruppe == null || targetTruppe.Besitzer == Besitzer)
-                return;
+            if ((targetTruppe == null || targetTruppe.Besitzer == Besitzer) && (BerechneDistanz(targetTruppe.AktuellesFeld) == 1))
+                return false;
             targetTruppe.NehmeSchaden(Schaden);
+            return true;
         }
-        public override void Angreifen(Stadt targetStadt)
+        public override bool Angreifen(Stadt targetStadt)
         {
-            if (targetStadt == null || Besitzer.staedteBesitz.Contains(targetStadt))
-                return;
-            targetStadt.Leben -= Schaden;
-            if (targetStadt.Leben <= 0)
-            {
-                targetStadt.EntferneStadt();
-            }
+            if ((targetStadt == null || targetStadt.Besitzer == Besitzer) && (BerechneDistanz(targetStadt.startFeld) == 1))
+                return false;
+            targetStadt.NehmeSchaden(Schaden);
+            return true;
         }
-        public override void Angreifen(Squad targetSquad)
+        public override bool Angreifen(Squad targetSquad)
         {
-            if (targetSquad == null || Besitzer == targetSquad.Besitzer)
-                return;
+            if ((targetSquad == null || Besitzer == targetSquad.Besitzer) && (BerechneDistanz(targetSquad.AktuellesFeld) == 1))
+                return false;
             targetSquad.NehmeSchaden(Schaden);
+            return true;
         }
         public override string ToString()
         {

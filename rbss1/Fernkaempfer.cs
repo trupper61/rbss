@@ -19,32 +19,26 @@ namespace rbss1
             Bewegungsreichweite = 2;
             textur.Image = Properties.Resources.ranged_character;
         }
-        public override void Angreifen(Truppe targetTruppe)
+        public override bool Angreifen(Truppe targetTruppe)
         {
-            if (targetTruppe != null || targetTruppe.Besitzer == Besitzer)
-                return;
-            int distanz = BerechneDistanz(targetTruppe.AktuellesFeld);
-            if (distanz <= Reichweite)
-            {
-                targetTruppe.NehmeSchaden(Schaden);
-            }
+            if ((targetTruppe != null || targetTruppe.Besitzer == Besitzer) && (BerechneDistanz(targetTruppe.AktuellesFeld) <= Reichweite))
+                return false;
+            targetTruppe.NehmeSchaden(Schaden);
+            return true;
         }
-        public override void Angreifen(Stadt targetStadt)
+        public override bool Angreifen(Stadt targetStadt)
         {
-            if (targetStadt != null || targetStadt.Besitzer == Besitzer)
-                return;
-            int distanz = BerechneDistanz(targetStadt.startFeld);
-            if (distanz <= Reichweite)
-            {
-                targetStadt.Leben -= Schaden;
-                if (targetStadt.Leben <= 0)
-                    targetStadt.EntferneStadt();
-            }
+            if ((targetStadt != null || targetStadt.Besitzer == Besitzer) && (BerechneDistanz(targetStadt.startFeld) <= Reichweite))
+                return false;
+            targetStadt.NehmeSchaden(Schaden);
+            return true;
         }
-        public override void Angreifen(Squad targetSquad)
+        public override bool Angreifen(Squad targetSquad)
         {
-            if (targetSquad != null || targetSquad.Besitzer == Besitzer)
-                return;
+            if ((targetSquad != null || targetSquad.Besitzer == Besitzer) && (BerechneDistanz(targetSquad.AktuellesFeld) <= Reichweite))
+                return false;
+            targetSquad.NehmeSchaden(Schaden);
+            return true;
         }
         public override string ToString()
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -125,23 +126,51 @@ namespace rbss1
                 truppe.EntferneTruppe();
             }
         }
-        public void Angreifen (Squad gegnerSquad)
+        public int TrueDamage(Feld targetFeld)
         {
-            gegnerSquad.NehmeSchaden(Gesamtschaden);
+            int aktuellerSchaden = Gesamtschaden;
+            foreach (Truppe truppe in Mitglieder)
+            {
+                if (truppe is Nahkaempfer && !(BerechneDistanz(targetFeld) == 1))
+                {
+                    aktuellerSchaden -= truppe.Schaden;
+                }
+                else if (truppe is Fernkaempfer fernkampf && !(BerechneDistanz(targetFeld) <= fernkampf.Reichweite))
+                {
+                    aktuellerSchaden -= truppe.Schaden;
+                }
+            }
+            return aktuellerSchaden;
         }
-        public void Angreifen (Truppe gegnerTruppe)
+        public bool Angreifen (Squad gegnerSquad)
         {
-            gegnerTruppe.NehmeSchaden(Gesamtschaden);
+            if (gegnerSquad.Besitzer == Besitzer)
+                return false;
+            int aktuellerSchaden = TrueDamage(gegnerSquad.AktuellesFeld);
+            if (aktuellerSchaden <= 0)
+                return false;
+            gegnerSquad.NehmeSchaden(aktuellerSchaden);
+            return true;
         }
-        public void Angreifen(Stadt targetStadt)
+        public bool Angreifen (Truppe gegnerTruppe)
+        {
+            if (gegnerTruppe.Besitzer == Besitzer)
+                return false;
+            int aktuellerSchaden = TrueDamage(gegnerTruppe.AktuellesFeld);
+            if (aktuellerSchaden <= 0)
+                return false;
+            gegnerTruppe.NehmeSchaden(aktuellerSchaden);
+            return true;
+        }
+        public bool Angreifen(Stadt targetStadt)
         {
             if (targetStadt == null || Besitzer.staedteBesitz.Contains(targetStadt))
-                return;
-            targetStadt.Leben -= Gesamtschaden;
-            if (targetStadt.Leben <= 0)
-            {
-                targetStadt.EntferneStadt();
-            }
+                return false;
+            int aktuellerSchaden = TrueDamage(targetStadt.startFeld);
+            if (aktuellerSchaden <= 0)
+                return false;
+            targetStadt.NehmeSchaden(aktuellerSchaden);
+            return true;
         }
         public int BerechneDistanz(Feld ziel)
         {
