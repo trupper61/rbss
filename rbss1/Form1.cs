@@ -6,6 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace rbss1
         public int truppenMax = 4;
         public int spielerMax = 4;
         public string truppeZumErstellen;
+        private Panel squadPanel;
+        private ListBox squadTruppenLB;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
@@ -55,7 +58,7 @@ namespace rbss1
 
             Feldgenerierung();
             InitialisiereComboBox();
-
+            ErstelleSquadPanel();
             MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
             UIAktualisierung();
         }
@@ -161,9 +164,7 @@ namespace rbss1
                     }
                 }
             }
-
             GeneriereStaedte(felderxMax, felderyMax);
-
         }
         public void feld_Click(object sender, EventArgs e)
         {
@@ -171,7 +172,7 @@ namespace rbss1
 
             UIInfo.Show();
             UIInfo.Image = Properties.Resources.UI2;
-
+            squadPanelBtn.Visible = false;
 
             if (clickedObject is Truppe clickedTruppe)
             {
@@ -206,7 +207,7 @@ namespace rbss1
                 {
                     selectedTruppe = clickedTruppe;
                     MakiereBewegungsreichweite(selectedTruppe);
-
+                    
                     if (lastClickedFeld != null)
                     {
                         lastClickedFeld.textur.BackColor = Color.White;
@@ -232,22 +233,23 @@ namespace rbss1
             }
             else if (clickedObject is Squad clickedSquad)
             {
-
+                if (rekrutiermodus)
+                    return;
                 if (selectedSquad != null && selectedSquad != clickedSquad)
                 {
                     EntferneBewegungsbereich(null);
                     if(selectedSquad.Angreifen(clickedSquad))
-                        ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
+                        ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedSquad.AktuellesFeld));
                     selectedSquad = null;
                     HideUIInfo();
                     return;
                 }
 
-                if (selectedTruppe != null)
+                else if (selectedTruppe != null)
                 {
                     EntferneBewegungsbereich(null);
                     if (selectedTruppe.Angreifen(clickedSquad))
-                        ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
+                        ZeigeSchaden(clickedSquad.textur, clickedSquad.Gesamtschaden);
                     selectedTruppe = null;
                     HideUIInfo();
                     return;
@@ -257,11 +259,25 @@ namespace rbss1
                     MessageBox.Show("Das ist nicht dein Squad!");
                     return;
                 }
-                selectedSquad = clickedSquad;
-                MakiereBewegungsreichweite(selectedSquad);
-                UpdateUIInfo(clickedSquad);
-                einnehmen.Show();
-                return;
+                if (selectedSquad == null)
+                {
+                    selectedSquad = clickedSquad;
+                    squadPanelBtn.Visible = true;
+                    MakiereBewegungsreichweite(selectedSquad);
+
+                    UpdateUIInfo(clickedSquad);
+                    einnehmen.Show();
+                }
+                else
+                {
+                    EntferneBewegungsbereich(null);
+                    selectedSquad = null;
+                    truppenLebenLB.Hide();
+                    truppenSchadenLB.Hide();
+                    einnehmen.Hide();
+                    ItemPB.Hide();
+                    titelLabel.Hide();
+                }
             }
 
             else if (clickedObject is Stadt clickedStadt)
@@ -289,7 +305,7 @@ namespace rbss1
                     else if (selectedSquad != null)
                     {
                         if (selectedSquad.Angreifen(clickedStadt))
-                            ZeigeSchaden(selectedSquad.textur, selectedSquad.Gesamtschaden);
+                            ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedStadt.startFeld));
                         selectedSquad = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
@@ -393,7 +409,7 @@ namespace rbss1
 
                         int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
 
-                        if (distanz > selectedTruppe.Bewegungsreichweite)
+                        if (distanz > selectedTruppe.Bewegungsreichweite && clickedFeld.StadtAufFeld != null)
                         {
                             selectedTruppe = null;
                             lastClickedFeld.textur.BackColor = Color.White;
@@ -421,13 +437,34 @@ namespace rbss1
                 }
                 else if (selectedSquad != null && clickedFeld.feldart == "Grass")
                 {
-                    if (selectedSquad.BerechneDistanz(clickedFeld) <= selectedSquad.Bewegungsreichweite)
+                    if (aktuellerSpieler.bewegungspunkte > 0)
                     {
-                        selectedSquad.BewegeZu(clickedFeld);
+
+
+                        if (selectedSquad.BerechneDistanz(clickedFeld) <= selectedSquad.Bewegungsreichweite)
+                        {
+                            selectedSquad.BewegeZu(clickedFeld);
+                            EntferneBewegungsbereich(null);
+                            selectedSquad = null;
+                            einnehmen.Hide();
+                            aktuellerSpieler.bewegungspunkte -= 1;
+                            UIAktualisierung();
+                        }
+                        else
+                        {
+                            selectedSquad = null;
+                            lastClickedFeld.textur.BackColor = Color.White;
+                            lastClickedFeld.textur.Image = Properties.Resources.grass;
+                            clickedFeld.textur.BackColor = Color.Gray;
+                            clickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                        selectedTruppe = null;
                         EntferneBewegungsbereich(null);
-                        selectedSquad = null;
-                        UIAktualisierung();
-                        einnehmen.Hide();
                     }
                 }
                 lastClickedFeld = clickedFeld;
@@ -702,8 +739,9 @@ namespace rbss1
                         spieler[spielerIndex].staedteBesitz.Add(neueStadt);
                         felder[x, y].StadtAufFeld = neueStadt;
 
-                        neueStadt.textur.Location = new Point(felder[x, y].textur.Location.X + 5, felder[x, y].textur.Location.Y + 5);
+                        neueStadt.textur.Location = new Point(felder[x, y].textur.Location.X, felder[x, y].textur.Location.Y);
                         neueStadt.textur.Tag = neueStadt;
+                        neueStadt.textur.BackColor = neueStadt.Besitzer.SpielerFarbe;
                         neueStadt.textur.Click += new EventHandler(feld_Click);
                         neueStadt.SetzeEinflussRadius(spieler, spielerIndex);
 
@@ -1158,20 +1196,25 @@ namespace rbss1
             Panel squadErstellenPanel = new Panel
             {
                 Size = new Size(300, 400),
-                Location = new Point(500, 50),
-                BorderStyle = BorderStyle.FixedSingle
+                Location = new Point(750, 100),
+                BorderStyle = BorderStyle.FixedSingle,
+                BackgroundImage = Properties.Resources.ui_wood
             };
             Label infoLabel = new Label
             {
                 Text = "Wähle Truppen:",
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
                 Location = new Point(10, 10),
-                Size = new Size(280, 20)
+                Size = new Size(280, 20),
+                ForeColor = Color.White
             };
             squadErstellenPanel.Controls.Add(infoLabel);
             ListBox truppenAnzeige = new ListBox
             {
                 Location = new Point(10, 40),
-                Size = new Size(280, 200)
+                Size = new Size(280, 200),
+                BackColor = ColorTranslator.FromHtml("#8C5028"),
+                ForeColor = Color.White
             };
             squadErstellenPanel.Controls.Add(truppenAnzeige);
 
@@ -1179,7 +1222,9 @@ namespace rbss1
             {
                 Text = "Nahkämpfer + ",
                 Location = new Point(10, 260),
-                Size = new Size(120, 30)
+                Size = new Size(120, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
             };
             nahkaempferButton.Click += (btnSender, btnE) =>
             {
@@ -1192,7 +1237,9 @@ namespace rbss1
             {
                 Text = "Fernkämpfer +",
                 Location = new Point(150, 260),
-                Size = new Size(120, 30)
+                Size = new Size(120, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
             };
             fernkaempferButton.Click += (btnSender, btnE) =>
             {
@@ -1205,7 +1252,9 @@ namespace rbss1
             {
                 Text = "Erstellen",
                 Location = new Point(10, 310),
-                Size = new Size(120, 30)
+                Size = new Size(120, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
             };
             confirmBtn.Click += (btnSender, btnE) =>
             {
@@ -1256,7 +1305,9 @@ namespace rbss1
                 Controls.Add(neuesSquad.textur);
                 neuesSquad.textur.Click += new EventHandler(feld_Click);
                 neuesSquad.textur.BringToFront();
+                freiesFeld.SquadAufFeld = neuesSquad;
                 aktuellerSpieler.geld -= preis;
+                UIAktualisierung();
                 neuesSquad.textur.Tag = neuesSquad;
                 squadErstellenPanel.Hide();
             };
@@ -1266,7 +1317,9 @@ namespace rbss1
             {
                 Text = "Abbrechen",
                 Location = new Point(150, 310),
-                Size = new Size(120, 30)
+                Size = new Size(120, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
             };
             cancelBtn.Click += (btnSender, btnE) =>
             {
@@ -1276,8 +1329,133 @@ namespace rbss1
             Controls.Add(squadErstellenPanel);
             squadErstellenPanel.BringToFront();
         }
+        public void ErstelleSquadPanel()
+        {
+            squadPanel = new Panel
+            {
+                Size = new Size(400, 300),
+                Location = new Point(750, 70),
+                BackgroundImage = Properties.Resources.ui_wood,
+                Visible = false
+            };
+            squadTruppenLB = new ListBox
+            {
+                Location = new Point(10, 10),
+                Size = new Size(180, 200),
+                BackColor = ColorTranslator.FromHtml("#8C5028"),
+                ForeColor = Color.White
+            };
+            squadPanel.Controls.Add(squadTruppenLB);
+            Button btnRemoveSelected = new Button
+            {
+                Text = "Truppe entfernen",
+                Location = new Point(200, 10),
+                Size = new Size(150, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
+            };
+            btnRemoveSelected.Click += (btnSender, btnE) =>
+            {
+                if (squadTruppenLB.SelectedItem == null)
+                {
+                    MessageBox.Show("Wähle eine Truppe aus");
+                    return;
+                }
+                int index = squadTruppenLB.SelectedIndex;
+                Truppe truppe = selectedSquad.Mitglieder[index];
+                selectedSquad.EntferneTruppe(truppe);
 
-        
+                squadTruppenLB.Items.RemoveAt(index);
+            };
+            squadPanel.Controls.Add(btnRemoveSelected);
+            Button closeBtn = new Button
+            {
+                Text = "Schließen",
+                Location = new Point(200, 150),
+                Size = new Size(150, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
+            };
+            closeBtn.Click += (btnSender, btnE) =>
+            {
+                squadPanel.Visible = false;
+            };
+            squadPanel.Controls.Add(closeBtn);
+            Button kaufeNahkaempfer = new Button
+            {
+                Text = "Nahkämpfer Kaufen",
+                Location = new Point(200, 50),
+                Size = new Size(150, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
+            };
+            kaufeNahkaempfer.Click += (btnSender, btnE) =>
+            {
+                if (!selectedSquad.AktuellesFeld.GehoertZuStadt)
+                {
+                    MessageBox.Show("Musst in deiner Stadt sein, um Truppen kaufen zu können");
+                    return;
+                }
+                Nahkaempfer nahkaempfer = new Nahkaempfer();
+                nahkaempfer.Besitzer = aktuellerSpieler;
+                if (nahkaempfer.Preis > aktuellerSpieler.geld)
+                {
+                    MessageBox.Show("Du hast nicht genügend Geld!");
+                }
+                else
+                {
+                    selectedSquad.TruppeHinzufuegen(nahkaempfer);
+                    aktuellerSpieler.geld -= nahkaempfer.Preis;
+                    squadTruppenLB.Items.Add(nahkaempfer);
+                    UIAktualisierung();
+                    UpdateUIInfo(selectedSquad);
+                }
+            };
+            squadPanel.Controls.Add(kaufeNahkaempfer);
+            Button kaufeFernkaempfer = new Button
+            {
+                Text = "Fernkämpfer Kaufen",
+                Location = new Point(200, 80),
+                Size = new Size(150, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
+            };
+            kaufeFernkaempfer.Click += (btnSender, btnE) =>
+            {
+                if (!selectedSquad.AktuellesFeld.GehoertZuStadt)
+                {
+                    MessageBox.Show("Musst in deiner Stadt sein, um Truppen kaufen zu können");
+                    return;
+                }
+                Fernkaempfer fernkaempfer = new Fernkaempfer();
+                fernkaempfer.Besitzer = aktuellerSpieler;
+                if (fernkaempfer.Preis > aktuellerSpieler.geld)
+                {
+                    MessageBox.Show("Du hast nicht genügend Geld!");
+                }
+                else
+                {
+                    selectedSquad.TruppeHinzufuegen(fernkaempfer);
+                    aktuellerSpieler.geld -= fernkaempfer.Preis;
+                    squadTruppenLB.Items.Add(fernkaempfer);
+                    UIAktualisierung();
+                    UpdateUIInfo(selectedSquad);
+                }
+            };
+            squadPanel.Controls.Add(kaufeFernkaempfer);
+            Controls.Add(squadPanel);
+        }
+
+        private void squadPanelBtn_Click(object sender, EventArgs e)
+        {
+            squadPanel.Visible = true;
+            squadTruppenLB.Items.Clear();
+            foreach (Truppe truppe in selectedSquad.Mitglieder)
+            {
+                squadTruppenLB.Items.Add(truppe.ToString());
+            }
+            squadPanel.BringToFront();
+        }
     }
 }
     

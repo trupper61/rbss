@@ -35,7 +35,7 @@ namespace rbss1
             stadtFlaeche = new List<Feld>();
             textur = new PictureBox
             {
-                Size = new Size(40, 40),
+                Size = new Size(50, 50),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Image = Properties.Resources.rathaus,
                 BackgroundImage = Properties.Resources.grasstransparent
