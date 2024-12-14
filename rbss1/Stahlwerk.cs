@@ -17,7 +17,7 @@ namespace rbss1
         public Feld[,] felder { get; set; }
         public Feld startFeld { get; set; }
 
-        public int StahlEinkommen { get; set; } = 10;
+        public int StahlEinkommen { get; set; } = 30;
 
         public Stahlwerk(Feld startFeld, Feld[,] felder)
         {

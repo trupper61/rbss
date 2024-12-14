@@ -424,6 +424,7 @@ namespace rbss1
                     else
                     {
                         MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                        einnehmen.Hide();
                         selectedTruppe = null;
                         EntferneBewegungsbereich(null);
                     }
@@ -659,9 +660,9 @@ namespace rbss1
             {
                 MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
             }
-            if (aktuellerSpieler.rescourcenBesitz.Eisen < 0 && aktuellerSpieler.rescourcenBesitz.Kohle < 0 && aktuellerSpieler.stahlwerkBesitz != null)
+            if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle <= 0 | aktuellerSpieler.rescourcenBesitz.Eisen <= 0) 
             {
-                MessageBox.Show("Die Stahlwerke können nicht mehr Arbeiten! Schaffe Kohle und Eisen an!");
+                MessageBox.Show("Eisen und Kohlemagnel, Stahlwerke können nicht Arbeiten!");
             }
             
             UIAktualisierung();

@@ -98,6 +98,7 @@ namespace rbss1
                 {
                     felder.besitzer = null;
                     felder.GehoertZuStadt = false;
+                    felder.StadtAufFeld = null;
                 }
             }
             Besitzer = null;
