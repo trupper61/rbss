@@ -69,7 +69,6 @@ namespace rbss1
                         {
                             if (!stadtFlaeche.Contains(felder[i, j]))
                             {
-                                Console.WriteLine($"Feld hinzugefügt: {i}, {j}");
                                 stadtFlaeche.Add(felder[i, j]);
                             }
                             if (Besitzer == null)
@@ -92,6 +91,14 @@ namespace rbss1
             if (stadt != null)
             {
                 startFeld.EntferneStadt();
+            }
+            foreach (var felder in felder) 
+            {
+                if(felder.besitzer == this.Besitzer) 
+                {
+                    felder.besitzer = null;
+                    felder.GehoertZuStadt = false;
+                }
             }
             Besitzer = null;
             this.textur.Hide();

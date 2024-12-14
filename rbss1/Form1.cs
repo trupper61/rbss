@@ -355,7 +355,7 @@ namespace rbss1
                 }
                 if (lastClickedFeld == clickedFeld)
                 {
-                    if (clickedFeld.GehoertZuStadt && clickedFeld.besitzer != null)
+                    if (clickedFeld.GehoertZuStadt && clickedFeld.besitzer != null || clickedFeld.besitzer != null)
                     {
                         clickedFeld.textur.BackColor = clickedFeld.besitzer.SpielerFarbe;
                         clickedFeld.textur.Image = Properties.Resources.grasstransparent;
@@ -375,7 +375,7 @@ namespace rbss1
 
                 if (lastClickedFeld != null)
                 {
-                    if (lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != null)
+                    if (lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != null || lastClickedFeld.besitzer != null)
                     {
                         lastClickedFeld.textur.BackColor = lastClickedFeld.besitzer.SpielerFarbe;
                         lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
@@ -391,12 +391,6 @@ namespace rbss1
                 clickedFeld.textur.Image = Properties.Resources.grasstransparent;
 
                 UIInfo.Show();
-
-                lastClickedFeld = clickedFeld;
-
-
-
-                lastClickedFeld = clickedFeld;
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
@@ -553,7 +547,6 @@ namespace rbss1
                 {
                     feld.textur.BackColor = Color.White;
                     feld.textur.Image = Properties.Resources.grass;
-
                 }
             }
             foreach (var feld in felder)
@@ -561,6 +554,11 @@ namespace rbss1
                 if (feld.StadtAufFeld != null)
                 {
                     feld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+                }
+                if(feld.besitzer != null && !feld.GehoertZuStadt) 
+                {
+                    feld.textur.BackColor = feld.besitzer.SpielerFarbe;
+                    feld.textur.Image = Properties.Resources.grasstransparent;
                 }
             }
 
@@ -797,7 +795,8 @@ namespace rbss1
         {
             if (lastClickedFeld != null && !lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
             {
-                lastClickedFeld.textur.BackColor = Color.Red;
+                lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                lastClickedFeld.textur.BackColor = spieler[aktuellerSpielerIndex].SpielerFarbe;
                 lastClickedFeld.besitzer = spieler[aktuellerSpielerIndex];
                 MessageBox.Show("Auf diesem Feld kann nun eine Stadt gebaut werden!");
                 return;
@@ -862,6 +861,11 @@ namespace rbss1
                     MessageBox.Show("Man kann keine Gebäude auf andere Bauen!");
                     return;
                 }
+                if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl < 30) 
+                {
+                    MessageBox.Show("Nicht genügend Stahl!");
+                    return;
+                }
                 List<Point> platzierteStadtPositionen = new List<Point>();
                 int stadtabstand = 5;
 
@@ -890,6 +894,23 @@ namespace rbss1
 
                     spieler[aktuellerSpielerIndex].bewegungspunkte -= 2;
                     spieler[aktuellerSpielerIndex].geld -= 200;
+
+
+                    bool abziehbarRes = true;
+                    foreach (var feld in felder) 
+                    {
+                        if(abziehbarRes == true) 
+                        {
+                            if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                            {
+                                if (feld.StahlwerkAufFeld != null)
+                                {
+                                    feld.rescourcen.Stahl -= 30;
+                                    abziehbarRes = false;
+                                }
+                            }
+                        }
+                    }
                     UIAktualisierung();
                 }
                 return;
