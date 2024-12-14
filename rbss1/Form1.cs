@@ -590,30 +590,29 @@ namespace rbss1
                         spieler.geld += stadt.einkommen;
                     }
                 }
-
-                foreach (var feld in alleFelder)
+                foreach (var spieler in spieler) 
                 {
+                    foreach (var feld in alleFelder)
+                    {
 
-                    if (feld.FarmAufFeld != null)
-                    {
-                        feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
-                    }
-                    if (feld.StahlwerkAufFeld != null)
-                    {
-                        if(aktuellerSpieler.rescourcenBesitz.Eisen > 0 && aktuellerSpieler.rescourcenBesitz.Kohle > 0) 
+                        if (feld.FarmAufFeld != null && feld.FarmAufFeld.Besitzer == spieler)
                         {
-                            if (feld.rescourcen == null)
-                            {
-                                feld.rescourcen = new Stahl(10, feld.StahlwerkAufFeld.StahlEinkommen);
-                            }
-                            else
-                            {
-                                feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
-                            }
+                            feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                         }
-                        else 
+                        if (feld.StahlwerkAufFeld != null && feld.StahlwerkAufFeld.Besitzer == spieler)
                         {
-                            MessageBox.Show("Die Stahlwerke können nicht mehr Arbeiten! Schaffe Kohle und Eisen an!");
+                            if (spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0)
+                            {
+                                if (feld.rescourcen == null)
+                                {
+                                    feld.rescourcen = new Stahl(10, feld.StahlwerkAufFeld.StahlEinkommen);
+                                    feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                                }
+                                else
+                                {
+                                    feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                                }
+                            }
                         }
                     }
                 }
@@ -636,7 +635,7 @@ namespace rbss1
                                     abziehbarVar--;
                                 }
                             }
-                            if(aktuellerSpieler.rescourcenBesitz.Eisen > 0 && aktuellerSpieler.rescourcenBesitz.Kohle > 0) 
+                            if(spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0) 
                             {
                                 if (feld.rescourcen != null)
                                 {
@@ -660,6 +659,11 @@ namespace rbss1
             {
                 MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
             }
+            if (aktuellerSpieler.rescourcenBesitz.Eisen < 0 && aktuellerSpieler.rescourcenBesitz.Kohle < 0 && aktuellerSpieler.stahlwerkBesitz != null)
+            {
+                MessageBox.Show("Die Stahlwerke können nicht mehr Arbeiten! Schaffe Kohle und Eisen an!");
+            }
+            
             UIAktualisierung();
             spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
         }
