@@ -23,7 +23,7 @@ namespace rbss1
         private Feld[,] felder;
         private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
-        public int spielerMax = 4;
+        public int spielerMax = 3;
         public string truppeZumErstellen;
         private Panel squadPanel;
         private ListBox squadTruppenLB;
@@ -282,7 +282,7 @@ namespace rbss1
             else if (clickedObject is Stadt clickedStadt)
             {
                 selectedStadt = clickedStadt;
-                if (clickedStadt != null)
+                if (clickedStadt != null && Gewinnueberpruefung() != true)
                 {
                     if (clickedStadt.Besitzer == aktuellerSpieler)
                     {
@@ -292,7 +292,7 @@ namespace rbss1
                         EntferneBewegungsbereich(null);
                         return;
                     }
-                    if (selectedTruppe != null)
+                    if (selectedTruppe != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
                         EntferneBewegungsbereich(null);
                         if (selectedTruppe.Angreifen(clickedStadt))
@@ -300,15 +300,24 @@ namespace rbss1
                         selectedTruppe = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
                         return;
                     }
-                    else if (selectedSquad != null)
+                    else if (selectedSquad != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
                         if (selectedSquad.Angreifen(clickedStadt))
                             ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedStadt.startFeld));
                         selectedSquad = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                        return;
+                    }
+                    else if (selectedTruppe != null || selectedSquad != null & spieler[aktuellerSpielerIndex].bewegungspunkte == 0)
+                    {
+                        MessageBox.Show("Nicht genügend Bewegungspunkte!");
                         return;
                     }
                     MessageBox.Show("Das ist nicht deine Stadt!");
@@ -465,7 +474,7 @@ namespace rbss1
                 lastClickedFeld = clickedFeld;
 
             }
-            if (rekrutiermodus == true)
+            if (rekrutiermodus == true && Gewinnueberpruefung() != true)
             {
                 if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
                 {
@@ -491,6 +500,10 @@ namespace rbss1
                         truppe.textur.Click += new EventHandler(feld_Click);
                         UIAktualisierung();
                     }
+                }
+                else if(lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex]) 
+                {
+                    MessageBox.Show("Das ist nicht dein Feld!");
                 }
                 else
                 {
@@ -567,8 +580,14 @@ namespace rbss1
 
         public void Spielerwechsel()
         {
+            if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
+            {
+                //MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
+                SpielstandUpdate();
+            }
             Gewinnueberpruefung();
             aktuellerSpielerIndex++;
+            
 
             if (aktuellerSpielerIndex >= spieler.Count)
             {
@@ -633,11 +652,14 @@ namespace rbss1
                             {
                                 if (abziehbarVar != 0)
                                 {
-                                    feld.rescourcen.Weizen -= 10;
-                                    abziehbarVar--;
+                                    if(spieler.rescourcenBesitz.Weizen >= 0) 
+                                    {
+                                        feld.rescourcen.Weizen -= 10;
+                                        abziehbarVar--;
+                                    }
                                 }
                             }
-                            if(spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0) 
+                            if(spieler.rescourcenBesitz.Eisen >= 10 && spieler.rescourcenBesitz.Kohle >= 10) 
                             {
                                 if (feld.rescourcen != null)
                                 {
@@ -653,22 +675,16 @@ namespace rbss1
                     }
                 }
             }
-            
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
-            if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
-            {
-                MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
-                SpielstandUpdate();
-            }
-            if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle <= 0 | aktuellerSpieler.rescourcenBesitz.Eisen <= 0) 
+            if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle < 10 | aktuellerSpieler.rescourcenBesitz.Eisen < 10) 
             {
                 MessageBox.Show("Eisen und Kohlemagnel, Stahlwerke können nicht Arbeiten!");
             }
-            
-            UIAktualisierung();
+
             spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+            UIAktualisierung();
         }
 
         private void weiter_Click(object sender, EventArgs e)
@@ -826,6 +842,7 @@ namespace rbss1
 
         private void construction_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             if (lastClickedFeld == null)
             {
                 MessageBox.Show("Wähle Zunächst ein Feld aus!");
@@ -863,6 +880,12 @@ namespace rbss1
 
         private void stadtbauen_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
+            if (lastClickedFeld == null) 
+            {
+                MessageBox.Show("Wähle zunächst ein Feld aus!");
+                return;
+            }
             if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1 && spieler[aktuellerSpielerIndex].geld >= 200 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null)
             {
                 if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
@@ -950,6 +973,12 @@ namespace rbss1
 
         private void farmbauen_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
+            if (lastClickedFeld == null)
+            {
+                MessageBox.Show("Wähle zunächst ein Feld aus!");
+                return;
+            }
             if (lastClickedFeld.rescourcen == null)
             {
                 MessageBox.Show("Man kann nur Farms auf Felder Bauen, die Weizen enthalten!");
@@ -1018,6 +1047,12 @@ namespace rbss1
 
         private void stahlwerkbauen_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
+            if (lastClickedFeld == null)
+            {
+                MessageBox.Show("Wähle zunächst ein Feld aus!");
+                return;
+            }
             if (lastClickedFeld.rescourcen != null)
             {
                 MessageBox.Show("Man kann nur Stahlwerke auf Felder Bauen, die keine Rescourcen enthalten!");
@@ -1099,6 +1134,7 @@ namespace rbss1
 
         private void recruitSoldiers_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             if (rekrutiermodus == false)
             {
                 truppeComboBox.Visible = true;
@@ -1116,10 +1152,12 @@ namespace rbss1
         //Aktualiseren der UI-Elemente, welche das Geld und die Bewegungspunkte anzeigen.
         public void UIAktualisierung()
         {
-
+            if(Gewinnueberpruefung() == true) { return; }
             geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
             bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
-            momentanerSpieler.Text = $"Spieler {aktuellerSpielerIndex + 1}";
+            momentanerSpieler.Text = $"Spieler {spieler[aktuellerSpielerIndex]}";
+            aktuellerSpielerFarbe.BackColor = spieler[aktuellerSpielerIndex].SpielerFarbe;
+            aktuellerSpielerFarbe.BackgroundImage = Properties.Resources.grasstransparent;
 
             if (rescourceinventory.Visible == true)
             {
@@ -1149,6 +1187,7 @@ namespace rbss1
 
         private void rescourcenFenster_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             UIAktualisierung();
             if (rescourceinventory.Visible == true)
             {
@@ -1219,12 +1258,31 @@ namespace rbss1
                 {
                     MessageBox.Show("Spieler ist Raus!");
                     spieler.Remove(Spieler);
+                    foreach(var feld in felder) 
+                    {
+                        if(feld.TruppeAufFeld != null) 
+                        {
+                            if(feld.TruppeAufFeld.Besitzer == Spieler) 
+                            {
+                                feld.EntferneTruppe();
+                            }
+                        }
+                        if(feld.SquadAufFeld != null) 
+                        {
+                            if(feld.SquadAufFeld.Besitzer == Spieler) 
+                            {
+                                feld.EntferneSquad();
+                            }
+                        }
+                    }
                     Gewinnueberpruefung();
                     return false;
                 }
                 if (spieler.Count == 1)
                 {
                     MessageBox.Show($"Spieler {Spieler.ToString()} hat gewonnen!");
+                    momentanerSpieler.Text = $"Spieler {Spieler.ToString()}";
+                    momentanerSpieler.BackColor = Spieler.SpielerFarbe;
                     return true;
                 }
             }
@@ -1259,6 +1317,7 @@ namespace rbss1
         }
         private void recruitSquad_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             Panel squadErstellenPanel = new Panel
             {
                 Size = new Size(300, 400),
@@ -1525,7 +1584,7 @@ namespace rbss1
 
         private void rescourcenVerkauf_Click(object sender, EventArgs e)
         {
-
+            if (Gewinnueberpruefung() == true) { return; }
             if (marktFenster.Visible == true)
             {
                 marktFenster.Hide();
@@ -1548,7 +1607,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen > 0) 
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen >= 10) 
             {
                 foreach (var feld in alleFelder)
                 {
@@ -1577,7 +1636,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle > 0)
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle >= 10)
             {
                 foreach (var feld in alleFelder)
                 {
@@ -1606,7 +1665,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl > 0)
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl >= 10)
             {
                 foreach (var feld in alleFelder)
                 {
@@ -1635,7 +1694,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen > 0)
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen >= 10)
             {
                 foreach (var feld in alleFelder)
                 {
@@ -1679,6 +1738,36 @@ namespace rbss1
                     spielerStaedte.Leben -= 50;
                 }
             }
+        }
+
+        private void recruitSquad_MouseEnter(object sender, EventArgs e)
+        {
+            recruitSquad.Image = Properties.Resources.recruit_squadglow;
+        }
+
+        private void recruitSquad_MouseLeave(object sender, EventArgs e)
+        {
+            recruitSquad.Image = Properties.Resources.recruit_squad;
+        }
+
+        private void rescourcenFenster_MouseEnter(object sender, EventArgs e)
+        {
+            rescourcenFenster.BackgroundImage = Properties.Resources.rescourceviewglow;
+        }
+
+        private void rescourcenFenster_MouseLeave(object sender, EventArgs e)
+        {
+            rescourcenFenster.BackgroundImage = Properties.Resources.rescourceview;
+        }
+
+        private void rescourcenVerkauf_MouseEnter(object sender, EventArgs e)
+        {
+            rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesellglow;
+        }
+
+        private void rescourcenVerkauf_MouseLeave(object sender, EventArgs e)
+        {
+            rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesell;
         }
     }
 }

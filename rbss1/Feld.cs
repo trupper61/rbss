@@ -57,6 +57,18 @@ namespace rbss1
                 TruppeAufFeld = null;
             }
         }
+
+        public void EntferneSquad() 
+        {
+            if (SquadAufFeld != null)
+            {
+                if (SquadAufFeld.textur.Parent != null)
+                {
+                    SquadAufFeld.textur.Parent.Controls.Remove(SquadAufFeld.textur);
+                }
+                SquadAufFeld = null;
+            }
+        }
         public void EntferneStadt()
         {
             if (StadtAufFeld != null)

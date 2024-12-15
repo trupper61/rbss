@@ -253,6 +253,16 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap recruit_squadglow {
+            get {
+                object obj = ResourceManager.GetObject("recruit_squadglow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap recruitglow {
             get {
                 object obj = ResourceManager.GetObject("recruitglow", resourceCulture);
@@ -273,9 +283,29 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap rescourcesellglow {
+            get {
+                object obj = ResourceManager.GetObject("rescourcesellglow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rescourceview {
             get {
                 object obj = ResourceManager.GetObject("rescourceview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rescourceviewglow {
+            get {
+                object obj = ResourceManager.GetObject("rescourceviewglow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
