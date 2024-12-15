@@ -65,13 +65,16 @@ namespace rbss1
 
         public void Feldgenerierung()
         {
+            //Flag sorgt dafür, dass nach generation eines Wasserfeldes garantiert ein weiterer Wasserfeld rechts von dem Wasserfeld generiert wird.
             bool flag = false;
             int felderxMax = 10;
-            int felderyMax = 10;
+            int felderyMax = 11;
             felder = new Feld[felderxMax, felderyMax];
 
+            //Je nach Feldfröße wird die Maximale anzahl an Wasserfelder angepasst.
             int wasserMax = (felderxMax * felderyMax) / 2;
             int feldgroesse = 50;
+            //Wie oft Wasser nacheinander generieren darf.
             int durchlauefe = 0;
 
             for (int i = 0; i < felderxMax; i++)
@@ -116,6 +119,7 @@ namespace rbss1
                         }
                     }
 
+                    //Random zuteilung von Rescourcen, Feld darf kein Wasser sein.
                     if (rescourcenEinteilung == 1 && feld.feldart == "Grass")
                     {
                         feld.rescourcen = new Eisen(10, rescourcenAnzahl);
@@ -148,7 +152,7 @@ namespace rbss1
                 }
             }
 
-            //Platzierung von Wasser links und über einem Wasserfeld
+            //Platzierung von Wasser links und über einem Wasserfeld, nachdem die Grundstruktur der Mapgenerierung vollendet wurde.
             for (int i = 1; i < felderxMax - 1; i++)
             {
                 for (int j = 1; j < felderyMax - 1; j++)
@@ -160,12 +164,15 @@ namespace rbss1
 
                         felder[i, j - 1].feldart = "Water";
                         felder[i, j - 1].textur.Image = Properties.Resources.water;
-
                     }
                 }
             }
+
+            //Platzierung der Städte(größe der Map wird übergeben)
             GeneriereStaedte(felderxMax, felderyMax);
         }
+
+        //Handler für den Klick auf einen Feld.
         public void feld_Click(object sender, EventArgs e)
         {
             var clickedObject = (sender as PictureBox).Tag;
@@ -174,26 +181,53 @@ namespace rbss1
             UIInfo.Image = Properties.Resources.UI2;
             squadPanelBtn.Visible = false;
 
+            //Nur Wenn auf eine Truppe geklickt wird.
             if (clickedObject is Truppe clickedTruppe)
             {
+
+                //Wenn der Rekrutiermodus an ist, kann nicht mehr mit anderen Truppen interagiert werden.
                 if (rekrutiermodus == true)
                 {
                     return;
                 }
+
+                //Logik für den Angriff einer anderen Truppe als einzeltruppe.
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
                     EntferneBewegungsbereich(null);
-                    if (selectedTruppe.Angreifen(clickedTruppe))
+                    if (aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedTruppe.Angreifen(clickedTruppe);
                         ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedTruppe = null;
                     HideUIInfo();
                     return;
                 }
+
+                //Logik für den Angriff einer anderen Truppe als Squad.
                 if (selectedSquad != null)
                 {
                     EntferneBewegungsbereich(null);
-                    if(selectedSquad.Angreifen(clickedTruppe))
-                        ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                    if(aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedSquad.Angreifen(clickedTruppe);
+                        ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedTruppe.AktuellesFeld));
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedSquad = null;
                     HideUIInfo();
                     return;
@@ -203,6 +237,8 @@ namespace rbss1
                     MessageBox.Show("Das ist nicht deine Truppe!");
                     return;
                 }
+
+                //Truppe auswählen, wenn es nicht bereits gemacht wurde.
                 if (selectedTruppe == null)
                 {
                     selectedTruppe = clickedTruppe;
@@ -216,6 +252,8 @@ namespace rbss1
                     UpdateUIInfo(clickedTruppe);
                     einnehmen.Show();
                 }
+
+                //Ermöglicht, die Truppe abzuwählen.
                 else if (selectedTruppe != null)
                 {
                     EntferneBewegungsbereich(null);
@@ -228,18 +266,32 @@ namespace rbss1
                     ItemPB.Hide();
                     titelLabel.Hide();
                 }
-                UpdateGame(selectedTruppe);
+                UpdateGame(selectedTruppe, selectedSquad);
                 lastClickedFeld = clickedTruppe.AktuellesFeld;
             }
+
+            //Nur wenn ein Squad angeklickt wird.
             else if (clickedObject is Squad clickedSquad)
             {
                 if (rekrutiermodus)
                     return;
+
+                //Logik für Angriff
                 if (selectedSquad != null && selectedSquad != clickedSquad)
                 {
                     EntferneBewegungsbereich(null);
-                    if(selectedSquad.Angreifen(clickedSquad))
+                    if(aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedSquad.Angreifen(clickedSquad);
                         ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedSquad.AktuellesFeld));
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedSquad = null;
                     HideUIInfo();
                     return;
@@ -247,8 +299,18 @@ namespace rbss1
                 else if (selectedTruppe != null)
                 {
                     EntferneBewegungsbereich(null);
-                    if (selectedTruppe.Angreifen(clickedSquad))
-                        ZeigeSchaden(clickedSquad.textur, clickedSquad.Gesamtschaden);
+                    if (aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedTruppe.Angreifen(clickedSquad);
+                        ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedTruppe = null;
                     HideUIInfo();
                     return;
@@ -258,6 +320,8 @@ namespace rbss1
                     MessageBox.Show("Das ist nicht dein Squad!");
                     return;
                 }
+
+                //Ermöglicht die Auswahl des Squads
                 if (selectedSquad == null)
                 {
                     selectedSquad = clickedSquad;
@@ -267,6 +331,8 @@ namespace rbss1
                     UpdateUIInfo(clickedSquad);
                     einnehmen.Show();
                 }
+
+                //Ermöglicht die Abwahl des Squads
                 else
                 {
                     EntferneBewegungsbereich(null);
@@ -277,13 +343,17 @@ namespace rbss1
                     ItemPB.Hide();
                     titelLabel.Hide();
                 }
+                UpdateGame(selectedTruppe, selectedSquad);
             }
 
+            //Nur wenn Stadt angeklickt wird
             else if (clickedObject is Stadt clickedStadt)
             {
                 selectedStadt = clickedStadt;
                 if (clickedStadt != null && Gewinnueberpruefung() != true)
                 {
+
+                    //Anzeige seiner Stadtdaten
                     if (clickedStadt.Besitzer == aktuellerSpieler)
                     {
                         UpdateUIInfo(clickedStadt);
@@ -292,29 +362,54 @@ namespace rbss1
                         EntferneBewegungsbereich(null);
                         return;
                     }
+
+                    //Logik für Stadtangriff
                     if (selectedTruppe != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
                         EntferneBewegungsbereich(null);
-                        if (selectedTruppe.Angreifen(clickedStadt))
+                        if (aktuellerSpieler.bewegungspunkte > 0) 
+                        {
+                            selectedTruppe.Angreifen(clickedStadt);
                             ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                            aktuellerSpieler.bewegungspunkte -= 1;
+                            UIAktualisierung();
+                        }
+                        else 
+                        {
+                            MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                        }
+                            
                         selectedTruppe = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
-                        aktuellerSpieler.bewegungspunkte -= 1;
+                        
                         UIAktualisierung();
                         return;
                     }
+
+                    //Logik für Stadtangriff mit Squad
                     else if (selectedSquad != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
-                        if (selectedSquad.Angreifen(clickedStadt))
+                        if (aktuellerSpieler.bewegungspunkte > 0) 
+                        {
+                            selectedSquad.Angreifen(clickedStadt);
                             ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedStadt.startFeld));
+                            aktuellerSpieler.bewegungspunkte -= 1;
+                            UIAktualisierung();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                        }
+
                         selectedSquad = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
-                        aktuellerSpieler.bewegungspunkte -= 1;
                         UIAktualisierung();
                         return;
                     }
+
+                    //Logik für wenn der Angriff nicht möglich ist
                     else if (selectedTruppe != null || selectedSquad != null & spieler[aktuellerSpielerIndex].bewegungspunkte == 0)
                     {
                         MessageBox.Show("Nicht genügend Bewegungspunkte!");
@@ -325,10 +420,14 @@ namespace rbss1
                 }
 
             }
+
+            //Logik für die Interaktion mit einem Feld
             else if (clickedObject is Feld clickedFeld)
             {
                 HideUIInfo();
                 EntferneBewegungsbereich(clickedFeld);
+
+                //Anzeige der UI-Elemente des Feldes
                 if (clickedFeld.rescourcen != null && clickedFeld.feldart != "Water")
                 {
                     UIInfo.Image = Properties.Resources.UI2eisen;
@@ -354,14 +453,19 @@ namespace rbss1
                 }
                 else
                 {
+                    //Anzeige der Rescourcenanzahl, Art und Wert.
                     anzahlRes.Hide();
                 }
+
+                //Interaktion mit Wasser nicht möglích
                 if (clickedFeld.feldart == "Water")
                 {
                     UIInfo.Hide();
                     anzahlRes.Hide();
                     return;
                 }
+
+                //Feld wird abgewählt wenn wahr.
                 if (lastClickedFeld == clickedFeld)
                 {
                     if (clickedFeld.GehoertZuStadt && clickedFeld.besitzer != null || clickedFeld.besitzer != null)
@@ -382,6 +486,7 @@ namespace rbss1
                     return;
                 }
 
+                //Logik für die gewährleistung, das die Farben der Gebiete, die einen Spieler gehören erhalten bleiben.
                 if (lastClickedFeld != null)
                 {
                     if (lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != null || lastClickedFeld.besitzer != null)
@@ -396,17 +501,22 @@ namespace rbss1
                     }
                 }
 
+                //Feld wird ausgewählt.
                 clickedFeld.textur.BackColor = Color.Gray;
                 clickedFeld.textur.Image = Properties.Resources.grasstransparent;
 
                 UIInfo.Show();
 
+                //Logik für die Bewegung der Truppen.
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
                     if (spieler[aktuellerSpielerIndex].bewegungspunkte > 0)
                     {
+                        //Koordinaten des Ausgangsfeldes
                         int startx = selectedTruppe.AktuellesFeld.textur.Location.X / 50;
                         int starty = selectedTruppe.AktuellesFeld.textur.Location.Y / 50;
+
+                        //Koordinaten des Zielfeldes
                         int zielx = clickedFeld.textur.Location.X / 50;
                         int ziely = clickedFeld.textur.Location.Y / 50;
 
@@ -437,7 +547,7 @@ namespace rbss1
                         selectedTruppe = null;
                         EntferneBewegungsbereich(null);
                     }
-                    UpdateGame(selectedTruppe);
+                    UpdateGame(selectedTruppe, selectedSquad);
                 }
                 else if (selectedSquad != null && clickedFeld.feldart == "Grass")
                 {
@@ -455,8 +565,6 @@ namespace rbss1
                         else
                         {
                             selectedSquad = null;
-                            //lastClickedFeld.textur.BackColor = Color.White;
-                            //lastClickedFeld.textur.Image = Properties.Resources.grass;
                             clickedFeld.textur.BackColor = Color.Gray;
                             clickedFeld.textur.Image = Properties.Resources.grasstransparent;
                             return;
@@ -465,6 +573,7 @@ namespace rbss1
                     else
                     {
                         MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                        einnehmen.Hide();
                         selectedTruppe = null;
                         EntferneBewegungsbereich(null);
                     }
@@ -472,6 +581,7 @@ namespace rbss1
                 lastClickedFeld = clickedFeld;
 
             }
+            //Rekrutierungslogik. Bei Klick auf ein Feld mit dem Rekrutiermodus wird bei genügend Geld eine Truppe erstellt.
             if (rekrutiermodus == true && Gewinnueberpruefung() != true)
             {
                 if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
@@ -509,86 +619,21 @@ namespace rbss1
                 }
             }
         }
-        public void MakiereBewegungsreichweite(object o)
-        {
-            if (o == null)
-                return;
-            Feld aktuellesFeld = null;
-            int bewegungsreichweite = 0;
-            if (o is Truppe truppe)
-            {
-                aktuellesFeld = truppe.AktuellesFeld;
-                bewegungsreichweite = truppe.Bewegungsreichweite;
-            }
-            else if (o is Squad squad)
-            {
-                aktuellesFeld = squad.AktuellesFeld;
-                bewegungsreichweite = squad.Bewegungsreichweite;
-            }
-            if (aktuellesFeld == null)
-                return;
-
-            int startX = aktuellesFeld.position.X;
-            int startY = aktuellesFeld.position.Y;
-
-            lastClickedFeld = null;
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
-                    if (distanz <= bewegungsreichweite)
-
-                    {
-                        if (felder[i, j].feldart != "Water") 
-                        {
-                            felder[i, j].textur.Image = Properties.Resources.grasstransparent;
-                            felder[i, j].textur.BackColor = Color.LightGreen;
-                        }
-                    }
-                }
-            }
-        }
-        public void EntferneBewegungsbereich(object ob)
-        {
-            foreach (var feld in felder)
-            {
-                if (feld == null)
-                    return;
-                if (feld.feldart == "Grass")
-                {
-                    feld.textur.BackColor = Color.White;
-                    feld.textur.Image = Properties.Resources.grass;
-                }
-            }
-            foreach (var feld in felder)
-            {
-                if (feld.StadtAufFeld != null)
-                {
-                    feld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
-                }
-                if(feld.besitzer != null && !feld.GehoertZuStadt) 
-                {
-                    feld.textur.BackColor = feld.besitzer.SpielerFarbe;
-                    feld.textur.Image = Properties.Resources.grasstransparent;
-                }
-            }
-
-        }
-
+        
+        //Rundenlogik für das Spiel
         public void Spielerwechsel()
         {
             if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
             {
-                //MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
                 SpielstandUpdate();
             }
             Gewinnueberpruefung();
             aktuellerSpielerIndex++;
             
-
+            //Bei beendigung der Runde ausgeführt
             if (aktuellerSpielerIndex >= spieler.Count)
             {
+                //Wenn es einen Gewinner gibt, wird nichts weiteres gemacht.
                 if (Gewinnueberpruefung() == true)
                 {
                     return;
@@ -597,18 +642,17 @@ namespace rbss1
                 aktuellerSpieler = spieler[aktuellerSpielerIndex];
                 MessageBox.Show("Neue Runde beginnt");
 
-                //Für jede Stadt, die ein Spieler besitzt, gibt es Einkommen
-
+                //Für jede Stadt, die ein Spieler besitzt, gibt es Einkommen.
                 foreach (var spieler in spieler)
                 {
                     spieler.bewegungspunkte = 3;
 
-                    // Für jede Stadt des Spielers wird Einkommen hinzugefügt
                     foreach (Stadt stadt in spieler.staedteBesitz)
                     {
                         spieler.geld += stadt.einkommen;
                     }
                 }
+                //Logik für die Stahleinnahmen pro Stahlwerke, die man Besitzt.
                 foreach (var spieler in spieler) 
                 {
                     foreach (var feld in alleFelder)
@@ -622,6 +666,7 @@ namespace rbss1
                         {
                             if (spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0)
                             {
+                                //Bei vergabe von Stahl an ein Feld wird zunächst die Rescource Stahl für das Feld erstellt, danach Stahl hinzugefügt.
                                 if (feld.rescourcen == null)
                                 {
                                     feld.rescourcen = new Stahl(40, feld.StahlwerkAufFeld.StahlEinkommen);
@@ -650,6 +695,7 @@ namespace rbss1
                             {
                                 if (abziehbarVar != 0)
                                 {
+                                    //Für jede Stadt wird Weizen abgezogen.
                                     if(spieler.rescourcenBesitz.Weizen >= 0) 
                                     {
                                         feld.rescourcen.Weizen -= 10;
@@ -657,6 +703,7 @@ namespace rbss1
                                     }
                                 }
                             }
+                            //Für jedes Stahlwerk wird Kohle und Eisen abgezogen.
                             if(spieler.rescourcenBesitz.Eisen >= 10 && spieler.rescourcenBesitz.Kohle >= 10) 
                             {
                                 if (feld.rescourcen != null)
@@ -690,8 +737,8 @@ namespace rbss1
             Spielerwechsel();
         }
 
-        //Update, damit Aktionen inmitten der Runde registriert, und darauf reagiert werden kann.
-        public void UpdateGame(Truppe selectedTruppe)
+        //Update, damit Aktionen inmitten der Runde registriert, und dann darauf reagiert werden kann.
+        public void UpdateGame(Truppe selectedTruppe, Squad selectedSquad)
         {
             if (selectedTruppe == null)
             {
@@ -701,20 +748,18 @@ namespace rbss1
             {
                 weiter.Hide();
             }
-        }
-
-        public void TruppenPlatzierung(int i, int j)
-        {
-            Nahkaempfer truppe = new Nahkaempfer();
-            felder[i, j].SetzeTruppe(truppe, spieler[random.Next(0, 2)]);
-            truppe.textur.Tag = truppe;
-
-            truppe.textur.Click += new EventHandler(feld_Click);
-            this.Controls.Add(truppe.textur);
-            spielerMax--;
+            if(selectedSquad == null) 
+            {
+                weiter.Show();
+            }
+            else 
+            {
+                weiter.Hide();
+            }
         }
         public void UpdateUIInfo(Object o)
         {
+            //Bei jeweiligen ausgewählten Objekt wird die UI aktualisiert.
             if (o == null)
             {
                 return;
@@ -759,15 +804,19 @@ namespace rbss1
             titelLabel.Hide();
         }
 
+        //Logik für die Generierung der Städte
         public void GeneriereStaedte(int felderxMax, int felderyMax)
         {
+            //Muss eingehalten werden, damit die Städte generieren können.
             int stadtabstand = 5;
             List<Point> platzierteStadtPositionen = new List<Point>();
 
+            //Die Anzahl der Städte ist gleich der Anzahl der Spieler
             for (int spielerIndex = 0; spielerIndex < spielerMax; spielerIndex++)
             {
                 bool stadtPlatziert = false;
 
+                //Geht solange zufällig alle Felder durch, bis der Abstand eingehalten werden kann und die Stadt platziert ist.
                 while (!stadtPlatziert)
                 {
                     int x = random.Next(0, felderxMax);
@@ -775,7 +824,6 @@ namespace rbss1
 
                     if (felder[x, y].feldart == "Grass" && KeineStadtImUmkreis(x, y, stadtabstand, platzierteStadtPositionen))
                     {
-
                         Stadt neueStadt = new Stadt(felder[x, y], felder);
                         neueStadt.Besitzer = spieler[spielerIndex];
                         spieler[spielerIndex].staedteBesitz.Add(neueStadt);
@@ -796,7 +844,7 @@ namespace rbss1
                 }
             }
         }
-
+        //Überprüfung, ob es möglich ist, eine Stadt in diesem Feld zu erstellen.
         private bool KeineStadtImUmkreis(int x, int y, int abstand, List<Point> platziertePositionen)
         {
             foreach (var position in platziertePositionen)
@@ -809,9 +857,7 @@ namespace rbss1
             }
             return true;
         }
-
-
-
+        //Eroberung eines Feldes
         private void einnehmen_Click(object sender, EventArgs e)
         {
             if (lastClickedFeld != null && !lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
@@ -875,7 +921,7 @@ namespace rbss1
             }
             return;
         }
-
+        //Errichtung von Gebäude - Stadt, Stahlwerk und Farm
         private void stadtbauen_Click(object sender, EventArgs e)
         {
             if (Gewinnueberpruefung() == true) { return; }
@@ -1110,26 +1156,6 @@ namespace rbss1
                 MessageBox.Show("Man kann keine Farm auf dem selben Feld bauen, auf dem eine Truppe steht!");
             }
         }
-        private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
-        {
-            recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
-        }
-
-        private void recruitSoldiers_MouseLeave(object sender, EventArgs e)
-        {
-            recruitSoldiers.BackgroundImage = Properties.Resources.recruit;
-        }
-
-        private void construction_MouseEnter(object sender, EventArgs e)
-        {
-            construction.BackgroundImage = Properties.Resources.constructionglow;
-        }
-
-        private void construction_MouseLeave(object sender, EventArgs e)
-        {
-            construction.BackgroundImage = Properties.Resources.construction;
-        }
-
         private void recruitSoldiers_Click(object sender, EventArgs e)
         {
             if (Gewinnueberpruefung() == true) { return; }
@@ -1147,42 +1173,7 @@ namespace rbss1
             }
 
         }
-        //Aktualiseren der UI-Elemente, welche das Geld und die Bewegungspunkte anzeigen.
-        public void UIAktualisierung()
-        {
-            if(Gewinnueberpruefung() == true) { return; }
-            geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
-            bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
-            momentanerSpieler.Text = $"Spieler {spieler[aktuellerSpielerIndex]}";
-            aktuellerSpielerFarbe.BackColor = spieler[aktuellerSpielerIndex].SpielerFarbe;
-            aktuellerSpielerFarbe.BackgroundImage = Properties.Resources.grasstransparent;
-
-            if (rescourceinventory.Visible == true)
-            {
-                spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
-
-                rescourceinventory.Show();
-                rescourcenlabel.Show();
-                rescourcenlabel.BringToFront();
-
-                eisenInventory.Show(); eisenInventory.BringToFront();
-                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
-
-                coalInventory.Show(); coalInventory.BringToFront();
-                coalAnzahl.Show(); coalAnzahl.BringToFront();
-
-                steelInventory.Show(); steelInventory.BringToFront();
-                steelAnzahl.Show(); steelAnzahl.BringToFront();
-
-                wheatInventory.Show(); wheatInventory.BringToFront();
-                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
-            }
-            eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
-            coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
-            steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
-            wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
-        }
-
+        //Die Anzeige aller Rescourcen im Rescourcenfenster.
         private void rescourcenFenster_Click(object sender, EventArgs e)
         {
             if (Gewinnueberpruefung() == true) { return; }
@@ -1228,11 +1219,11 @@ namespace rbss1
         }
         public void InitialisiereComboBox()
         {
+            //Auswahl der Truppenart
             truppeComboBox.Items.Add(new { Typ = "Nahkämpfer" });
             truppeComboBox.Items.Add(new { Typ = "Fernkämpfer" });
             truppeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             truppeComboBox.Size = new Size(150, 30);
-            truppeComboBox.Location = new Point(10, 50);
             truppeComboBox.SelectedIndexChanged += TruppenComboBox_SelectedIndexChanged;
         }
         public void TruppenComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1273,6 +1264,7 @@ namespace rbss1
                             }
                         }
                     }
+                    //Falls ein Spieler aus der Liste gelöscht wird, wird die Methode erneut aufgerufen und die jetzige beendet.
                     Gewinnueberpruefung();
                     return false;
                 }
@@ -1286,33 +1278,7 @@ namespace rbss1
             }
             return false;
         }
-        public void ZeigeSchaden(PictureBox textur, int schaden)
-        {
-            if (textur == null || textur.Parent == null)
-                return;
-            Label schadenLabel = new Label
-            {
-                Text = $"-{schaden}",
-                ForeColor = Color.Red,
-                Font = new Font("Arial", 12, FontStyle.Bold),
-                BackColor = Color.Transparent,
-                AutoSize = true
-            };
-            schadenLabel.Location = new Point(textur.Location.X + textur.Width / 2 - schadenLabel.Width / 2, textur.Location.Y - 20);
-            textur.Parent.Controls.Add(schadenLabel);
-            schadenLabel.BringToFront();
-            Timer timer = new Timer
-            {
-                Interval = 1000
-            };
-            timer.Tick += (sender, e) =>
-            {
-                textur.Parent.Controls.Remove(schadenLabel);
-                timer.Stop();
-                timer.Dispose();
-            };
-            timer.Start();
-        }
+        //Handler für die Rekrutierung eines Squads
         private void recruitSquad_Click(object sender, EventArgs e)
         {
             if (squadErstellenPanel != null && squadErstellenPanel.Visible)
@@ -1458,6 +1424,7 @@ namespace rbss1
             Controls.Add(squadErstellenPanel);
             squadErstellenPanel.BringToFront();
         }
+        //Bei aufruf eines Squadpanels kann ein Squad erstellt werden.
         public void ErstelleSquadPanel()
         {
             squadPanel = new Panel
@@ -1585,7 +1552,7 @@ namespace rbss1
             }
             squadPanel.BringToFront();
         }
-
+        //Fenster für das Verkaufen von Rescourcen
         private void rescourcenVerkauf_Click(object sender, EventArgs e)
         {
             if (Gewinnueberpruefung() == true) { return; }
@@ -1606,7 +1573,7 @@ namespace rbss1
                 weizenMarkt.Show(); weizenMarkt.BringToFront();
             }
         }
-
+        //Alle Märkte - Eisen, Kohle, Stahl und Weizen
         private void eisenMarkt_Click(object sender, EventArgs e)
         {
             bool abziehbarRes = true;
@@ -1725,9 +1692,9 @@ namespace rbss1
 
         public void SpielstandUpdate() 
         {
+            //Falls mitten in der Runde ein Spieler aus der Liste entfernt wird, ruft sich die Methode selbst auf und die jetzige Methode gibt nichts zurück.
             foreach (var spielerStaedte in aktuellerSpieler.staedteBesitz)
             {
-
                 if (spielerStaedte.Leben <= 0)
                 {
                     spielerStaedte.EntferneStadt();
@@ -1744,6 +1711,142 @@ namespace rbss1
             }
         }
 
+        //Aktualiseren der UI-Elemente, welche das Geld, die Bewegungspunkte und weitere wichtige Elemente anzeigen.
+        public void UIAktualisierung()
+        {
+            if (Gewinnueberpruefung() == true) { return; }
+            geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
+            bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
+            momentanerSpieler.Text = $"Spieler {spieler[aktuellerSpielerIndex]}";
+            aktuellerSpielerFarbe.BackColor = spieler[aktuellerSpielerIndex].SpielerFarbe;
+            aktuellerSpielerFarbe.BackgroundImage = Properties.Resources.grasstransparent;
+
+            if (rescourceinventory.Visible == true)
+            {
+                spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+
+                rescourceinventory.Show();
+                rescourcenlabel.Show();
+                rescourcenlabel.BringToFront();
+
+                eisenInventory.Show(); eisenInventory.BringToFront();
+                eisenAnzahl.Show(); eisenAnzahl.BringToFront();
+
+                coalInventory.Show(); coalInventory.BringToFront();
+                coalAnzahl.Show(); coalAnzahl.BringToFront();
+
+                steelInventory.Show(); steelInventory.BringToFront();
+                steelAnzahl.Show(); steelAnzahl.BringToFront();
+
+                wheatInventory.Show(); wheatInventory.BringToFront();
+                wheatAnzahl.Show(); wheatAnzahl.BringToFront();
+            }
+            eisenAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen}";
+            coalAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle}";
+            steelAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl}";
+            wheatAnzahl.Text = $"{spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen}";
+        }
+        //Die Reichweite, die eine Truppe laufen kann wird angezeigt
+        public void MakiereBewegungsreichweite(object o)
+        {
+            if (o == null)
+                return;
+            Feld aktuellesFeld = null;
+            int bewegungsreichweite = 0;
+            if (o is Truppe truppe)
+            {
+                aktuellesFeld = truppe.AktuellesFeld;
+                bewegungsreichweite = truppe.Bewegungsreichweite;
+            }
+            else if (o is Squad squad)
+            {
+                aktuellesFeld = squad.AktuellesFeld;
+                bewegungsreichweite = squad.Bewegungsreichweite;
+            }
+            if (aktuellesFeld == null)
+                return;
+
+            int startX = aktuellesFeld.position.X;
+            int startY = aktuellesFeld.position.Y;
+
+            lastClickedFeld = null;
+
+            //Alle belaufbaren Felder werden Markiert.
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 11; j++)
+                {
+                    int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
+                    if (distanz <= bewegungsreichweite)
+
+                    {
+                        if (felder[i, j].feldart != "Water")
+                        {
+                            felder[i, j].textur.Image = Properties.Resources.grasstransparent;
+                            felder[i, j].textur.BackColor = Color.LightGreen;
+                        }
+                    }
+                }
+            }
+        }
+        public void EntferneBewegungsbereich(object ob)
+        {
+            //Alle Felder werden wieder in ihre Ursprungsfarben und Texturen gebracht
+            foreach (var feld in felder)
+            {
+                if (feld == null)
+                    return;
+                if (feld.feldart == "Grass")
+                {
+                    feld.textur.BackColor = Color.White;
+                    feld.textur.Image = Properties.Resources.grass;
+                }
+            }
+            //Aushnahme: Einflussradius der Städte und eigentum von Spielern
+            foreach (var feld in felder)
+            {
+                if (feld.StadtAufFeld != null)
+                {
+                    feld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
+                }
+                if (feld.besitzer != null && !feld.GehoertZuStadt)
+                {
+                    feld.textur.BackColor = feld.besitzer.SpielerFarbe;
+                    feld.textur.Image = Properties.Resources.grasstransparent;
+                }
+            }
+        }
+
+        public void ZeigeSchaden(PictureBox textur, int schaden)
+        {
+            //Der zugefügte Schaden wird hinzugefügt.
+            if (textur == null || textur.Parent == null)
+                return;
+            Label schadenLabel = new Label
+            {
+                Text = $"-{schaden}",
+                ForeColor = Color.Red,
+                Font = new Font("Arial", 12, FontStyle.Bold),
+                BackColor = Color.Transparent,
+                AutoSize = true
+            };
+            schadenLabel.Location = new Point(textur.Location.X + textur.Width / 2 - schadenLabel.Width / 2, textur.Location.Y - 20);
+            textur.Parent.Controls.Add(schadenLabel);
+            schadenLabel.BringToFront();
+            Timer timer = new Timer
+            {
+                Interval = 1000
+            };
+            timer.Tick += (sender, e) =>
+            {
+                textur.Parent.Controls.Remove(schadenLabel);
+                timer.Stop();
+                timer.Dispose();
+            };
+            timer.Start();
+        }
+
+        //Glow Effekt für das Hovern über einen Button
         private void recruitSquad_MouseEnter(object sender, EventArgs e)
         {
             recruitSquad.Image = Properties.Resources.recruit_squadglow;
@@ -1772,6 +1875,25 @@ namespace rbss1
         private void rescourcenVerkauf_MouseLeave(object sender, EventArgs e)
         {
             rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesell;
+        }
+        private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
+        {
+            recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
+        }
+
+        private void recruitSoldiers_MouseLeave(object sender, EventArgs e)
+        {
+            recruitSoldiers.BackgroundImage = Properties.Resources.recruit;
+        }
+
+        private void construction_MouseEnter(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.constructionglow;
+        }
+
+        private void construction_MouseLeave(object sender, EventArgs e)
+        {
+            construction.BackgroundImage = Properties.Resources.construction;
         }
     }
 }
