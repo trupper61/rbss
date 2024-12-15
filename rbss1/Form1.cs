@@ -567,6 +567,7 @@ namespace rbss1
 
         public void Spielerwechsel()
         {
+            Gewinnueberpruefung();
             aktuellerSpielerIndex++;
 
             if (aktuellerSpielerIndex >= spieler.Count)
@@ -652,7 +653,7 @@ namespace rbss1
                     }
                 }
             }
-
+            
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
