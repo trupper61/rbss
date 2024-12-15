@@ -659,7 +659,7 @@ namespace rbss1
                                     }
                                 }
                             }
-                            if(spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0) 
+                            if(spieler.rescourcenBesitz.Eisen >= 10 && spieler.rescourcenBesitz.Kohle >= 10) 
                             {
                                 if (feld.rescourcen != null)
                                 {
@@ -678,7 +678,7 @@ namespace rbss1
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
-            if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle <= 0 | aktuellerSpieler.rescourcenBesitz.Eisen <= 0) 
+            if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle < 10 | aktuellerSpieler.rescourcenBesitz.Eisen < 10) 
             {
                 MessageBox.Show("Eisen und Kohlemagnel, Stahlwerke können nicht Arbeiten!");
             }
@@ -879,6 +879,11 @@ namespace rbss1
 
         private void stadtbauen_Click(object sender, EventArgs e)
         {
+            if(lastClickedFeld == null) 
+            {
+                MessageBox.Show("Wähle zunächst ein Feld aus!");
+                return;
+            }
             if (spieler[aktuellerSpielerIndex].bewegungspunkte > 1 && spieler[aktuellerSpielerIndex].geld >= 200 && felder[lastClickedFeld.position.X, lastClickedFeld.position.Y].TruppeAufFeld == null)
             {
                 if (lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
@@ -966,6 +971,11 @@ namespace rbss1
 
         private void farmbauen_Click(object sender, EventArgs e)
         {
+            if (lastClickedFeld == null)
+            {
+                MessageBox.Show("Wähle zunächst ein Feld aus!");
+                return;
+            }
             if (lastClickedFeld.rescourcen == null)
             {
                 MessageBox.Show("Man kann nur Farms auf Felder Bauen, die Weizen enthalten!");
@@ -1034,6 +1044,11 @@ namespace rbss1
 
         private void stahlwerkbauen_Click(object sender, EventArgs e)
         {
+            if (lastClickedFeld == null)
+            {
+                MessageBox.Show("Wähle zunächst ein Feld aus!");
+                return;
+            }
             if (lastClickedFeld.rescourcen != null)
             {
                 MessageBox.Show("Man kann nur Stahlwerke auf Felder Bauen, die keine Rescourcen enthalten!");
