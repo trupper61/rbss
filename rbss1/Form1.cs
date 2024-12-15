@@ -68,7 +68,7 @@ namespace rbss1
             //Flag sorgt dafür, dass nach generation eines Wasserfeldes garantiert ein weiterer Wasserfeld rechts von dem Wasserfeld generiert wird.
             bool flag = false;
             int felderxMax = 10;
-            int felderyMax = 10;
+            int felderyMax = 11;
             felder = new Feld[felderxMax, felderyMax];
 
             //Je nach Feldfröße wird die Maximale anzahl an Wasserfelder angepasst.
@@ -195,8 +195,18 @@ namespace rbss1
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
                     EntferneBewegungsbereich(null);
-                    if (selectedTruppe.Angreifen(clickedTruppe))
+                    if (aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedTruppe.Angreifen(clickedTruppe);
                         ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedTruppe = null;
                     HideUIInfo();
                     return;
@@ -206,8 +216,18 @@ namespace rbss1
                 if (selectedSquad != null)
                 {
                     EntferneBewegungsbereich(null);
-                    if(selectedSquad.Angreifen(clickedTruppe))
-                        ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                    if(aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedSquad.Angreifen(clickedTruppe);
+                        ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedTruppe.AktuellesFeld));
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedSquad = null;
                     HideUIInfo();
                     return;
@@ -246,7 +266,7 @@ namespace rbss1
                     ItemPB.Hide();
                     titelLabel.Hide();
                 }
-                UpdateGame(selectedTruppe);
+                UpdateGame(selectedTruppe, selectedSquad);
                 lastClickedFeld = clickedTruppe.AktuellesFeld;
             }
 
@@ -260,8 +280,18 @@ namespace rbss1
                 if (selectedSquad != null && selectedSquad != clickedSquad)
                 {
                     EntferneBewegungsbereich(null);
-                    if(selectedSquad.Angreifen(clickedSquad))
+                    if(aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedSquad.Angreifen(clickedSquad);
                         ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedSquad.AktuellesFeld));
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedSquad = null;
                     HideUIInfo();
                     return;
@@ -269,8 +299,18 @@ namespace rbss1
                 else if (selectedTruppe != null)
                 {
                     EntferneBewegungsbereich(null);
-                    if (selectedTruppe.Angreifen(clickedSquad))
-                        ZeigeSchaden(clickedSquad.textur, clickedSquad.Gesamtschaden);
+                    if (aktuellerSpieler.bewegungspunkte > 0) 
+                    {
+                        selectedTruppe.Angreifen(clickedSquad);
+                        ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+
                     selectedTruppe = null;
                     HideUIInfo();
                     return;
@@ -303,6 +343,7 @@ namespace rbss1
                     ItemPB.Hide();
                     titelLabel.Hide();
                 }
+                UpdateGame(selectedTruppe, selectedSquad);
             }
 
             //Nur wenn Stadt angeklickt wird
@@ -326,12 +367,22 @@ namespace rbss1
                     if (selectedTruppe != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
                         EntferneBewegungsbereich(null);
-                        if (selectedTruppe.Angreifen(clickedStadt))
+                        if (aktuellerSpieler.bewegungspunkte > 0) 
+                        {
+                            selectedTruppe.Angreifen(clickedStadt);
                             ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
+                            aktuellerSpieler.bewegungspunkte -= 1;
+                            UIAktualisierung();
+                        }
+                        else 
+                        {
+                            MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                        }
+                            
                         selectedTruppe = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
-                        aktuellerSpieler.bewegungspunkte -= 1;
+                        
                         UIAktualisierung();
                         return;
                     }
@@ -339,12 +390,21 @@ namespace rbss1
                     //Logik für Stadtangriff mit Squad
                     else if (selectedSquad != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
-                        if (selectedSquad.Angreifen(clickedStadt))
+                        if (aktuellerSpieler.bewegungspunkte > 0) 
+                        {
+                            selectedSquad.Angreifen(clickedStadt);
                             ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedStadt.startFeld));
+                            aktuellerSpieler.bewegungspunkte -= 1;
+                            UIAktualisierung();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                        }
+
                         selectedSquad = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
-                        aktuellerSpieler.bewegungspunkte -= 1;
                         UIAktualisierung();
                         return;
                     }
@@ -487,7 +547,7 @@ namespace rbss1
                         selectedTruppe = null;
                         EntferneBewegungsbereich(null);
                     }
-                    UpdateGame(selectedTruppe);
+                    UpdateGame(selectedTruppe, selectedSquad);
                 }
                 else if (selectedSquad != null && clickedFeld.feldart == "Grass")
                 {
@@ -677,13 +737,21 @@ namespace rbss1
         }
 
         //Update, damit Aktionen inmitten der Runde registriert, und dann darauf reagiert werden kann.
-        public void UpdateGame(Truppe selectedTruppe)
+        public void UpdateGame(Truppe selectedTruppe, Squad selectedSquad)
         {
             if (selectedTruppe == null)
             {
                 weiter.Show();
             }
             else
+            {
+                weiter.Hide();
+            }
+            if(selectedSquad == null) 
+            {
+                weiter.Show();
+            }
+            else 
             {
                 weiter.Hide();
             }
@@ -1155,7 +1223,6 @@ namespace rbss1
             truppeComboBox.Items.Add(new { Typ = "Fernkämpfer" });
             truppeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             truppeComboBox.Size = new Size(150, 30);
-            truppeComboBox.Location = new Point(10, 50);
             truppeComboBox.SelectedIndexChanged += TruppenComboBox_SelectedIndexChanged;
         }
         public void TruppenComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1706,7 +1773,7 @@ namespace rbss1
             //Alle belaufbaren Felder werden Markiert.
             for (int i = 0; i < 10; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 11; j++)
                 {
                     int distanz = Math.Abs(startX - i) + Math.Abs(startY - j);
                     if (distanz <= bewegungsreichweite)
