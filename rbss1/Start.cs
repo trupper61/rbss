@@ -70,7 +70,7 @@ namespace rbss1
             {
                 int spielerAnzahl = settings.spielerAnzahl;
                 MessageBox.Show($"Das Spiel wird mit {spielerAnzahl} gestartet!");
-                Form1 game = new Form1(spielerAnzahl);
+                Form1 game = new Form1(spielerAnzahl, this);
                 game.Show();
                 this.Hide();
             }

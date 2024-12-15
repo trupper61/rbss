@@ -28,6 +28,7 @@ namespace rbss1
         private Panel squadPanel;
         private ListBox squadTruppenLB;
         private Panel squadErstellenPanel;
+        private Start menu;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
@@ -42,7 +43,7 @@ namespace rbss1
         Random rescourcenMenge = new Random();
         Random spielAnfaenger = new Random();
         Random randomPlatzierung = new Random();
-        public Form1(int spielerMax)
+        public Form1(int spielerMax, Start menu)
         {
             InitializeComponent();
             this.spielerMax = spielerMax;
@@ -61,6 +62,7 @@ namespace rbss1
             ErstelleSquadPanel();
             MessageBox.Show($"Aktueller Spieler: {aktuellerSpieler.spielernummer}");
             UIAktualisierung();
+            this.menu = menu;
         }
 
         public void Feldgenerierung()
@@ -1330,7 +1332,16 @@ namespace rbss1
                 ForeColor = Color.White
             };
             squadErstellenPanel.Controls.Add(truppenAnzeige);
-
+            Label preisLb = new Label
+            {
+                Text = "",
+                Size = new Size(70,15),
+                Location = new Point(200, 245),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
+            };
+            squadErstellenPanel.Controls.Add(preisLb);
+            int gesamtPreis = 0;
             Button nahkaempferButton = new Button
             {
                 Text = "Nahkämpfer + ",
@@ -1343,6 +1354,8 @@ namespace rbss1
             {
                 Truppe neueTruppe = new Nahkaempfer();
                 truppenAnzeige.Items.Add(neueTruppe.ToString());
+                gesamtPreis += neueTruppe.Preis + Convert.ToInt32(neueTruppe.Preis * 0.10);
+                preisLb.Text = $"Preis: {gesamtPreis}";
             };
 
             squadErstellenPanel.Controls.Add(nahkaempferButton);
@@ -1358,9 +1371,23 @@ namespace rbss1
             {
                 Truppe neueTruppe = new Fernkaempfer();
                 truppenAnzeige.Items.Add(neueTruppe.ToString());
+                gesamtPreis += neueTruppe.Preis + Convert.ToInt32(neueTruppe.Preis * 0.10);
+                preisLb.Text = $"Preis: {gesamtPreis}";
             };
             squadErstellenPanel.Controls.Add(fernkaempferButton);
-
+            Button cancelBtn = new Button
+            {
+                Text = "Abbrechen",
+                Location = new Point(150, 310),
+                Size = new Size(120, 30),
+                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
+                ForeColor = Color.White
+            };
+            cancelBtn.Click += (btnSender, btnE) =>
+            {
+                squadErstellenPanel.Hide();
+            };
+            squadErstellenPanel.Controls.Add(cancelBtn);
             Button confirmBtn = new Button
             {
                 Text = "Erstellen",
@@ -1371,11 +1398,10 @@ namespace rbss1
             };
             confirmBtn.Click += (btnSender, btnE) =>
             {
-                int preis = 0;
-                if (preis > aktuellerSpieler.geld)
+                if (gesamtPreis > aktuellerSpieler.geld)
                 {
                     MessageBox.Show("Du hast nicht genug Geld");
-                    CancelButton.PerformClick();
+                    cancelBtn.PerformClick();
                     return;
                 }
                 List<Feld> ziel = aktuellerSpieler.staedteBesitz[0].stadtFlaeche;
@@ -1398,28 +1424,21 @@ namespace rbss1
                     if (item.ToString() == "Nahkämpfer")
                     {
                         neueTruppe = new Nahkaempfer();
-                        preis += neueTruppe.Preis;
                     }
                     else if (item.ToString() == "Fernkämpfer")
                     {
                         neueTruppe = new Fernkaempfer();
-                        preis += neueTruppe.Preis;
                     }
                     else
                         continue;
                     neueTruppe.Besitzer = aktuellerSpieler;
                     neuesSquad.TruppeHinzufuegen(neueTruppe);
                 }
-                if (preis > aktuellerSpieler.geld)
-                {
-                    MessageBox.Show("Du hast nicht genügend Geld");
-                    return;
-                }
                 Controls.Add(neuesSquad.textur);
                 neuesSquad.textur.Click += new EventHandler(feld_Click);
                 neuesSquad.textur.BringToFront();
                 freiesFeld.SquadAufFeld = neuesSquad;
-                aktuellerSpieler.geld -= preis;
+                aktuellerSpieler.geld -= gesamtPreis;
                 UIAktualisierung();
                 neuesSquad.textur.Tag = neuesSquad;
                 squadErstellenPanel.Hide();
@@ -1427,19 +1446,6 @@ namespace rbss1
             squadErstellenPanel.Visible = true;
             squadErstellenPanel.Controls.Add(confirmBtn);
 
-            Button cancelBtn = new Button
-            {
-                Text = "Abbrechen",
-                Location = new Point(150, 310),
-                Size = new Size(120, 30),
-                BackColor = ColorTranslator.FromHtml("#7A5A3F"),
-                ForeColor = Color.White
-            };
-            cancelBtn.Click += (btnSender, btnE) =>
-            {
-                squadErstellenPanel.Hide();
-            };
-            squadErstellenPanel.Controls.Add(cancelBtn);
             Controls.Add(squadErstellenPanel);
             squadErstellenPanel.BringToFront();
         }
@@ -1513,14 +1519,15 @@ namespace rbss1
                 }
                 Nahkaempfer nahkaempfer = new Nahkaempfer();
                 nahkaempfer.Besitzer = aktuellerSpieler;
-                if (nahkaempfer.Preis > aktuellerSpieler.geld)
+                int preis = nahkaempfer.Preis + Convert.ToInt32(nahkaempfer.Preis * 0.10);
+                if (preis > aktuellerSpieler.geld)
                 {
                     MessageBox.Show("Du hast nicht genügend Geld!");
                 }
                 else
                 {
                     selectedSquad.TruppeHinzufuegen(nahkaempfer);
-                    aktuellerSpieler.geld -= nahkaempfer.Preis;
+                    aktuellerSpieler.geld -= preis;
                     squadTruppenLB.Items.Add(nahkaempfer);
                     UIAktualisierung();
                     UpdateUIInfo(selectedSquad);
@@ -1543,15 +1550,16 @@ namespace rbss1
                     return;
                 }
                 Fernkaempfer fernkaempfer = new Fernkaempfer();
+                int preis = fernkaempfer.Preis + Convert.ToInt32(fernkaempfer.Preis * 0.10);
                 fernkaempfer.Besitzer = aktuellerSpieler;
-                if (fernkaempfer.Preis > aktuellerSpieler.geld)
+                if (preis > aktuellerSpieler.geld)
                 {
                     MessageBox.Show("Du hast nicht genügend Geld!");
                 }
                 else
                 {
                     selectedSquad.TruppeHinzufuegen(fernkaempfer);
-                    aktuellerSpieler.geld -= fernkaempfer.Preis;
+                    aktuellerSpieler.geld -= preis;
                     squadTruppenLB.Items.Add(fernkaempfer);
                     UIAktualisierung();
                     UpdateUIInfo(selectedSquad);
@@ -1914,9 +1922,13 @@ namespace rbss1
         {
             construction.BackgroundImage = Properties.Resources.construction;
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (menu != null)
+            {
+                menu.Close();
+            }
+        }
     }
 }
-    
-    
-
-
