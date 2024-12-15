@@ -86,7 +86,7 @@ namespace rbss1
                     Feld feld = new Feld();
 
                     int rescourcenEinteilung = rescourcen.Next(0, 6);
-                    int rescourcenAnzahl = rescourcenMenge.Next(1, 25);
+                    int rescourcenAnzahl = rescourcenMenge.Next(5, 50);
 
                     if (wasserMax > 0 && random.Next(1, 100) < 10 || durchlauefe > 0)
                     {
@@ -684,17 +684,19 @@ namespace rbss1
                         }
                         if (feld.StahlwerkAufFeld != null && feld.StahlwerkAufFeld.Besitzer == spieler)
                         {
-                            if (spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0)
+                            if (spieler.rescourcenBesitz.Eisen >= 10 && spieler.rescourcenBesitz.Kohle >= 10)
                             {
                                 //Bei vergabe von Stahl an ein Feld wird zunächst die Rescource Stahl für das Feld erstellt, danach Stahl hinzugefügt.
                                 if (feld.rescourcen == null)
                                 {
                                     feld.rescourcen = new Stahl(40, feld.StahlwerkAufFeld.StahlEinkommen);
                                     feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                                    spieler.UpdateRessourcen(alleFelder);
                                 }
                                 else
                                 {
                                     feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                                    spieler.UpdateRessourcen(alleFelder);
                                 }
                             }
                         }
@@ -719,6 +721,7 @@ namespace rbss1
                                     if(spieler.rescourcenBesitz.Weizen >= 0) 
                                     {
                                         feld.rescourcen.Weizen -= 10;
+                                        spieler.UpdateRessourcen(alleFelder);
                                         abziehbarVar--;
                                     }
                                 }
@@ -732,6 +735,7 @@ namespace rbss1
                                     {
                                         feld.rescourcen.Kohle -= 10;
                                         feld.rescourcen.Eisen -= 10;
+                                        spieler.UpdateRessourcen(alleFelder);
                                         abziehbarResVar--;
                                     }
                                 }
@@ -899,6 +903,7 @@ namespace rbss1
                 }
 
                 MessageBox.Show("Dieses Feld gehört nun Dir!");
+                UIAktualisierung();
                 return;
             }
             MessageBox.Show("Hier geht das nicht!");
