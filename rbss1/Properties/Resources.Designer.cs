@@ -153,6 +153,16 @@ namespace rbss1.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap kiste {
+            get {
+                object obj = ResourceManager.GetObject("kiste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap labelbackround {
             get {
                 object obj = ResourceManager.GetObject("labelbackround", resourceCulture);
@@ -246,6 +256,26 @@ namespace rbss1.Properties {
         internal static System.Drawing.Bitmap recruitglow {
             get {
                 object obj = ResourceManager.GetObject("recruitglow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rescourcesell {
+            get {
+                object obj = ResourceManager.GetObject("rescourcesell", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rescourceview {
+            get {
+                object obj = ResourceManager.GetObject("rescourceview", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

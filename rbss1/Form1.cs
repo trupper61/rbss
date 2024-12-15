@@ -803,7 +803,19 @@ namespace rbss1
                 lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
                 lastClickedFeld.textur.BackColor = spieler[aktuellerSpielerIndex].SpielerFarbe;
                 lastClickedFeld.besitzer = spieler[aktuellerSpielerIndex];
-                MessageBox.Show("Auf diesem Feld kann nun eine Stadt gebaut werden!");
+
+                if(lastClickedFeld.FarmAufFeld != null) 
+                {
+                    lastClickedFeld.FarmAufFeld.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].farmBesitz.Add(lastClickedFeld.FarmAufFeld);
+                }
+                if(lastClickedFeld.StahlwerkAufFeld != null) 
+                {
+                    lastClickedFeld.StahlwerkAufFeld.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].stahlwerkBesitz.Add(lastClickedFeld.StahlwerkAufFeld);
+                }
+
+                MessageBox.Show("Dieses Feld gehört nun Dir!");
                 return;
             }
             MessageBox.Show("Hier geht das nicht!");
@@ -1504,6 +1516,11 @@ namespace rbss1
                 squadTruppenLB.Items.Add(truppe.ToString());
             }
             squadPanel.BringToFront();
+        }
+
+        private void rescourcenVerkauf_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
