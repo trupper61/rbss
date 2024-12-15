@@ -27,6 +27,7 @@ namespace rbss1
         public string truppeZumErstellen;
         private Panel squadPanel;
         private ListBox squadTruppenLB;
+        private Panel squadErstellenPanel;
 
         public static List<Spieler> spieler = new List<Spieler>
         {
@@ -243,7 +244,6 @@ namespace rbss1
                     HideUIInfo();
                     return;
                 }
-
                 else if (selectedTruppe != null)
                 {
                     EntferneBewegungsbereich(null);
@@ -412,7 +412,7 @@ namespace rbss1
 
                         int distanz = Math.Abs(startx - zielx) + Math.Abs(starty - ziely);
 
-                        if (distanz > selectedTruppe.Bewegungsreichweite && clickedFeld.StadtAufFeld != null)
+                        if (distanz > selectedTruppe.Bewegungsreichweite)
                         {
                             selectedTruppe = null;
                             lastClickedFeld.textur.BackColor = Color.White;
@@ -443,8 +443,6 @@ namespace rbss1
                 {
                     if (aktuellerSpieler.bewegungspunkte > 0)
                     {
-
-
                         if (selectedSquad.BerechneDistanz(clickedFeld) <= selectedSquad.Bewegungsreichweite)
                         {
                             selectedSquad.BewegeZu(clickedFeld);
@@ -457,8 +455,8 @@ namespace rbss1
                         else
                         {
                             selectedSquad = null;
-                            lastClickedFeld.textur.BackColor = Color.White;
-                            lastClickedFeld.textur.Image = Properties.Resources.grass;
+                            //lastClickedFeld.textur.BackColor = Color.White;
+                            //lastClickedFeld.textur.Image = Properties.Resources.grass;
                             clickedFeld.textur.BackColor = Color.Gray;
                             clickedFeld.textur.Image = Properties.Resources.grasstransparent;
                             return;
@@ -1317,13 +1315,18 @@ namespace rbss1
         }
         private void recruitSquad_Click(object sender, EventArgs e)
         {
+            if (squadErstellenPanel != null && squadErstellenPanel.Visible)
+            {
+                return;
+            }
             if (Gewinnueberpruefung() == true) { return; }
-            Panel squadErstellenPanel = new Panel
+            squadErstellenPanel = new Panel
             {
                 Size = new Size(300, 400),
                 Location = new Point(750, 100),
                 BorderStyle = BorderStyle.FixedSingle,
-                BackgroundImage = Properties.Resources.ui_wood
+                BackgroundImage = Properties.Resources.ui_wood,
+                Visible = false
             };
             Label infoLabel = new Label
             {
@@ -1400,7 +1403,7 @@ namespace rbss1
                         break;
                     }
                 }
-                if (freiesFeld == null)
+                if (freiesFeld == null || truppenAnzeige.Items.Count == 0)
                     return;
                 Squad neuesSquad = new Squad(aktuellerSpieler, freiesFeld);
                 foreach (var item in truppenAnzeige.Items)
@@ -1436,6 +1439,7 @@ namespace rbss1
                 neuesSquad.textur.Tag = neuesSquad;
                 squadErstellenPanel.Hide();
             };
+            squadErstellenPanel.Visible = true;
             squadErstellenPanel.Controls.Add(confirmBtn);
 
             Button cancelBtn = new Button

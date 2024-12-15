@@ -17,21 +17,27 @@ namespace rbss1
         }
         public override bool Angreifen(Truppe targetTruppe)
         {
-            if ((targetTruppe == null || targetTruppe.Besitzer == Besitzer) && (BerechneDistanz(targetTruppe.AktuellesFeld) == 1))
+            if (targetTruppe == null && targetTruppe.Besitzer == Besitzer)
+                return false;
+            if (BerechneDistanz(targetTruppe.AktuellesFeld) != 1)
                 return false;
             targetTruppe.NehmeSchaden(Schaden);
             return true;
         }
         public override bool Angreifen(Stadt targetStadt)
         {
-            if ((targetStadt == null || targetStadt.Besitzer == Besitzer) && (BerechneDistanz(targetStadt.startFeld) == 1))
+            if (targetStadt == null || targetStadt.Besitzer == Besitzer)
+                return false;
+            if ((BerechneDistanz(targetStadt.startFeld) != 1))
                 return false;
             targetStadt.NehmeSchaden(Schaden);
             return true;
         }
         public override bool Angreifen(Squad targetSquad)
         {
-            if ((targetSquad == null || Besitzer == targetSquad.Besitzer) && (BerechneDistanz(targetSquad.AktuellesFeld) == 1))
+            if (targetSquad == null || Besitzer == targetSquad.Besitzer)
+                return false;
+            if (BerechneDistanz(targetSquad.AktuellesFeld) != 1)
                 return false;
             targetSquad.NehmeSchaden(Schaden);
             return true;
