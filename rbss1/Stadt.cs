@@ -101,6 +101,7 @@ namespace rbss1
                     felder.StadtAufFeld = null;
                 }
             }
+            this.Besitzer.staedteBesitz.Remove(this);
             Besitzer = null;
             this.textur.Hide();
             this.stadt = null;

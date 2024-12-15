@@ -23,7 +23,6 @@ namespace rbss1
         private Feld[,] felder;
         private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
-        public int truppenMax = 4;
         public int spielerMax = 4;
         public string truppeZumErstellen;
         private Panel squadPanel;
@@ -300,6 +299,7 @@ namespace rbss1
                             ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                         selectedTruppe = null;
                         HideUIInfo();
+                        EntferneBewegungsbereich(null);
                         return;
                     }
                     else if (selectedSquad != null)
@@ -659,6 +659,21 @@ namespace rbss1
             if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
             {
                 MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
+                foreach (var spielerStaedte in aktuellerSpieler.staedteBesitz) 
+                {
+                    
+                    if(spielerStaedte.Leben <= 0) 
+                    {
+                        spielerStaedte.EntferneStadt();
+                        spielerStaedte.Besitzer = null;
+                        aktuellerSpieler.staedteBesitz.Remove(spielerStaedte);
+                        EntferneBewegungsbereich(null);
+                    }
+                    else 
+                    {
+                        spielerStaedte.Leben -= 50;
+                    }
+                }
             }
             if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle <= 0 | aktuellerSpieler.rescourcenBesitz.Eisen <= 0) 
             {
@@ -1212,10 +1227,12 @@ namespace rbss1
         {
             foreach (var Spieler in spieler)
             {
+                Console.WriteLine($"{Spieler.staedteBesitz.Count}");
                 if (Spieler.staedteBesitz.Count == 0)
                 {
                     MessageBox.Show("Spieler ist Raus!");
                     spieler.Remove(Spieler);
+                    return false;
                 }
                 if (spieler.Count == 1)
                 {
