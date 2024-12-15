@@ -23,7 +23,7 @@ namespace rbss1
         private Feld[,] felder;
         private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
-        public int spielerMax = 3;
+        public int spielerMax = 4;
         public string truppeZumErstellen;
         private Panel squadPanel;
         private ListBox squadTruppenLB;
