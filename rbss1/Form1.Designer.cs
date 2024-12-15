@@ -68,6 +68,7 @@
             this.kohleMarkt = new System.Windows.Forms.PictureBox();
             this.stahlMarkt = new System.Windows.Forms.PictureBox();
             this.weizenMarkt = new System.Windows.Forms.PictureBox();
+            this.aktuellerSpielerFarbe = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.rescourcenVerkauf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.squadPanelBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSquad)).BeginInit();
@@ -88,6 +89,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.kohleMarkt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stahlMarkt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weizenMarkt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aktuellerSpielerFarbe)).BeginInit();
             this.SuspendLayout();
             // 
             // truppeComboBox
@@ -582,12 +584,22 @@
             this.weizenMarkt.Visible = false;
             this.weizenMarkt.Click += new System.EventHandler(this.weizenMarkt_Click);
             // 
+            // aktuellerSpielerFarbe
+            // 
+            this.aktuellerSpielerFarbe.BackColor = System.Drawing.Color.Transparent;
+            this.aktuellerSpielerFarbe.Location = new System.Drawing.Point(574, 367);
+            this.aktuellerSpielerFarbe.Name = "aktuellerSpielerFarbe";
+            this.aktuellerSpielerFarbe.Size = new System.Drawing.Size(99, 142);
+            this.aktuellerSpielerFarbe.TabIndex = 39;
+            this.aktuellerSpielerFarbe.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1103, 501);
+            this.Controls.Add(this.aktuellerSpielerFarbe);
             this.Controls.Add(this.weizenMarkt);
             this.Controls.Add(this.stahlMarkt);
             this.Controls.Add(this.kohleMarkt);
@@ -648,6 +660,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.kohleMarkt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stahlMarkt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.weizenMarkt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aktuellerSpielerFarbe)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -694,6 +707,7 @@
         private System.Windows.Forms.PictureBox kohleMarkt;
         private System.Windows.Forms.PictureBox stahlMarkt;
         private System.Windows.Forms.PictureBox weizenMarkt;
+        private System.Windows.Forms.PictureBox aktuellerSpielerFarbe;
     }
 }
 

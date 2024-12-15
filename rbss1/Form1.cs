@@ -23,7 +23,7 @@ namespace rbss1
         private Feld[,] felder;
         private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
-        public int spielerMax = 4;
+        public int spielerMax = 3;
         public string truppeZumErstellen;
         private Panel squadPanel;
         private ListBox squadTruppenLB;
@@ -282,7 +282,7 @@ namespace rbss1
             else if (clickedObject is Stadt clickedStadt)
             {
                 selectedStadt = clickedStadt;
-                if (clickedStadt != null)
+                if (clickedStadt != null && Gewinnueberpruefung() != true)
                 {
                     if (clickedStadt.Besitzer == aktuellerSpieler)
                     {
@@ -474,7 +474,7 @@ namespace rbss1
                 lastClickedFeld = clickedFeld;
 
             }
-            if (rekrutiermodus == true)
+            if (rekrutiermodus == true && Gewinnueberpruefung() != true)
             {
                 if (lastClickedFeld.besitzer == spieler[aktuellerSpielerIndex] && lastClickedFeld.TruppeAufFeld == null && truppeZumErstellen != null)
                 {
@@ -842,6 +842,7 @@ namespace rbss1
 
         private void construction_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             if (lastClickedFeld == null)
             {
                 MessageBox.Show("Wähle Zunächst ein Feld aus!");
@@ -879,7 +880,8 @@ namespace rbss1
 
         private void stadtbauen_Click(object sender, EventArgs e)
         {
-            if(lastClickedFeld == null) 
+            if (Gewinnueberpruefung() == true) { return; }
+            if (lastClickedFeld == null) 
             {
                 MessageBox.Show("Wähle zunächst ein Feld aus!");
                 return;
@@ -971,6 +973,7 @@ namespace rbss1
 
         private void farmbauen_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             if (lastClickedFeld == null)
             {
                 MessageBox.Show("Wähle zunächst ein Feld aus!");
@@ -1044,6 +1047,7 @@ namespace rbss1
 
         private void stahlwerkbauen_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             if (lastClickedFeld == null)
             {
                 MessageBox.Show("Wähle zunächst ein Feld aus!");
@@ -1130,6 +1134,7 @@ namespace rbss1
 
         private void recruitSoldiers_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             if (rekrutiermodus == false)
             {
                 truppeComboBox.Visible = true;
@@ -1147,10 +1152,12 @@ namespace rbss1
         //Aktualiseren der UI-Elemente, welche das Geld und die Bewegungspunkte anzeigen.
         public void UIAktualisierung()
         {
-
+            if(Gewinnueberpruefung() == true) { return; }
             geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
             bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
             momentanerSpieler.Text = $"Spieler {spieler[aktuellerSpielerIndex]}";
+            aktuellerSpielerFarbe.BackColor = spieler[aktuellerSpielerIndex].SpielerFarbe;
+            aktuellerSpielerFarbe.BackgroundImage = Properties.Resources.grasstransparent;
 
             if (rescourceinventory.Visible == true)
             {
@@ -1180,6 +1187,7 @@ namespace rbss1
 
         private void rescourcenFenster_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             UIAktualisierung();
             if (rescourceinventory.Visible == true)
             {
@@ -1250,6 +1258,23 @@ namespace rbss1
                 {
                     MessageBox.Show("Spieler ist Raus!");
                     spieler.Remove(Spieler);
+                    foreach(var feld in felder) 
+                    {
+                        if(feld.TruppeAufFeld != null) 
+                        {
+                            if(feld.TruppeAufFeld.Besitzer == Spieler) 
+                            {
+                                feld.EntferneTruppe();
+                            }
+                        }
+                        if(feld.SquadAufFeld != null) 
+                        {
+                            if(feld.SquadAufFeld.Besitzer == Spieler) 
+                            {
+                                feld.EntferneSquad();
+                            }
+                        }
+                    }
                     Gewinnueberpruefung();
                     return false;
                 }
@@ -1257,6 +1282,7 @@ namespace rbss1
                 {
                     MessageBox.Show($"Spieler {Spieler.ToString()} hat gewonnen!");
                     momentanerSpieler.Text = $"Spieler {Spieler.ToString()}";
+                    momentanerSpieler.BackColor = Spieler.SpielerFarbe;
                     return true;
                 }
             }
@@ -1291,6 +1317,7 @@ namespace rbss1
         }
         private void recruitSquad_Click(object sender, EventArgs e)
         {
+            if (Gewinnueberpruefung() == true) { return; }
             Panel squadErstellenPanel = new Panel
             {
                 Size = new Size(300, 400),
@@ -1557,7 +1584,7 @@ namespace rbss1
 
         private void rescourcenVerkauf_Click(object sender, EventArgs e)
         {
-
+            if (Gewinnueberpruefung() == true) { return; }
             if (marktFenster.Visible == true)
             {
                 marktFenster.Hide();
