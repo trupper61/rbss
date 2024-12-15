@@ -195,16 +195,20 @@ namespace rbss1
                 if (selectedTruppe != null && selectedTruppe != clickedTruppe)
                 {
                     EntferneBewegungsbereich(null);
-                    if (aktuellerSpieler.bewegungspunkte > 0) 
+                    if (aktuellerSpieler.bewegungspunkte > 0 && selectedTruppe.Angreifen(clickedTruppe)) 
                     {
-                        selectedTruppe.Angreifen(clickedTruppe);
+                        //if (selectedTruppe.Angreifen(clickedTruppe))
                         ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                         aktuellerSpieler.bewegungspunkte -= 1;
                         UIAktualisierung();
                     }
-                    else
+                    else if (aktuellerSpieler.bewegungspunkte <= 0)
                     {
                         MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Deine Truppe hat nicht die benötigte Reichweite");
                     }
 
                     selectedTruppe = null;
@@ -216,16 +220,19 @@ namespace rbss1
                 if (selectedSquad != null)
                 {
                     EntferneBewegungsbereich(null);
-                    if(aktuellerSpieler.bewegungspunkte > 0) 
+                    if(aktuellerSpieler.bewegungspunkte > 0 && selectedSquad.Angreifen(clickedTruppe)) 
                     {
-                        selectedSquad.Angreifen(clickedTruppe);
                         ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedTruppe.AktuellesFeld));
                         aktuellerSpieler.bewegungspunkte -= 1;
                         UIAktualisierung();
                     }
-                    else
+                    else if (aktuellerSpieler.bewegungspunkte <= 0)
                     {
                         MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Dein Squad hat nicht die benötigte Reichweite");
                     }
 
                     selectedSquad = null;
@@ -280,16 +287,19 @@ namespace rbss1
                 if (selectedSquad != null && selectedSquad != clickedSquad)
                 {
                     EntferneBewegungsbereich(null);
-                    if(aktuellerSpieler.bewegungspunkte > 0) 
-                    {
-                        selectedSquad.Angreifen(clickedSquad);
+                    if(aktuellerSpieler.bewegungspunkte > 0 && selectedSquad.Angreifen(clickedSquad))
+                    { 
                         ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedSquad.AktuellesFeld));
                         aktuellerSpieler.bewegungspunkte -= 1;
                         UIAktualisierung();
                     }
-                    else
+                    else if (aktuellerSpieler.bewegungspunkte <= 0)
                     {
                         MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Dein Squad hat nicht die benötigte Reichweite");
                     }
 
                     selectedSquad = null;
@@ -299,16 +309,19 @@ namespace rbss1
                 else if (selectedTruppe != null)
                 {
                     EntferneBewegungsbereich(null);
-                    if (aktuellerSpieler.bewegungspunkte > 0) 
-                    {
-                        selectedTruppe.Angreifen(clickedSquad);
+                    if (aktuellerSpieler.bewegungspunkte > 0 && selectedTruppe.Angreifen(clickedSquad))
+                    { 
                         ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                         aktuellerSpieler.bewegungspunkte -= 1;
                         UIAktualisierung();
                     }
-                    else
+                    else if (aktuellerSpieler.bewegungspunkte <= 0)
                     {
                         MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Deine Truppe hat nicht die benötigte Reichweite");
                     }
 
                     selectedTruppe = null;
@@ -364,19 +377,21 @@ namespace rbss1
                     }
 
                     //Logik für Stadtangriff
-                    if (selectedTruppe != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
+                    if (selectedTruppe != null)
                     {
-                        EntferneBewegungsbereich(null);
-                        if (aktuellerSpieler.bewegungspunkte > 0) 
+                        if (aktuellerSpieler.bewegungspunkte > 0 && selectedTruppe.Angreifen(clickedStadt)) 
                         {
-                            selectedTruppe.Angreifen(clickedStadt);
                             ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                             aktuellerSpieler.bewegungspunkte -= 1;
                             UIAktualisierung();
                         }
-                        else 
+                        else if (aktuellerSpieler.bewegungspunkte <= 0)
                         {
                             MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Deine Truppe hat nicht die benötigte Reichweite");
                         }
                             
                         selectedTruppe = null;
@@ -388,18 +403,21 @@ namespace rbss1
                     }
 
                     //Logik für Stadtangriff mit Squad
-                    else if (selectedSquad != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
+                    else if (selectedSquad != null)
                     {
-                        if (aktuellerSpieler.bewegungspunkte > 0) 
+                        if (aktuellerSpieler.bewegungspunkte > 0 && selectedSquad.Angreifen(clickedStadt)) 
                         {
-                            selectedSquad.Angreifen(clickedStadt);
                             ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedStadt.startFeld));
                             aktuellerSpieler.bewegungspunkte -= 1;
                             UIAktualisierung();
                         }
-                        else
+                        else if (aktuellerSpieler.bewegungspunkte <= 0)
                         {
                             MessageBox.Show("Nicht genügend Bewegunspunkte!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Dein Squad hat nicht die benötigte Reichweite");
                         }
 
                         selectedSquad = null;
@@ -770,7 +788,7 @@ namespace rbss1
                     ItemPB.Image = Properties.Resources.melee;
                 else if (truppe is Fernkaempfer)
                     ItemPB.Image = Properties.Resources.ranged;
-                truppenLebenLB.Text = $"Lebel: {truppe.Leben}";
+                truppenLebenLB.Text = $"Leben: {truppe.Leben}";
                 truppenSchadenLB.Text = $"Schaden: {truppe.Schaden}";
                 titelLabel.Text = truppe.ToString();
                 truppenSchadenLB.Visible = true;
@@ -802,6 +820,7 @@ namespace rbss1
             truppenSchadenLB.Hide();
             truppenLebenLB.Hide();
             titelLabel.Hide();
+            einnehmen.Hide();
         }
 
         //Logik für die Generierung der Städte
