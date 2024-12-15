@@ -23,7 +23,6 @@ namespace rbss1
         private Feld[,] felder;
         private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
-        public int truppenMax = 4;
         public int spielerMax = 4;
         public string truppeZumErstellen;
         private Panel squadPanel;
@@ -300,6 +299,7 @@ namespace rbss1
                             ZeigeSchaden(selectedTruppe.textur, selectedTruppe.Schaden);
                         selectedTruppe = null;
                         HideUIInfo();
+                        EntferneBewegungsbereich(null);
                         return;
                     }
                     else if (selectedSquad != null)
@@ -355,7 +355,7 @@ namespace rbss1
                 }
                 if (lastClickedFeld == clickedFeld)
                 {
-                    if (clickedFeld.GehoertZuStadt && clickedFeld.besitzer != null)
+                    if (clickedFeld.GehoertZuStadt && clickedFeld.besitzer != null || clickedFeld.besitzer != null)
                     {
                         clickedFeld.textur.BackColor = clickedFeld.besitzer.SpielerFarbe;
                         clickedFeld.textur.Image = Properties.Resources.grasstransparent;
@@ -375,7 +375,7 @@ namespace rbss1
 
                 if (lastClickedFeld != null)
                 {
-                    if (lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != null)
+                    if (lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != null || lastClickedFeld.besitzer != null)
                     {
                         lastClickedFeld.textur.BackColor = lastClickedFeld.besitzer.SpielerFarbe;
                         lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
@@ -391,12 +391,6 @@ namespace rbss1
                 clickedFeld.textur.Image = Properties.Resources.grasstransparent;
 
                 UIInfo.Show();
-
-                lastClickedFeld = clickedFeld;
-
-
-
-                lastClickedFeld = clickedFeld;
 
                 if (selectedTruppe != null && clickedFeld.feldart == "Grass")
                 {
@@ -430,6 +424,7 @@ namespace rbss1
                     else
                     {
                         MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                        einnehmen.Hide();
                         selectedTruppe = null;
                         EntferneBewegungsbereich(null);
                     }
@@ -553,7 +548,6 @@ namespace rbss1
                 {
                     feld.textur.BackColor = Color.White;
                     feld.textur.Image = Properties.Resources.grass;
-
                 }
             }
             foreach (var feld in felder)
@@ -562,12 +556,18 @@ namespace rbss1
                 {
                     feld.StadtAufFeld.SetzeEinflussRadius(spieler, aktuellerSpielerIndex);
                 }
+                if(feld.besitzer != null && !feld.GehoertZuStadt) 
+                {
+                    feld.textur.BackColor = feld.besitzer.SpielerFarbe;
+                    feld.textur.Image = Properties.Resources.grasstransparent;
+                }
             }
 
         }
 
         public void Spielerwechsel()
         {
+            Gewinnueberpruefung();
             aktuellerSpielerIndex++;
 
             if (aktuellerSpielerIndex >= spieler.Count)
@@ -592,30 +592,29 @@ namespace rbss1
                         spieler.geld += stadt.einkommen;
                     }
                 }
-
-                foreach (var feld in alleFelder)
+                foreach (var spieler in spieler) 
                 {
+                    foreach (var feld in alleFelder)
+                    {
 
-                    if (feld.FarmAufFeld != null)
-                    {
-                        feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
-                    }
-                    if (feld.StahlwerkAufFeld != null)
-                    {
-                        if(aktuellerSpieler.rescourcenBesitz.Eisen > 0 && aktuellerSpieler.rescourcenBesitz.Kohle > 0) 
+                        if (feld.FarmAufFeld != null && feld.FarmAufFeld.Besitzer == spieler)
                         {
-                            if (feld.rescourcen == null)
-                            {
-                                feld.rescourcen = new Stahl(10, feld.StahlwerkAufFeld.StahlEinkommen);
-                            }
-                            else
-                            {
-                                feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
-                            }
+                            feld.rescourcen.Weizen += feld.FarmAufFeld.weizenEinkommen;
                         }
-                        else 
+                        if (feld.StahlwerkAufFeld != null && feld.StahlwerkAufFeld.Besitzer == spieler)
                         {
-                            MessageBox.Show("Die Stahlwerke können nicht mehr Arbeiten! Schaffe Kohle und Eisen an!");
+                            if (spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0)
+                            {
+                                if (feld.rescourcen == null)
+                                {
+                                    feld.rescourcen = new Stahl(40, feld.StahlwerkAufFeld.StahlEinkommen);
+                                    feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                                }
+                                else
+                                {
+                                    feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
+                                }
+                            }
                         }
                     }
                 }
@@ -638,7 +637,7 @@ namespace rbss1
                                     abziehbarVar--;
                                 }
                             }
-                            if(aktuellerSpieler.rescourcenBesitz.Eisen > 0 && aktuellerSpieler.rescourcenBesitz.Kohle > 0) 
+                            if(spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0) 
                             {
                                 if (feld.rescourcen != null)
                                 {
@@ -654,14 +653,20 @@ namespace rbss1
                     }
                 }
             }
-
+            
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
             if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
             {
                 MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
+                SpielstandUpdate();
             }
+            if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle <= 0 | aktuellerSpieler.rescourcenBesitz.Eisen <= 0) 
+            {
+                MessageBox.Show("Eisen und Kohlemagnel, Stahlwerke können nicht Arbeiten!");
+            }
+            
             UIAktualisierung();
             spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
         }
@@ -797,9 +802,22 @@ namespace rbss1
         {
             if (lastClickedFeld != null && !lastClickedFeld.GehoertZuStadt && lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex])
             {
-                lastClickedFeld.textur.BackColor = Color.Red;
+                lastClickedFeld.textur.Image = Properties.Resources.grasstransparent;
+                lastClickedFeld.textur.BackColor = spieler[aktuellerSpielerIndex].SpielerFarbe;
                 lastClickedFeld.besitzer = spieler[aktuellerSpielerIndex];
-                MessageBox.Show("Auf diesem Feld kann nun eine Stadt gebaut werden!");
+
+                if(lastClickedFeld.FarmAufFeld != null) 
+                {
+                    lastClickedFeld.FarmAufFeld.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].farmBesitz.Add(lastClickedFeld.FarmAufFeld);
+                }
+                if(lastClickedFeld.StahlwerkAufFeld != null) 
+                {
+                    lastClickedFeld.StahlwerkAufFeld.Besitzer = spieler[aktuellerSpielerIndex];
+                    spieler[aktuellerSpielerIndex].stahlwerkBesitz.Add(lastClickedFeld.StahlwerkAufFeld);
+                }
+
+                MessageBox.Show("Dieses Feld gehört nun Dir!");
                 return;
             }
             MessageBox.Show("Hier geht das nicht!");
@@ -862,6 +880,11 @@ namespace rbss1
                     MessageBox.Show("Man kann keine Gebäude auf andere Bauen!");
                     return;
                 }
+                if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl < 30) 
+                {
+                    MessageBox.Show("Nicht genügend Stahl!");
+                    return;
+                }
                 List<Point> platzierteStadtPositionen = new List<Point>();
                 int stadtabstand = 5;
 
@@ -890,6 +913,23 @@ namespace rbss1
 
                     spieler[aktuellerSpielerIndex].bewegungspunkte -= 2;
                     spieler[aktuellerSpielerIndex].geld -= 200;
+
+
+                    bool abziehbarRes = true;
+                    foreach (var feld in felder) 
+                    {
+                        if(abziehbarRes == true) 
+                        {
+                            if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                            {
+                                if (feld.StahlwerkAufFeld != null)
+                                {
+                                    feld.rescourcen.Stahl -= 30;
+                                    abziehbarRes = false;
+                                }
+                            }
+                        }
+                    }
                     UIAktualisierung();
                 }
                 return;
@@ -1174,10 +1214,13 @@ namespace rbss1
         {
             foreach (var Spieler in spieler)
             {
+                Console.WriteLine($"{Spieler.staedteBesitz.Count}");
                 if (Spieler.staedteBesitz.Count == 0)
                 {
                     MessageBox.Show("Spieler ist Raus!");
                     spieler.Remove(Spieler);
+                    Gewinnueberpruefung();
+                    return false;
                 }
                 if (spieler.Count == 1)
                 {
@@ -1478,6 +1521,164 @@ namespace rbss1
                 squadTruppenLB.Items.Add(truppe.ToString());
             }
             squadPanel.BringToFront();
+        }
+
+        private void rescourcenVerkauf_Click(object sender, EventArgs e)
+        {
+
+            if (marktFenster.Visible == true)
+            {
+                marktFenster.Hide();
+                eisenMarkt.Hide();
+                kohleMarkt.Hide();
+                stahlMarkt.Hide();
+                weizenMarkt.Hide();
+            }
+            else
+            {
+                marktFenster.Show();
+                eisenMarkt.Show(); eisenMarkt.BringToFront();
+                kohleMarkt.Show(); kohleMarkt.BringToFront();
+                stahlMarkt.Show(); stahlMarkt.BringToFront();
+                weizenMarkt.Show(); weizenMarkt.BringToFront();
+            }
+        }
+
+        private void eisenMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen > 0) 
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Eisen -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                MessageBox.Show("Nicht genügend Eisen zu Verkaufen!");
+            }
+        }
+
+        private void kohleMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle > 0)
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Kohle -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nicht genügend Kohle zu Verkaufen!");
+            }
+        }
+
+        private void stahlMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl > 0)
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Stahl -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nicht genügend Stahl zu Verkaufen!");
+            }
+        }
+
+        private void weizenMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen > 0)
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Weizen -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nicht genügend Weizen zu Verkaufen!");
+            }
+        }
+
+        public void SpielstandUpdate() 
+        {
+            foreach (var spielerStaedte in aktuellerSpieler.staedteBesitz)
+            {
+
+                if (spielerStaedte.Leben <= 0)
+                {
+                    spielerStaedte.EntferneStadt();
+                    spielerStaedte.Besitzer = null;
+                    aktuellerSpieler.staedteBesitz.Remove(spielerStaedte);
+                    EntferneBewegungsbereich(null);
+                    SpielstandUpdate();
+                    return;
+                }
+                else
+                {
+                    spielerStaedte.Leben -= 50;
+                }
+            }
         }
     }
 }

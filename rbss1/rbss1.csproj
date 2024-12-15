@@ -151,5 +151,14 @@
   <ItemGroup>
     <None Include="Resources\settings.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\kiste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\rescourceview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\rescourcesell.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
