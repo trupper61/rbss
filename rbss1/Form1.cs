@@ -1627,6 +1627,7 @@ namespace rbss1
             if (Gewinnueberpruefung() == true) { return; }
             if (marktFenster.Visible == true)
             {
+                verkaufshinweis.Hide();
                 marktFenster.Hide();
                 eisenMarkt.Hide();
                 kohleMarkt.Hide();
@@ -1635,6 +1636,7 @@ namespace rbss1
             }
             else
             {
+                verkaufshinweis.Show();
                 marktFenster.Show();
                 eisenMarkt.Show(); eisenMarkt.BringToFront();
                 kohleMarkt.Show(); kohleMarkt.BringToFront();
