@@ -63,6 +63,11 @@
             this.anzahlRes = new System.Windows.Forms.Label();
             this.UIInfo = new System.Windows.Forms.PictureBox();
             this.UI = new System.Windows.Forms.PictureBox();
+            this.marktFenster = new System.Windows.Forms.PictureBox();
+            this.eisenMarkt = new System.Windows.Forms.PictureBox();
+            this.kohleMarkt = new System.Windows.Forms.PictureBox();
+            this.stahlMarkt = new System.Windows.Forms.PictureBox();
+            this.weizenMarkt = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.rescourcenVerkauf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.squadPanelBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSquad)).BeginInit();
@@ -78,6 +83,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.marktFenster)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eisenMarkt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kohleMarkt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stahlMarkt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weizenMarkt)).BeginInit();
             this.SuspendLayout();
             // 
             // truppeComboBox
@@ -501,12 +511,82 @@
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
             // 
+            // marktFenster
+            // 
+            this.marktFenster.BackgroundImage = global::rbss1.Properties.Resources.labelbackround;
+            this.marktFenster.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.marktFenster.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.marktFenster.Location = new System.Drawing.Point(763, 367);
+            this.marktFenster.Margin = new System.Windows.Forms.Padding(2);
+            this.marktFenster.Name = "marktFenster";
+            this.marktFenster.Size = new System.Drawing.Size(342, 132);
+            this.marktFenster.TabIndex = 34;
+            this.marktFenster.TabStop = false;
+            this.marktFenster.Visible = false;
+            // 
+            // eisenMarkt
+            // 
+            this.eisenMarkt.BackgroundImage = global::rbss1.Properties.Resources.ironinventory;
+            this.eisenMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.eisenMarkt.Location = new System.Drawing.Point(812, 430);
+            this.eisenMarkt.Margin = new System.Windows.Forms.Padding(2);
+            this.eisenMarkt.Name = "eisenMarkt";
+            this.eisenMarkt.Size = new System.Drawing.Size(32, 32);
+            this.eisenMarkt.TabIndex = 35;
+            this.eisenMarkt.TabStop = false;
+            this.eisenMarkt.Visible = false;
+            this.eisenMarkt.Click += new System.EventHandler(this.eisenMarkt_Click);
+            // 
+            // kohleMarkt
+            // 
+            this.kohleMarkt.BackgroundImage = global::rbss1.Properties.Resources.coalinventory1;
+            this.kohleMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.kohleMarkt.Location = new System.Drawing.Point(873, 430);
+            this.kohleMarkt.Margin = new System.Windows.Forms.Padding(2);
+            this.kohleMarkt.Name = "kohleMarkt";
+            this.kohleMarkt.Size = new System.Drawing.Size(32, 32);
+            this.kohleMarkt.TabIndex = 36;
+            this.kohleMarkt.TabStop = false;
+            this.kohleMarkt.Visible = false;
+            this.kohleMarkt.Click += new System.EventHandler(this.kohleMarkt_Click);
+            // 
+            // stahlMarkt
+            // 
+            this.stahlMarkt.BackgroundImage = global::rbss1.Properties.Resources.stahlinventory1;
+            this.stahlMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.stahlMarkt.Location = new System.Drawing.Point(946, 430);
+            this.stahlMarkt.Margin = new System.Windows.Forms.Padding(2);
+            this.stahlMarkt.Name = "stahlMarkt";
+            this.stahlMarkt.Size = new System.Drawing.Size(32, 32);
+            this.stahlMarkt.TabIndex = 37;
+            this.stahlMarkt.TabStop = false;
+            this.stahlMarkt.Visible = false;
+            this.stahlMarkt.Click += new System.EventHandler(this.stahlMarkt_Click);
+            // 
+            // weizenMarkt
+            // 
+            this.weizenMarkt.BackgroundImage = global::rbss1.Properties.Resources.wheatinventory;
+            this.weizenMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.weizenMarkt.Location = new System.Drawing.Point(1019, 430);
+            this.weizenMarkt.Margin = new System.Windows.Forms.Padding(2);
+            this.weizenMarkt.Name = "weizenMarkt";
+            this.weizenMarkt.Size = new System.Drawing.Size(32, 32);
+            this.weizenMarkt.TabIndex = 38;
+            this.weizenMarkt.TabStop = false;
+            this.weizenMarkt.Visible = false;
+            this.weizenMarkt.Click += new System.EventHandler(this.weizenMarkt_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1103, 501);
+            this.Controls.Add(this.weizenMarkt);
+            this.Controls.Add(this.stahlMarkt);
+            this.Controls.Add(this.kohleMarkt);
+            this.Controls.Add(this.eisenMarkt);
+            this.Controls.Add(this.marktFenster);
             this.Controls.Add(this.rescourcenVerkauf);
             this.Controls.Add(this.squadPanelBtn);
             this.Controls.Add(this.stahlwerkbauen);
@@ -557,6 +637,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemPB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UIInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UI)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.marktFenster)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eisenMarkt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kohleMarkt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stahlMarkt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weizenMarkt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -598,6 +683,11 @@
         private System.Windows.Forms.Button stahlwerkbauen;
         private System.Windows.Forms.PictureBox squadPanelBtn;
         private System.Windows.Forms.PictureBox rescourcenVerkauf;
+        private System.Windows.Forms.PictureBox marktFenster;
+        private System.Windows.Forms.PictureBox eisenMarkt;
+        private System.Windows.Forms.PictureBox kohleMarkt;
+        private System.Windows.Forms.PictureBox stahlMarkt;
+        private System.Windows.Forms.PictureBox weizenMarkt;
     }
 }
 

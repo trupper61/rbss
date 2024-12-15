@@ -606,7 +606,7 @@ namespace rbss1
                             {
                                 if (feld.rescourcen == null)
                                 {
-                                    feld.rescourcen = new Stahl(10, feld.StahlwerkAufFeld.StahlEinkommen);
+                                    feld.rescourcen = new Stahl(40, feld.StahlwerkAufFeld.StahlEinkommen);
                                     feld.rescourcen.Stahl += feld.StahlwerkAufFeld.StahlEinkommen;
                                 }
                                 else
@@ -1521,6 +1521,138 @@ namespace rbss1
         private void rescourcenVerkauf_Click(object sender, EventArgs e)
         {
 
+            if (marktFenster.Visible == true)
+            {
+                marktFenster.Hide();
+                eisenMarkt.Hide();
+                kohleMarkt.Hide();
+                stahlMarkt.Hide();
+                weizenMarkt.Hide();
+            }
+            else
+            {
+                marktFenster.Show();
+                eisenMarkt.Show(); eisenMarkt.BringToFront();
+                kohleMarkt.Show(); kohleMarkt.BringToFront();
+                stahlMarkt.Show(); stahlMarkt.BringToFront();
+                weizenMarkt.Show(); weizenMarkt.BringToFront();
+            }
+        }
+
+        private void eisenMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen > 0) 
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Eisen -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                MessageBox.Show("Nicht genügend Eisen zu Verkaufen!");
+            }
+        }
+
+        private void kohleMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle > 0)
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Kohle -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nicht genügend Kohle zu Verkaufen!");
+            }
+        }
+
+        private void stahlMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl > 0)
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Stahl -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nicht genügend Stahl zu Verkaufen!");
+            }
+        }
+
+        private void weizenMarkt_Click(object sender, EventArgs e)
+        {
+            bool abziehbarRes = true;
+
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen > 0)
+            {
+                foreach (var feld in alleFelder)
+                {
+                    if (feld.besitzer == spieler[aktuellerSpielerIndex])
+                    {
+                        if (feld.rescourcen != null)
+                        {
+                            if (abziehbarRes == true)
+                            {
+                                feld.rescourcen.Weizen -= 10;
+                                spieler[aktuellerSpielerIndex].geld += feld.rescourcen.wert * 3;
+                                abziehbarRes = false;
+                                UIAktualisierung();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nicht genügend Weizen zu Verkaufen!");
+            }
         }
     }
 }
