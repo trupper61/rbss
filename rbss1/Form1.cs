@@ -23,7 +23,7 @@ namespace rbss1
         private Feld[,] felder;
         private List<Feld> alleFelder = new List<Feld>();
         public bool rekrutiermodus = false;
-        public int spielerMax = 4;
+        public int spielerMax;
         public string truppeZumErstellen;
         private Panel squadPanel;
         private ListBox squadTruppenLB;
@@ -42,10 +42,10 @@ namespace rbss1
         Random rescourcenMenge = new Random();
         Random spielAnfaenger = new Random();
         Random randomPlatzierung = new Random();
-        public Form1()
+        public Form1(int spielerMax)
         {
             InitializeComponent();
-
+            this.spielerMax = spielerMax;
             for (int i = 0; i < spielerMax; i++)
             {
                 spieler.Add(new Spieler(null, 150, 3, i + 1, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)), null, null));
