@@ -48,5 +48,10 @@ namespace rbss1
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return spielernummer.ToString();
+        }
     }
 }

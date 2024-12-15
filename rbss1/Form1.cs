@@ -659,21 +659,7 @@ namespace rbss1
             if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
             {
                 MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
-                foreach (var spielerStaedte in aktuellerSpieler.staedteBesitz) 
-                {
-                    
-                    if(spielerStaedte.Leben <= 0) 
-                    {
-                        spielerStaedte.EntferneStadt();
-                        spielerStaedte.Besitzer = null;
-                        aktuellerSpieler.staedteBesitz.Remove(spielerStaedte);
-                        EntferneBewegungsbereich(null);
-                    }
-                    else 
-                    {
-                        spielerStaedte.Leben -= 50;
-                    }
-                }
+                SpielstandUpdate();
             }
             if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle <= 0 | aktuellerSpieler.rescourcenBesitz.Eisen <= 0) 
             {
@@ -1232,6 +1218,7 @@ namespace rbss1
                 {
                     MessageBox.Show("Spieler ist Raus!");
                     spieler.Remove(Spieler);
+                    Gewinnueberpruefung();
                     return false;
                 }
                 if (spieler.Count == 1)
@@ -1669,6 +1656,27 @@ namespace rbss1
             else
             {
                 MessageBox.Show("Nicht genügend Weizen zu Verkaufen!");
+            }
+        }
+
+        public void SpielstandUpdate() 
+        {
+            foreach (var spielerStaedte in aktuellerSpieler.staedteBesitz)
+            {
+
+                if (spielerStaedte.Leben <= 0)
+                {
+                    spielerStaedte.EntferneStadt();
+                    spielerStaedte.Besitzer = null;
+                    aktuellerSpieler.staedteBesitz.Remove(spielerStaedte);
+                    EntferneBewegungsbereich(null);
+                    SpielstandUpdate();
+                    return;
+                }
+                else
+                {
+                    spielerStaedte.Leben -= 50;
+                }
             }
         }
     }
