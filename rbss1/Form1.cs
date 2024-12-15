@@ -292,7 +292,7 @@ namespace rbss1
                         EntferneBewegungsbereich(null);
                         return;
                     }
-                    if (selectedTruppe != null)
+                    if (selectedTruppe != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
                         EntferneBewegungsbereich(null);
                         if (selectedTruppe.Angreifen(clickedStadt))
@@ -300,15 +300,24 @@ namespace rbss1
                         selectedTruppe = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
                         return;
                     }
-                    else if (selectedSquad != null)
+                    else if (selectedSquad != null && spieler[aktuellerSpielerIndex].bewegungspunkte != 0)
                     {
                         if (selectedSquad.Angreifen(clickedStadt))
                             ZeigeSchaden(selectedSquad.textur, selectedSquad.TrueDamage(clickedStadt.startFeld));
                         selectedSquad = null;
                         HideUIInfo();
                         EntferneBewegungsbereich(null);
+                        aktuellerSpieler.bewegungspunkte -= 1;
+                        UIAktualisierung();
+                        return;
+                    }
+                    else 
+                    {
+                        MessageBox.Show("Nicht genügend Bewegungspunkte!");
                         return;
                     }
                     MessageBox.Show("Das ist nicht deine Stadt!");
@@ -491,6 +500,10 @@ namespace rbss1
                         truppe.textur.Click += new EventHandler(feld_Click);
                         UIAktualisierung();
                     }
+                }
+                else if(lastClickedFeld.besitzer != spieler[aktuellerSpielerIndex]) 
+                {
+                    MessageBox.Show("Das ist nicht dein Feld!");
                 }
                 else
                 {
