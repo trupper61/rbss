@@ -573,6 +573,7 @@ namespace rbss1
                     else
                     {
                         MessageBox.Show("Nicht genügend Bewegungspunkte!");
+                        einnehmen.Hide();
                         selectedTruppe = null;
                         EntferneBewegungsbereich(null);
                     }
