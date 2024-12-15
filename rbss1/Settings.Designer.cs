@@ -56,7 +56,7 @@
             0,
             0});
             this.spielerAnzalInput.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
