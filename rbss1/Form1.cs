@@ -315,7 +315,7 @@ namespace rbss1
                         UIAktualisierung();
                         return;
                     }
-                    else 
+                    else if (selectedTruppe != null || selectedSquad != null & spieler[aktuellerSpielerIndex].bewegungspunkte == 0)
                     {
                         MessageBox.Show("Nicht genügend Bewegungspunkte!");
                         return;
@@ -580,8 +580,14 @@ namespace rbss1
 
         public void Spielerwechsel()
         {
+            if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
+            {
+                //MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
+                SpielstandUpdate();
+            }
             Gewinnueberpruefung();
             aktuellerSpielerIndex++;
+            
 
             if (aktuellerSpielerIndex >= spieler.Count)
             {
@@ -646,8 +652,11 @@ namespace rbss1
                             {
                                 if (abziehbarVar != 0)
                                 {
-                                    feld.rescourcen.Weizen -= 10;
-                                    abziehbarVar--;
+                                    if(spieler.rescourcenBesitz.Weizen >= 0) 
+                                    {
+                                        feld.rescourcen.Weizen -= 10;
+                                        abziehbarVar--;
+                                    }
                                 }
                             }
                             if(spieler.rescourcenBesitz.Eisen > 0 && spieler.rescourcenBesitz.Kohle > 0) 
@@ -666,22 +675,16 @@ namespace rbss1
                     }
                 }
             }
-            
             aktuellerSpieler = spieler[aktuellerSpielerIndex];
             MessageBox.Show($"Spieler {aktuellerSpieler.spielernummer} ist dran");
 
-            if (aktuellerSpieler.rescourcenBesitz.Weizen < 0)
-            {
-                MessageBox.Show("Rescourcendefizit! Sorge für Weizenproduktion, oder deine Zivilisation stirbt aus!");
-                SpielstandUpdate();
-            }
             if(aktuellerSpieler.stahlwerkBesitz.Count != 0 && aktuellerSpieler.rescourcenBesitz.Kohle <= 0 | aktuellerSpieler.rescourcenBesitz.Eisen <= 0) 
             {
                 MessageBox.Show("Eisen und Kohlemagnel, Stahlwerke können nicht Arbeiten!");
             }
-            
-            UIAktualisierung();
+
             spieler[aktuellerSpielerIndex].UpdateRessourcen(alleFelder);
+            UIAktualisierung();
         }
 
         private void weiter_Click(object sender, EventArgs e)
@@ -1132,7 +1135,7 @@ namespace rbss1
 
             geldanzeige.Text = spieler[aktuellerSpielerIndex].geld.ToString();
             bewpunktanzeige.Text = spieler[aktuellerSpielerIndex].bewegungspunkte.ToString();
-            momentanerSpieler.Text = $"Spieler {aktuellerSpielerIndex + 1}";
+            momentanerSpieler.Text = $"Spieler {spieler[aktuellerSpielerIndex]}";
 
             if (rescourceinventory.Visible == true)
             {
@@ -1238,6 +1241,7 @@ namespace rbss1
                 if (spieler.Count == 1)
                 {
                     MessageBox.Show($"Spieler {Spieler.ToString()} hat gewonnen!");
+                    momentanerSpieler.Text = $"Spieler {Spieler.ToString()}";
                     return true;
                 }
             }
