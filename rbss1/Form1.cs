@@ -29,6 +29,35 @@ namespace rbss1
         private ListBox squadTruppenLB;
         private Panel squadErstellenPanel;
 
+        Label constructionCost = new Label()
+        {
+            Text = $"Gebäude: $100, Stadt: $200 + 30 Stahl",
+            Image = Properties.Resources.labelbackround,
+            ImageAlign = ContentAlignment.MiddleCenter,
+            Visible = false,
+            FlatStyle = FlatStyle.Popup,
+            Size = new Size(200, 25)
+        };
+        Label rekrutierungCost = new Label()
+        {
+            Text = $"Truppe: $100",
+            Image = Properties.Resources.labelbackround,
+            ImageAlign = ContentAlignment.MiddleCenter,
+            Visible = false,
+            FlatStyle = FlatStyle.Popup,
+            Size = new Size(200, 25)
+        };
+        Label rescourcenVerkaufAnzeige = new Label()
+        {
+            Text = $"Pro 10 $30, Pro 10 Stahl $120",
+            Image = Properties.Resources.labelbackround,
+            ImageAlign = ContentAlignment.MiddleCenter,
+            Visible = false,
+            FlatStyle = FlatStyle.Popup,
+            Size = new Size(200, 25)
+        };
+
+
         public static List<Spieler> spieler = new List<Spieler>
         {
         };
@@ -45,6 +74,13 @@ namespace rbss1
         public Form1(int spielerMax)
         {
             InitializeComponent();
+
+            this.Controls.Add(constructionCost);
+            this.Controls.Add(rekrutierungCost);
+            this.Controls.Add(rescourcenVerkaufAnzeige);
+
+            constructionCost.BringToFront();
+
             this.spielerMax = spielerMax;
             for (int i = 0; i < spielerMax; i++)
             {
@@ -1894,30 +1930,39 @@ namespace rbss1
         private void rescourcenVerkauf_MouseEnter(object sender, EventArgs e)
         {
             rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesellglow;
+            rescourcenVerkaufAnzeige.Location = new Point(rescourcenVerkauf.Location.X - 200, rescourcenVerkauf.Location.Y + 20);
+            rescourcenVerkaufAnzeige.Show();
         }
 
         private void rescourcenVerkauf_MouseLeave(object sender, EventArgs e)
         {
             rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesell;
+            rescourcenVerkaufAnzeige.Hide();
         }
         private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
         {
             recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
+            rekrutierungCost.Location = new Point(recruitSoldiers.Location.X - 200, recruitSoldiers.Location.Y + 20);
+            rekrutierungCost.Show();
         }
 
         private void recruitSoldiers_MouseLeave(object sender, EventArgs e)
         {
             recruitSoldiers.BackgroundImage = Properties.Resources.recruit;
+            rekrutierungCost.Hide();
         }
 
         private void construction_MouseEnter(object sender, EventArgs e)
         {
             construction.BackgroundImage = Properties.Resources.constructionglow;
+            constructionCost.Location = new Point(construction.Location.X - 200, construction.Location.Y + 20);
+            constructionCost.Show();
         }
 
         private void construction_MouseLeave(object sender, EventArgs e)
         {
             construction.BackgroundImage = Properties.Resources.construction;
+            constructionCost.Hide();
         }
     }
 }
