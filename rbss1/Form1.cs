@@ -1561,7 +1561,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen > 0) 
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Eisen >= 10) 
             {
                 foreach (var feld in alleFelder)
                 {
@@ -1590,7 +1590,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle > 0)
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Kohle >= 10)
             {
                 foreach (var feld in alleFelder)
                 {
@@ -1619,7 +1619,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl > 0)
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Stahl >= 10)
             {
                 foreach (var feld in alleFelder)
                 {
@@ -1648,7 +1648,7 @@ namespace rbss1
         {
             bool abziehbarRes = true;
 
-            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen > 0)
+            if (spieler[aktuellerSpielerIndex].rescourcenBesitz.Weizen >= 10)
             {
                 foreach (var feld in alleFelder)
                 {
