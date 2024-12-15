@@ -34,6 +34,7 @@ namespace rbss1
         }
         public int BerechneDistanz(Feld ziel)
         {
+            //Felder, die die Truppe belaufen kann, wird berechnet.
             return Math.Abs(AktuellesFeld.position.X - ziel.position.X) + Math.Abs(AktuellesFeld.position.Y - ziel.position.Y);
         }
         public void EntferneTruppe()

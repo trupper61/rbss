@@ -35,7 +35,7 @@ namespace rbss1
             zugbeendet = false;
             truppen = new List<Truppe>();
         }
-
+        //Alle auf den Feldern vorhandenen Rescourcen werden zu "Rescourcenbesitz" addiert, somit werden alle Rescourcen, die der Spieler besitzt, angezeigt.
         public void UpdateRessourcen(List<Feld> alleFelder)
         {
             rescourcenBesitz = new Rescourcen();
