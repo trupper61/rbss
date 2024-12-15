@@ -70,6 +70,7 @@
             this.weizenMarkt = new System.Windows.Forms.PictureBox();
             this.aktuellerSpielerFarbe = new System.Windows.Forms.PictureBox();
             this.farbedesSpielers = new System.Windows.Forms.Label();
+            this.verkaufshinweis = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.rescourcenVerkauf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.squadPanelBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSquad)).BeginInit();
@@ -96,10 +97,10 @@
             // truppeComboBox
             // 
             this.truppeComboBox.FormattingEnabled = true;
-            this.truppeComboBox.Location = new System.Drawing.Point(1249, 62);
-            this.truppeComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.truppeComboBox.Location = new System.Drawing.Point(937, 50);
+            this.truppeComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.truppeComboBox.Name = "truppeComboBox";
-            this.truppeComboBox.Size = new System.Drawing.Size(121, 24);
+            this.truppeComboBox.Size = new System.Drawing.Size(92, 21);
             this.truppeComboBox.TabIndex = 11;
             this.truppeComboBox.Visible = false;
             // 
@@ -107,10 +108,10 @@
             // 
             this.rescourcenVerkauf.BackgroundImage = global::rbss1.Properties.Resources.rescourcesell;
             this.rescourcenVerkauf.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.rescourcenVerkauf.Location = new System.Drawing.Point(1389, 372);
-            this.rescourcenVerkauf.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rescourcenVerkauf.Location = new System.Drawing.Point(1042, 302);
+            this.rescourcenVerkauf.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rescourcenVerkauf.Name = "rescourcenVerkauf";
-            this.rescourcenVerkauf.Size = new System.Drawing.Size(67, 62);
+            this.rescourcenVerkauf.Size = new System.Drawing.Size(50, 50);
             this.rescourcenVerkauf.TabIndex = 33;
             this.rescourcenVerkauf.TabStop = false;
             this.rescourcenVerkauf.Click += new System.EventHandler(this.rescourcenVerkauf_Click);
@@ -120,10 +121,10 @@
             // squadPanelBtn
             // 
             this.squadPanelBtn.Image = global::rbss1.Properties.Resources.settings;
-            this.squadPanelBtn.Location = new System.Drawing.Point(1315, 238);
-            this.squadPanelBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.squadPanelBtn.Location = new System.Drawing.Point(986, 193);
+            this.squadPanelBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.squadPanelBtn.Name = "squadPanelBtn";
-            this.squadPanelBtn.Size = new System.Drawing.Size(67, 62);
+            this.squadPanelBtn.Size = new System.Drawing.Size(50, 50);
             this.squadPanelBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.squadPanelBtn.TabIndex = 32;
             this.squadPanelBtn.TabStop = false;
@@ -134,10 +135,10 @@
             // 
             this.stahlwerkbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.stahlwerkbauen.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.stahlwerkbauen.Location = new System.Drawing.Point(957, 62);
-            this.stahlwerkbauen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.stahlwerkbauen.Location = new System.Drawing.Point(718, 50);
+            this.stahlwerkbauen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.stahlwerkbauen.Name = "stahlwerkbauen";
-            this.stahlwerkbauen.Size = new System.Drawing.Size(91, 23);
+            this.stahlwerkbauen.Size = new System.Drawing.Size(68, 19);
             this.stahlwerkbauen.TabIndex = 30;
             this.stahlwerkbauen.Text = "Stahlwerk";
             this.stahlwerkbauen.UseVisualStyleBackColor = true;
@@ -149,10 +150,9 @@
             this.recruitSquad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("recruitSquad.BackgroundImage")));
             this.recruitSquad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.recruitSquad.Image = global::rbss1.Properties.Resources.recruit_squad;
-            this.recruitSquad.Location = new System.Drawing.Point(1389, 238);
-            this.recruitSquad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.recruitSquad.Location = new System.Drawing.Point(1042, 193);
             this.recruitSquad.Name = "recruitSquad";
-            this.recruitSquad.Size = new System.Drawing.Size(67, 62);
+            this.recruitSquad.Size = new System.Drawing.Size(50, 50);
             this.recruitSquad.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.recruitSquad.TabIndex = 29;
             this.recruitSquad.TabStop = false;
@@ -164,10 +164,10 @@
             // 
             this.farmbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.farmbauen.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.farmbauen.Location = new System.Drawing.Point(1053, 62);
-            this.farmbauen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.farmbauen.Location = new System.Drawing.Point(790, 50);
+            this.farmbauen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.farmbauen.Name = "farmbauen";
-            this.farmbauen.Size = new System.Drawing.Size(91, 23);
+            this.farmbauen.Size = new System.Drawing.Size(68, 19);
             this.farmbauen.TabIndex = 26;
             this.farmbauen.Text = "Farm Errichten";
             this.farmbauen.UseVisualStyleBackColor = true;
@@ -179,9 +179,10 @@
             this.wheatAnzahl.AutoSize = true;
             this.wheatAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.wheatAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.wheatAnzahl.Location = new System.Drawing.Point(813, 406);
+            this.wheatAnzahl.Location = new System.Drawing.Point(610, 330);
+            this.wheatAnzahl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.wheatAnzahl.Name = "wheatAnzahl";
-            this.wheatAnzahl.Size = new System.Drawing.Size(85, 18);
+            this.wheatAnzahl.Size = new System.Drawing.Size(70, 15);
             this.wheatAnzahl.TabIndex = 25;
             this.wheatAnzahl.Text = "Rescourcen:";
             this.wheatAnzahl.Visible = false;
@@ -191,9 +192,10 @@
             this.steelAnzahl.AutoSize = true;
             this.steelAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.steelAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.steelAnzahl.Location = new System.Drawing.Point(812, 362);
+            this.steelAnzahl.Location = new System.Drawing.Point(609, 294);
+            this.steelAnzahl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.steelAnzahl.Name = "steelAnzahl";
-            this.steelAnzahl.Size = new System.Drawing.Size(85, 18);
+            this.steelAnzahl.Size = new System.Drawing.Size(70, 15);
             this.steelAnzahl.TabIndex = 24;
             this.steelAnzahl.Text = "Rescourcen:";
             this.steelAnzahl.Visible = false;
@@ -202,10 +204,10 @@
             // 
             this.wheatInventory.BackgroundImage = global::rbss1.Properties.Resources.wheatinventory;
             this.wheatInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.wheatInventory.Location = new System.Drawing.Point(765, 406);
-            this.wheatInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.wheatInventory.Location = new System.Drawing.Point(574, 330);
+            this.wheatInventory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.wheatInventory.Name = "wheatInventory";
-            this.wheatInventory.Size = new System.Drawing.Size(43, 39);
+            this.wheatInventory.Size = new System.Drawing.Size(32, 32);
             this.wheatInventory.TabIndex = 23;
             this.wheatInventory.TabStop = false;
             this.wheatInventory.Visible = false;
@@ -214,10 +216,10 @@
             // 
             this.steelInventory.BackgroundImage = global::rbss1.Properties.Resources.stahlinventory1;
             this.steelInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.steelInventory.Location = new System.Drawing.Point(765, 362);
-            this.steelInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.steelInventory.Location = new System.Drawing.Point(574, 294);
+            this.steelInventory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.steelInventory.Name = "steelInventory";
-            this.steelInventory.Size = new System.Drawing.Size(43, 39);
+            this.steelInventory.Size = new System.Drawing.Size(32, 32);
             this.steelInventory.TabIndex = 22;
             this.steelInventory.TabStop = false;
             this.steelInventory.Visible = false;
@@ -227,9 +229,10 @@
             this.coalAnzahl.AutoSize = true;
             this.coalAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.coalAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.coalAnzahl.Location = new System.Drawing.Point(813, 316);
+            this.coalAnzahl.Location = new System.Drawing.Point(610, 257);
+            this.coalAnzahl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.coalAnzahl.Name = "coalAnzahl";
-            this.coalAnzahl.Size = new System.Drawing.Size(85, 18);
+            this.coalAnzahl.Size = new System.Drawing.Size(70, 15);
             this.coalAnzahl.TabIndex = 21;
             this.coalAnzahl.Text = "Rescourcen:";
             this.coalAnzahl.Visible = false;
@@ -238,10 +241,10 @@
             // 
             this.coalInventory.BackgroundImage = global::rbss1.Properties.Resources.coalinventory1;
             this.coalInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.coalInventory.Location = new System.Drawing.Point(765, 316);
-            this.coalInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.coalInventory.Location = new System.Drawing.Point(574, 257);
+            this.coalInventory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.coalInventory.Name = "coalInventory";
-            this.coalInventory.Size = new System.Drawing.Size(43, 39);
+            this.coalInventory.Size = new System.Drawing.Size(32, 32);
             this.coalInventory.TabIndex = 20;
             this.coalInventory.TabStop = false;
             this.coalInventory.Visible = false;
@@ -251,9 +254,10 @@
             this.eisenAnzahl.AutoSize = true;
             this.eisenAnzahl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.eisenAnzahl.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.eisenAnzahl.Location = new System.Drawing.Point(812, 272);
+            this.eisenAnzahl.Location = new System.Drawing.Point(609, 221);
+            this.eisenAnzahl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.eisenAnzahl.Name = "eisenAnzahl";
-            this.eisenAnzahl.Size = new System.Drawing.Size(85, 18);
+            this.eisenAnzahl.Size = new System.Drawing.Size(70, 15);
             this.eisenAnzahl.TabIndex = 19;
             this.eisenAnzahl.Text = "Rescourcen:";
             this.eisenAnzahl.Visible = false;
@@ -262,10 +266,10 @@
             // 
             this.eisenInventory.BackgroundImage = global::rbss1.Properties.Resources.ironinventory;
             this.eisenInventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.eisenInventory.Location = new System.Drawing.Point(765, 272);
-            this.eisenInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.eisenInventory.Location = new System.Drawing.Point(574, 221);
+            this.eisenInventory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.eisenInventory.Name = "eisenInventory";
-            this.eisenInventory.Size = new System.Drawing.Size(43, 39);
+            this.eisenInventory.Size = new System.Drawing.Size(32, 32);
             this.eisenInventory.TabIndex = 18;
             this.eisenInventory.TabStop = false;
             this.eisenInventory.Visible = false;
@@ -275,9 +279,10 @@
             this.rescourcenlabel.AutoSize = true;
             this.rescourcenlabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rescourcenlabel.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.rescourcenlabel.Location = new System.Drawing.Point(765, 240);
+            this.rescourcenlabel.Location = new System.Drawing.Point(574, 195);
+            this.rescourcenlabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.rescourcenlabel.Name = "rescourcenlabel";
-            this.rescourcenlabel.Size = new System.Drawing.Size(85, 18);
+            this.rescourcenlabel.Size = new System.Drawing.Size(70, 15);
             this.rescourcenlabel.TabIndex = 17;
             this.rescourcenlabel.Text = "Rescourcen:";
             this.rescourcenlabel.Visible = false;
@@ -287,10 +292,10 @@
             this.rescourceinventory.BackgroundImage = global::rbss1.Properties.Resources.labelbackround;
             this.rescourceinventory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.rescourceinventory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rescourceinventory.Location = new System.Drawing.Point(732, 226);
-            this.rescourceinventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rescourceinventory.Location = new System.Drawing.Point(549, 184);
+            this.rescourceinventory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rescourceinventory.Name = "rescourceinventory";
-            this.rescourceinventory.Size = new System.Drawing.Size(166, 265);
+            this.rescourceinventory.Size = new System.Drawing.Size(125, 216);
             this.rescourceinventory.TabIndex = 16;
             this.rescourceinventory.TabStop = false;
             this.rescourceinventory.Visible = false;
@@ -299,10 +304,10 @@
             // 
             this.rescourcenFenster.BackgroundImage = global::rbss1.Properties.Resources.rescourceview;
             this.rescourcenFenster.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.rescourcenFenster.Location = new System.Drawing.Point(1389, 305);
-            this.rescourcenFenster.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rescourcenFenster.Location = new System.Drawing.Point(1042, 248);
+            this.rescourcenFenster.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rescourcenFenster.Name = "rescourcenFenster";
-            this.rescourcenFenster.Size = new System.Drawing.Size(67, 62);
+            this.rescourcenFenster.Size = new System.Drawing.Size(50, 50);
             this.rescourcenFenster.TabIndex = 15;
             this.rescourcenFenster.TabStop = false;
             this.rescourcenFenster.Click += new System.EventHandler(this.rescourcenFenster_Click);
@@ -315,9 +320,10 @@
             this.momentanerSpieler.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.momentanerSpieler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.momentanerSpieler.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.momentanerSpieler.Location = new System.Drawing.Point(821, 155);
+            this.momentanerSpieler.Location = new System.Drawing.Point(616, 126);
+            this.momentanerSpieler.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.momentanerSpieler.Name = "momentanerSpieler";
-            this.momentanerSpieler.Size = new System.Drawing.Size(130, 18);
+            this.momentanerSpieler.Size = new System.Drawing.Size(103, 15);
             this.momentanerSpieler.TabIndex = 14;
             this.momentanerSpieler.Text = "Momentaner Spieler";
             // 
@@ -326,9 +332,10 @@
             this.bewpunktanzeige.AutoSize = true;
             this.bewpunktanzeige.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bewpunktanzeige.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.bewpunktanzeige.Location = new System.Drawing.Point(836, 108);
+            this.bewpunktanzeige.Location = new System.Drawing.Point(627, 88);
+            this.bewpunktanzeige.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.bewpunktanzeige.Name = "bewpunktanzeige";
-            this.bewpunktanzeige.Size = new System.Drawing.Size(71, 18);
+            this.bewpunktanzeige.Size = new System.Drawing.Size(57, 15);
             this.bewpunktanzeige.TabIndex = 13;
             this.bewpunktanzeige.Text = "movpoints";
             // 
@@ -337,9 +344,10 @@
             this.geldanzeige.AutoSize = true;
             this.geldanzeige.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.geldanzeige.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.geldanzeige.Location = new System.Drawing.Point(836, 50);
+            this.geldanzeige.Location = new System.Drawing.Point(627, 41);
+            this.geldanzeige.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.geldanzeige.Name = "geldanzeige";
-            this.geldanzeige.Size = new System.Drawing.Size(50, 18);
+            this.geldanzeige.Size = new System.Drawing.Size(40, 15);
             this.geldanzeige.TabIndex = 12;
             this.geldanzeige.Text = "money";
             // 
@@ -347,10 +355,10 @@
             // 
             this.pictureBox1.BackgroundImage = global::rbss1.Properties.Resources.data;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(732, -6);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(549, -5);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(165, 244);
+            this.pictureBox1.Size = new System.Drawing.Size(124, 198);
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
@@ -358,10 +366,9 @@
             // 
             this.recruitSoldiers.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("recruitSoldiers.BackgroundImage")));
             this.recruitSoldiers.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.recruitSoldiers.Location = new System.Drawing.Point(1389, 167);
-            this.recruitSoldiers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.recruitSoldiers.Location = new System.Drawing.Point(1042, 136);
             this.recruitSoldiers.Name = "recruitSoldiers";
-            this.recruitSoldiers.Size = new System.Drawing.Size(67, 62);
+            this.recruitSoldiers.Size = new System.Drawing.Size(50, 50);
             this.recruitSoldiers.TabIndex = 10;
             this.recruitSoldiers.TabStop = false;
             this.recruitSoldiers.Click += new System.EventHandler(this.recruitSoldiers_Click);
@@ -372,10 +379,9 @@
             // 
             this.stadtbauen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.stadtbauen.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.stadtbauen.Location = new System.Drawing.Point(1151, 62);
-            this.stadtbauen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.stadtbauen.Location = new System.Drawing.Point(863, 50);
             this.stadtbauen.Name = "stadtbauen";
-            this.stadtbauen.Size = new System.Drawing.Size(91, 23);
+            this.stadtbauen.Size = new System.Drawing.Size(68, 19);
             this.stadtbauen.TabIndex = 9;
             this.stadtbauen.Text = "Stadt Errichten";
             this.stadtbauen.UseVisualStyleBackColor = true;
@@ -386,10 +392,9 @@
             // 
             this.einnehmen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.einnehmen.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.einnehmen.Location = new System.Drawing.Point(971, 332);
-            this.einnehmen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.einnehmen.Location = new System.Drawing.Point(728, 270);
             this.einnehmen.Name = "einnehmen";
-            this.einnehmen.Size = new System.Drawing.Size(171, 23);
+            this.einnehmen.Size = new System.Drawing.Size(128, 19);
             this.einnehmen.TabIndex = 8;
             this.einnehmen.Text = "Feld Einnehmen";
             this.einnehmen.UseVisualStyleBackColor = true;
@@ -400,10 +405,9 @@
             // 
             this.construction.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("construction.BackgroundImage")));
             this.construction.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.construction.Location = new System.Drawing.Point(1389, 100);
-            this.construction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.construction.Location = new System.Drawing.Point(1042, 81);
             this.construction.Name = "construction";
-            this.construction.Size = new System.Drawing.Size(67, 62);
+            this.construction.Size = new System.Drawing.Size(50, 50);
             this.construction.TabIndex = 7;
             this.construction.TabStop = false;
             this.construction.Click += new System.EventHandler(this.construction_Click);
@@ -414,10 +418,9 @@
             // 
             this.weiter.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.weiter.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.weiter.Location = new System.Drawing.Point(917, 10);
-            this.weiter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.weiter.Location = new System.Drawing.Point(688, 8);
             this.weiter.Name = "weiter";
-            this.weiter.Size = new System.Drawing.Size(101, 23);
+            this.weiter.Size = new System.Drawing.Size(76, 19);
             this.weiter.TabIndex = 5;
             this.weiter.Text = "Nächste Runde";
             this.weiter.UseVisualStyleBackColor = true;
@@ -430,10 +433,9 @@
             this.titelLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.titelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titelLabel.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.titelLabel.Location = new System.Drawing.Point(1157, 100);
-            this.titelLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.titelLabel.Location = new System.Drawing.Point(868, 81);
             this.titelLabel.Name = "titelLabel";
-            this.titelLabel.Size = new System.Drawing.Size(43, 22);
+            this.titelLabel.Size = new System.Drawing.Size(37, 19);
             this.titelLabel.TabIndex = 6;
             this.titelLabel.Text = "Titel";
             this.titelLabel.Visible = false;
@@ -442,10 +444,9 @@
             // 
             this.ItemPB.BackgroundImage = global::rbss1.Properties.Resources.ui_wood;
             this.ItemPB.Image = global::rbss1.Properties.Resources.squad_wappen;
-            this.ItemPB.Location = new System.Drawing.Point(981, 126);
-            this.ItemPB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ItemPB.Location = new System.Drawing.Point(736, 102);
             this.ItemPB.Name = "ItemPB";
-            this.ItemPB.Size = new System.Drawing.Size(169, 198);
+            this.ItemPB.Size = new System.Drawing.Size(127, 161);
             this.ItemPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ItemPB.TabIndex = 5;
             this.ItemPB.TabStop = false;
@@ -458,9 +459,10 @@
             this.truppenLebenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.truppenLebenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.truppenLebenLB.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.truppenLebenLB.Location = new System.Drawing.Point(1157, 155);
+            this.truppenLebenLB.Location = new System.Drawing.Point(868, 126);
+            this.truppenLebenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenLebenLB.Name = "truppenLebenLB";
-            this.truppenLebenLB.Size = new System.Drawing.Size(81, 27);
+            this.truppenLebenLB.Size = new System.Drawing.Size(66, 22);
             this.truppenLebenLB.TabIndex = 3;
             this.truppenLebenLB.Text = "Leben:";
             this.truppenLebenLB.Visible = false;
@@ -472,9 +474,10 @@
             this.truppenSchadenLB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.truppenSchadenLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.truppenSchadenLB.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.truppenSchadenLB.Location = new System.Drawing.Point(1157, 210);
+            this.truppenSchadenLB.Location = new System.Drawing.Point(868, 171);
+            this.truppenSchadenLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.truppenSchadenLB.Name = "truppenSchadenLB";
-            this.truppenSchadenLB.Size = new System.Drawing.Size(107, 27);
+            this.truppenSchadenLB.Size = new System.Drawing.Size(87, 22);
             this.truppenSchadenLB.TabIndex = 4;
             this.truppenSchadenLB.Text = "Schaden:";
             this.truppenSchadenLB.Visible = false;
@@ -486,10 +489,9 @@
             this.anzahlRes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.anzahlRes.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.anzahlRes.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.anzahlRes.Location = new System.Drawing.Point(1079, 423);
-            this.anzahlRes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.anzahlRes.Location = new System.Drawing.Point(809, 344);
             this.anzahlRes.Name = "anzahlRes";
-            this.anzahlRes.Size = new System.Drawing.Size(53, 17);
+            this.anzahlRes.Size = new System.Drawing.Size(45, 15);
             this.anzahlRes.TabIndex = 2;
             this.anzahlRes.Text = "Anzahl: ";
             this.anzahlRes.Visible = false;
@@ -498,10 +500,10 @@
             // 
             this.UIInfo.BackColor = System.Drawing.Color.Transparent;
             this.UIInfo.Image = global::rbss1.Properties.Resources.UI2eisen;
-            this.UIInfo.Location = new System.Drawing.Point(1053, 498);
-            this.UIInfo.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.UIInfo.Location = new System.Drawing.Point(790, 405);
+            this.UIInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.UIInfo.Name = "UIInfo";
-            this.UIInfo.Size = new System.Drawing.Size(384, 116);
+            this.UIInfo.Size = new System.Drawing.Size(288, 94);
             this.UIInfo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UIInfo.TabIndex = 1;
             this.UIInfo.TabStop = false;
@@ -511,10 +513,10 @@
             // 
             this.UI.BackColor = System.Drawing.Color.Transparent;
             this.UI.Image = global::rbss1.Properties.Resources.UI1;
-            this.UI.Location = new System.Drawing.Point(893, -6);
-            this.UI.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.UI.Location = new System.Drawing.Point(670, -5);
+            this.UI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.UI.Name = "UI";
-            this.UI.Size = new System.Drawing.Size(580, 704);
+            this.UI.Size = new System.Drawing.Size(435, 572);
             this.UI.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UI.TabIndex = 0;
             this.UI.TabStop = false;
@@ -524,10 +526,10 @@
             this.marktFenster.BackgroundImage = global::rbss1.Properties.Resources.labelbackround;
             this.marktFenster.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.marktFenster.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.marktFenster.Location = new System.Drawing.Point(1017, 452);
-            this.marktFenster.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.marktFenster.Location = new System.Drawing.Point(763, 367);
+            this.marktFenster.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.marktFenster.Name = "marktFenster";
-            this.marktFenster.Size = new System.Drawing.Size(455, 162);
+            this.marktFenster.Size = new System.Drawing.Size(342, 132);
             this.marktFenster.TabIndex = 34;
             this.marktFenster.TabStop = false;
             this.marktFenster.Visible = false;
@@ -536,10 +538,10 @@
             // 
             this.eisenMarkt.BackgroundImage = global::rbss1.Properties.Resources.ironinventory;
             this.eisenMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.eisenMarkt.Location = new System.Drawing.Point(1083, 529);
-            this.eisenMarkt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.eisenMarkt.Location = new System.Drawing.Point(812, 430);
+            this.eisenMarkt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.eisenMarkt.Name = "eisenMarkt";
-            this.eisenMarkt.Size = new System.Drawing.Size(43, 39);
+            this.eisenMarkt.Size = new System.Drawing.Size(32, 32);
             this.eisenMarkt.TabIndex = 35;
             this.eisenMarkt.TabStop = false;
             this.eisenMarkt.Visible = false;
@@ -549,10 +551,10 @@
             // 
             this.kohleMarkt.BackgroundImage = global::rbss1.Properties.Resources.coalinventory1;
             this.kohleMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.kohleMarkt.Location = new System.Drawing.Point(1164, 529);
-            this.kohleMarkt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.kohleMarkt.Location = new System.Drawing.Point(873, 430);
+            this.kohleMarkt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.kohleMarkt.Name = "kohleMarkt";
-            this.kohleMarkt.Size = new System.Drawing.Size(43, 39);
+            this.kohleMarkt.Size = new System.Drawing.Size(32, 32);
             this.kohleMarkt.TabIndex = 36;
             this.kohleMarkt.TabStop = false;
             this.kohleMarkt.Visible = false;
@@ -562,10 +564,10 @@
             // 
             this.stahlMarkt.BackgroundImage = global::rbss1.Properties.Resources.stahlinventory1;
             this.stahlMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.stahlMarkt.Location = new System.Drawing.Point(1261, 529);
-            this.stahlMarkt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.stahlMarkt.Location = new System.Drawing.Point(946, 430);
+            this.stahlMarkt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.stahlMarkt.Name = "stahlMarkt";
-            this.stahlMarkt.Size = new System.Drawing.Size(43, 39);
+            this.stahlMarkt.Size = new System.Drawing.Size(32, 32);
             this.stahlMarkt.TabIndex = 37;
             this.stahlMarkt.TabStop = false;
             this.stahlMarkt.Visible = false;
@@ -575,10 +577,10 @@
             // 
             this.weizenMarkt.BackgroundImage = global::rbss1.Properties.Resources.wheatinventory;
             this.weizenMarkt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.weizenMarkt.Location = new System.Drawing.Point(1359, 529);
-            this.weizenMarkt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.weizenMarkt.Location = new System.Drawing.Point(1019, 430);
+            this.weizenMarkt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.weizenMarkt.Name = "weizenMarkt";
-            this.weizenMarkt.Size = new System.Drawing.Size(43, 39);
+            this.weizenMarkt.Size = new System.Drawing.Size(32, 32);
             this.weizenMarkt.TabIndex = 38;
             this.weizenMarkt.TabStop = false;
             this.weizenMarkt.Visible = false;
@@ -587,10 +589,9 @@
             // aktuellerSpielerFarbe
             // 
             this.aktuellerSpielerFarbe.BackColor = System.Drawing.Color.Transparent;
-            this.aktuellerSpielerFarbe.Location = new System.Drawing.Point(732, 487);
-            this.aktuellerSpielerFarbe.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.aktuellerSpielerFarbe.Location = new System.Drawing.Point(549, 396);
             this.aktuellerSpielerFarbe.Name = "aktuellerSpielerFarbe";
-            this.aktuellerSpielerFarbe.Size = new System.Drawing.Size(165, 139);
+            this.aktuellerSpielerFarbe.Size = new System.Drawing.Size(124, 113);
             this.aktuellerSpielerFarbe.TabIndex = 39;
             this.aktuellerSpielerFarbe.TabStop = false;
             // 
@@ -599,20 +600,31 @@
             this.farbedesSpielers.AutoSize = true;
             this.farbedesSpielers.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.farbedesSpielers.Image = global::rbss1.Properties.Resources.labelbackround;
-            this.farbedesSpielers.Location = new System.Drawing.Point(785, 498);
-            this.farbedesSpielers.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.farbedesSpielers.Location = new System.Drawing.Point(589, 405);
             this.farbedesSpielers.Name = "farbedesSpielers";
-            this.farbedesSpielers.Size = new System.Drawing.Size(85, 16);
+            this.farbedesSpielers.Size = new System.Drawing.Size(68, 13);
             this.farbedesSpielers.TabIndex = 40;
             this.farbedesSpielers.Text = "Deine Farbe:";
             // 
+            // verkaufshinweis
+            // 
+            this.verkaufshinweis.AutoSize = true;
+            this.verkaufshinweis.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.verkaufshinweis.Location = new System.Drawing.Point(865, 388);
+            this.verkaufshinweis.Name = "verkaufshinweis";
+            this.verkaufshinweis.Size = new System.Drawing.Size(158, 13);
+            this.verkaufshinweis.TabIndex = 41;
+            this.verkaufshinweis.Text = "Zum Verkaufen Icons anklicken";
+            this.verkaufshinweis.Visible = false;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImage = global::rbss1.Properties.Resources.labelbackround;
-            this.ClientSize = new System.Drawing.Size(1471, 617);
+            this.ClientSize = new System.Drawing.Size(1103, 501);
+            this.Controls.Add(this.verkaufshinweis);
             this.Controls.Add(this.farbedesSpielers);
             this.Controls.Add(this.aktuellerSpielerFarbe);
             this.Controls.Add(this.weizenMarkt);
@@ -653,7 +665,6 @@
             this.Controls.Add(this.anzahlRes);
             this.Controls.Add(this.UIInfo);
             this.Controls.Add(this.UI);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -726,6 +737,7 @@
         private System.Windows.Forms.PictureBox weizenMarkt;
         private System.Windows.Forms.PictureBox aktuellerSpielerFarbe;
         private System.Windows.Forms.Label farbedesSpielers;
+        private System.Windows.Forms.Label verkaufshinweis;
     }
 }
 

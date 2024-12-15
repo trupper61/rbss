@@ -838,7 +838,7 @@ namespace rbss1
             {
                 ItemPB.Image = Properties.Resources.stadt;
                 ItemPB.BackgroundImage = Properties.Resources.ui_wood;
-                truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
+                truppenLebenLB.Text = $"Leben: {stadt.Leben}";
                 titelLabel.Text = stadt.Name;
             }
             else if (o is Squad squad)
@@ -1630,6 +1630,7 @@ namespace rbss1
         {
             if (marktFenster.Visible == true)
             {
+                verkaufshinweis.Hide();
                 marktFenster.Hide();
                 eisenMarkt.Hide();
                 kohleMarkt.Hide();
@@ -1638,6 +1639,7 @@ namespace rbss1
             }
             else
             {
+                verkaufshinweis.Show();
                 marktFenster.Show();
                 eisenMarkt.Show(); eisenMarkt.BringToFront();
                 kohleMarkt.Show(); kohleMarkt.BringToFront();
