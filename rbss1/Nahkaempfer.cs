@@ -15,15 +15,27 @@ namespace rbss1
             textur.Image = Properties.Resources.melee_character;
 
         }
+        /// <summary>
+        /// Methode zum Angreifen einer anderen Truppe
+        /// </summary>
+        /// <param name="targetTruppe"></param>
+        /// <returns></returns>
         public override bool Angreifen(Truppe targetTruppe)
         {
-            if (targetTruppe == null && targetTruppe.Besitzer == Besitzer)
+            // Überprüfung, ob Ziel existiert und Besitzer gleich ist
+            if (targetTruppe == null && targetTruppe.Besitzer == Besitzer) 
                 return false;
+            // Überprüfung, ob Ziel sich ein Feld entfernt
             if (BerechneDistanz(targetTruppe.AktuellesFeld) != 1)
                 return false;
-            targetTruppe.NehmeSchaden(Schaden);
+            targetTruppe.NehmeSchaden(Schaden); // Verursache Schaden
             return true;
         }
+        /// <summary>
+        /// Methode zum Angreifen einer Stadt
+        /// </summary>
+        /// <param name="targetStadt"></param>
+        /// <returns></returns>
         public override bool Angreifen(Stadt targetStadt)
         {
             if (targetStadt == null || targetStadt.Besitzer == Besitzer)
@@ -33,6 +45,11 @@ namespace rbss1
             targetStadt.NehmeSchaden(Schaden);
             return true;
         }
+        /// <summary>
+        /// Methode zum Angreifen einer Stadt
+        /// </summary>
+        /// <param name="targetSquad"></param>
+        /// <returns></returns>
         public override bool Angreifen(Squad targetSquad)
         {
             if (targetSquad == null || Besitzer == targetSquad.Besitzer)

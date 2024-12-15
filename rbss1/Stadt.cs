@@ -109,10 +109,11 @@ namespace rbss1
             this.textur.Hide();
             this.stadt = null;
         }
+        // Stadt erleidet Schaden
         public void NehmeSchaden(int schaden)
         {
             Leben -= schaden;
-            if (Leben <= 0)
+            if (Leben <= 0) // Wenn die Stadt kein Leben hat löscht sie sich
             {
                 EntferneStadt();
             }

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace rbss1
 {
+    // Abstrakte Klasse "Truppe" dient als Basisklasse für spezifische Truppentypen
     public abstract class Truppe
     {
         public Spieler Besitzer {  get; set; }
@@ -27,16 +28,27 @@ namespace rbss1
                 BackgroundImage = Properties.Resources.grasstransparent
             };
         }
+        /// <summary>
+        /// Setzt das Feld, auf dem sich Truppe befindet, ändert Farbe basierend auf die des Spielers
+        /// </summary>
+        /// <param name="neuesFeld"></param>
         public void SetzeFeld(Feld neuesFeld)
         {
             AktuellesFeld = neuesFeld;
             textur.BackColor = Besitzer.SpielerFarbe;
         }
+        /// <summary>
+        /// Berechnet Manhattan-Distanz von aktueller Position zu einem Ziel feld
+        /// </summary>
+        /// <param name="ziel"></param>
+        /// <returns></returns>
         public int BerechneDistanz(Feld ziel)
         {
-            //Felder, die die Truppe belaufen kann, wird berechnet.
             return Math.Abs(AktuellesFeld.position.X - ziel.position.X) + Math.Abs(AktuellesFeld.position.Y - ziel.position.Y);
         }
+        /// <summary>
+        /// Entfernt die Truppen vom aktuellen Feld und versteckt die Grafik
+        /// </summary>
         public void EntferneTruppe()
         {
             if (AktuellesFeld != null)
@@ -45,6 +57,10 @@ namespace rbss1
             }
             textur.Hide();
         }
+        /// <summary>
+        /// Reduziert Lebenspunkte der Truppe und entfernt sie wenn sie auf 0 fällt
+        /// </summary>
+        /// <param name="schaden"></param>
         public void NehmeSchaden(int schaden)
         {
             Leben -= schaden;

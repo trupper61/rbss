@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace rbss1
 {
+    // Klasse Squad repräsentiert eine Gruppe von Truppen, die zusammen agieren
     public class Squad
     {
         public Spieler Besitzer { get; set; }
@@ -35,6 +36,10 @@ namespace rbss1
             };
             AktualisiereAttribute();   
         }
+        /// <summary>
+        /// Setzt Squad auf ein neues Feld
+        /// </summary>
+        /// <param name="feld"></param>
         public void SetzeFeld(Feld feld)
         {
             AktuellesFeld = feld;
@@ -45,41 +50,54 @@ namespace rbss1
                 textur.Show();
             }
         }
+        /// <summary>
+        /// Aktualisiert die Attribute  des Squads basierend auf die Mitglieder
+        /// </summary>
         public void AktualisiereAttribute()
         {
-            Gesamtschaden = 0;
-            Gesamtleben = 0;
+            Gesamtschaden = 0; // Zurücksetzen Gesamtschaden
+            Gesamtleben = 0; // Zurücksetzen Gesamtleben
 
             if (Mitglieder.Count > 0)
             {
-                Bewegungsreichweite = Mitglieder[0].Bewegungsreichweite;
+                Bewegungsreichweite = Mitglieder[0].Bewegungsreichweite; // Setzt Bewegungsreichweite auf erste Truppe
             }
             else
             {
                 Bewegungsreichweite = 0;
             }
+            // Berechnet Gesamtschaden/Gesamtleben des Squads
             foreach (Truppe truppe in Mitglieder)
             {
                 Gesamtleben += truppe.Leben;
                 Gesamtschaden += truppe.Schaden;
-                if (truppe.Bewegungsreichweite < Bewegungsreichweite)
+                if (truppe.Bewegungsreichweite < Bewegungsreichweite) // Bewegungsreichweite ist die min. Reichweite aller Truppen
                 {
                     Bewegungsreichweite = truppe.Bewegungsreichweite;
                 }
             }
         }
+        /// <summary>
+        /// Bewegt das Squad zu Ziel-Feld
+        /// </summary>
+        /// <param name="zielFeld"></param>
         public void BewegeZu(Feld zielFeld)
         {
-                AktuellesFeld.TruppeAufFeld = null;
-                SetzeFeld(zielFeld);
-                zielFeld.SquadAufFeld = this;
+            AktuellesFeld.TruppeAufFeld = null;
+            SetzeFeld(zielFeld);
+            zielFeld.SquadAufFeld = this;
 
-                textur.Location = zielFeld.textur.Location;
-                foreach (Truppe truppe in Mitglieder)
-                {
-                    truppe.AktuellesFeld = zielFeld;
-                }
+            textur.Location = zielFeld.textur.Location;
+            // Bewegt alle Truppen im Squad zu neuem Feld
+            foreach (Truppe truppe in Mitglieder)
+            {
+                truppe.AktuellesFeld = zielFeld;
+            }
         }
+        /// <summary>
+        /// Fügt einer Truppe zum Squad hinzu
+        /// </summary>
+        /// <param name="truppe"></param>
         public void TruppeHinzufuegen(Truppe truppe)
         {
             if (truppe.Besitzer == Besitzer)
@@ -88,23 +106,25 @@ namespace rbss1
                 AktualisiereAttribute();
             }
         }
-        public void Bewegen(Feld zielFeld)
-        {
-            foreach (Truppe truppe in Mitglieder)
-            {
-                truppe.SetzeFeld(zielFeld);
-            }
-        }
+        /// <summary>
+        /// Entfernt eine Truppe aus dem Squad
+        /// </summary>
+        /// <param name="truppe"></param>
         public void EntferneTruppe(Truppe truppe)
         {
             Mitglieder.Remove(truppe);
             AktualisiereAttribute();
+            // Wenn Squad keine Mitglieder hat
             if (Mitglieder.Count == 0)
             {
-                AktuellesFeld.SquadAufFeld = null;
+                AktuellesFeld.SquadAufFeld = null; // Squad wir gelöscht
                 textur.Hide();
             }
         }
+        /// <summary>
+        /// Squad nimmt Schaden, der auf Truppen aufgeteilt wird.
+        /// </summary>
+        /// <param name="schaden"></param>
         public void NehmeSchaden (int schaden)
         {
             int schadenRemaining = schaden;
@@ -116,25 +136,32 @@ namespace rbss1
                     break;
                 int originalLeben = truppe.Leben;
                 truppe.Leben -= schadenRemaining;
-                schadenRemaining -= originalLeben;
+                schadenRemaining -= originalLeben; 
                 if (truppe.Leben <= 0)
-                    zuEntfernen.Add(truppe);
+                    zuEntfernen.Add(truppe); // Wenn die Truppe gestorben ist, wird sie zur List zuentfernender Truppen hinzugefügt
             }
             foreach(Truppe truppe in zuEntfernen)
             {
-                EntferneTruppe(truppe);
+                EntferneTruppe(truppe); // Entfernt gestorbene Truppe aus Squad
                 truppe.EntferneTruppe();
             }
         }
+        /// <summary>
+        /// Berechnet den tatsächlichen Schaden des Squads auf ein Ziel-Feld
+        /// </summary>
+        /// <param name="targetFeld"></param>
+        /// <returns></returns>
         public int TrueDamage(Feld targetFeld)
         {
             int aktuellerSchaden = Gesamtschaden;
             foreach (Truppe truppe in Mitglieder)
             {
+                // Schaden von Nahkämpfer wird reduziert, wenn Ziel nicht Distanz von eins hat
                 if (truppe is Nahkaempfer && !(BerechneDistanz(targetFeld) == 1))
                 {
                     aktuellerSchaden -= truppe.Schaden;
                 }
+                // Schaden von Fernkämpfer wird reduziert, wenn Ziel nicht in ihrer Reichweite ist
                 else if (truppe is Fernkaempfer fernkampf && !(BerechneDistanz(targetFeld) <= fernkampf.Reichweite))
                 {
                     aktuellerSchaden -= truppe.Schaden;
@@ -142,16 +169,22 @@ namespace rbss1
             }
             return aktuellerSchaden;
         }
+        /// <summary>
+        /// Überladene Methode zum Angreifen eines Squads
+        /// </summary>
+        /// <param name="gegnerSquad"></param>
+        /// <returns></returns>
         public bool Angreifen (Squad gegnerSquad)
         {
             if (gegnerSquad.Besitzer == Besitzer)
                 return false;
             int aktuellerSchaden = TrueDamage(gegnerSquad.AktuellesFeld);
-            if (aktuellerSchaden <= 0)
+            if (aktuellerSchaden <= 0) // Wenn Schaden 0 ist -> Ziel zu weit entfernt
                 return false;
             gegnerSquad.NehmeSchaden(aktuellerSchaden);
             return true;
         }
+        // Überladene Methode zum Angreifen einer Truppe
         public bool Angreifen (Truppe gegnerTruppe)
         {
             if (gegnerTruppe.Besitzer == Besitzer)
@@ -162,6 +195,7 @@ namespace rbss1
             gegnerTruppe.NehmeSchaden(aktuellerSchaden);
             return true;
         }
+        // Überladene Methode zum Angreifen einer Stadt
         public bool Angreifen(Stadt targetStadt)
         {
             if (targetStadt == null || Besitzer.staedteBesitz.Contains(targetStadt))
