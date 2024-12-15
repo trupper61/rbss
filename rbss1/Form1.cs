@@ -30,6 +30,7 @@ namespace rbss1
         private Panel squadErstellenPanel;
         private Start menu;
 
+        //Anzeige der Preise der jeweiligen Sachen
         Label constructionCost = new Label()
         {
             Text = $"Gebäude: $100, Stadt: $200 + 30 Stahl",
@@ -37,7 +38,7 @@ namespace rbss1
             ImageAlign = ContentAlignment.MiddleCenter,
             Visible = false,
             FlatStyle = FlatStyle.Popup,
-            Size = new Size(200, 25)
+            Size = new Size(200, 20)
         };
         Label rekrutierungCost = new Label()
         {
@@ -46,7 +47,7 @@ namespace rbss1
             ImageAlign = ContentAlignment.MiddleCenter,
             Visible = false,
             FlatStyle = FlatStyle.Popup,
-            Size = new Size(200, 25)
+            Size = new Size(80, 20)
         };
         Label rescourcenVerkaufAnzeige = new Label()
         {
@@ -55,7 +56,7 @@ namespace rbss1
             ImageAlign = ContentAlignment.MiddleCenter,
             Visible = false,
             FlatStyle = FlatStyle.Popup,
-            Size = new Size(200, 25)
+            Size = new Size(170, 20)
         };
 
 
@@ -76,11 +77,11 @@ namespace rbss1
         {
             InitializeComponent();
 
-            this.Controls.Add(constructionCost);
-            this.Controls.Add(rekrutierungCost);
-            this.Controls.Add(rescourcenVerkaufAnzeige);
+            this.Controls.Add(constructionCost); constructionCost.BringToFront();
+            this.Controls.Add(rekrutierungCost); rekrutierungCost.BringToFront();
+            this.Controls.Add(rescourcenVerkaufAnzeige); rescourcenVerkaufAnzeige.BringToFront();
 
-            constructionCost.BringToFront();
+            
 
             this.spielerMax = spielerMax;
             for (int i = 0; i < spielerMax; i++)
@@ -1938,7 +1939,7 @@ namespace rbss1
         private void rescourcenVerkauf_MouseEnter(object sender, EventArgs e)
         {
             rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesellglow;
-            rescourcenVerkaufAnzeige.Location = new Point(rescourcenVerkauf.Location.X - 200, rescourcenVerkauf.Location.Y + 20);
+            rescourcenVerkaufAnzeige.Location = new Point(rescourcenVerkauf.Location.X - 170, rescourcenVerkauf.Location.Y + 20);
             rescourcenVerkaufAnzeige.Show();
         }
 
@@ -1950,7 +1951,7 @@ namespace rbss1
         private void recruitSoldiers_MouseEnter(object sender, EventArgs e)
         {
             recruitSoldiers.BackgroundImage = Properties.Resources.recruitglow;
-            rekrutierungCost.Location = new Point(recruitSoldiers.Location.X - 200, recruitSoldiers.Location.Y + 20);
+            rekrutierungCost.Location = new Point(recruitSoldiers.Location.X - 80, recruitSoldiers.Location.Y + 20);
             rekrutierungCost.Show();
         }
 
