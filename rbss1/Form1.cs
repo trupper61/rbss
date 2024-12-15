@@ -840,7 +840,7 @@ namespace rbss1
             {
                 ItemPB.Image = Properties.Resources.stadt;
                 ItemPB.BackgroundImage = Properties.Resources.ui_wood;
-                truppenLebenLB.Text = $"Siedler: {stadt.Einwohner}";
+                truppenLebenLB.Text = $"Leben: {stadt.Leben}";
                 titelLabel.Text = stadt.Name;
             }
             else if (o is Squad squad)
