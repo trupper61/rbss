@@ -12,12 +12,14 @@ namespace rbss1
     public class Stadt
     {
         public Spieler Besitzer { get; set; }
+        //Stadtfläche - Die Fläche, in der die Stadt seinen Einflussradius hat
         public List<Feld> stadtFlaeche { get; set; }
         public PictureBox textur { get; private set; }
         public int Einwohner { get; set; }
         public string Name { get; set; }
         public Stadt stadt { get; private set; }
         public Feld[,] felder { get; set; }
+        //Mitte des Einflussradius
         public Feld startFeld { get; set; }
 
         public int einkommen { get; set; } = 75;
@@ -42,7 +44,7 @@ namespace rbss1
 
             };
         }
-
+        //Diese Methode ist verantwortlich für die Färbung aller Felder im Einflussradius der Stadt in die jeweilige Farbe des Spielers.
         public void SetzeEinflussRadius(List<Spieler> spieler, int spielerIndex)
         {
             
@@ -92,6 +94,7 @@ namespace rbss1
             {
                 startFeld.EntferneStadt();
             }
+            //Es werden durch alle Felder iteriert. Die Stadt des Besitzers wird entfernt.
             foreach (var felder in felder) 
             {
                 if(felder.besitzer == this.Besitzer) 

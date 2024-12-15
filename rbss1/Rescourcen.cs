@@ -28,6 +28,7 @@ namespace rbss1
             return $"Wert: {wert}, Anzahl: {anzahl}";
         }
 
+        //Der Besitz der Rescourcen des Spielers wird aktualiseiert
         public void Add(Rescourcen neueRessourcen)
         {
             if (neueRessourcen != null)

@@ -69,6 +69,7 @@
             this.stahlMarkt = new System.Windows.Forms.PictureBox();
             this.weizenMarkt = new System.Windows.Forms.PictureBox();
             this.aktuellerSpielerFarbe = new System.Windows.Forms.PictureBox();
+            this.farbedesSpielers = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.rescourcenVerkauf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.squadPanelBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.recruitSquad)).BeginInit();
@@ -593,12 +594,24 @@
             this.aktuellerSpielerFarbe.TabIndex = 39;
             this.aktuellerSpielerFarbe.TabStop = false;
             // 
+            // farbedesSpielers
+            // 
+            this.farbedesSpielers.AutoSize = true;
+            this.farbedesSpielers.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.farbedesSpielers.Image = global::rbss1.Properties.Resources.labelbackround;
+            this.farbedesSpielers.Location = new System.Drawing.Point(601, 367);
+            this.farbedesSpielers.Name = "farbedesSpielers";
+            this.farbedesSpielers.Size = new System.Drawing.Size(68, 13);
+            this.farbedesSpielers.TabIndex = 40;
+            this.farbedesSpielers.Text = "Deine Farbe:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1103, 501);
+            this.Controls.Add(this.farbedesSpielers);
             this.Controls.Add(this.aktuellerSpielerFarbe);
             this.Controls.Add(this.weizenMarkt);
             this.Controls.Add(this.stahlMarkt);
@@ -708,6 +721,7 @@
         private System.Windows.Forms.PictureBox stahlMarkt;
         private System.Windows.Forms.PictureBox weizenMarkt;
         private System.Windows.Forms.PictureBox aktuellerSpielerFarbe;
+        private System.Windows.Forms.Label farbedesSpielers;
     }
 }
 
