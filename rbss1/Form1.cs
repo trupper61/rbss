@@ -1693,6 +1693,36 @@ namespace rbss1
                 }
             }
         }
+
+        private void recruitSquad_MouseEnter(object sender, EventArgs e)
+        {
+            recruitSquad.Image = Properties.Resources.recruit_squadglow;
+        }
+
+        private void recruitSquad_MouseLeave(object sender, EventArgs e)
+        {
+            recruitSquad.Image = Properties.Resources.recruit_squad;
+        }
+
+        private void rescourcenFenster_MouseEnter(object sender, EventArgs e)
+        {
+            rescourcenFenster.BackgroundImage = Properties.Resources.rescourceviewglow;
+        }
+
+        private void rescourcenFenster_MouseLeave(object sender, EventArgs e)
+        {
+            rescourcenFenster.BackgroundImage = Properties.Resources.rescourceview;
+        }
+
+        private void rescourcenVerkauf_MouseEnter(object sender, EventArgs e)
+        {
+            rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesellglow;
+        }
+
+        private void rescourcenVerkauf_MouseLeave(object sender, EventArgs e)
+        {
+            rescourcenVerkauf.BackgroundImage = Properties.Resources.rescourcesell;
+        }
     }
 }
     

@@ -111,6 +111,8 @@
             this.rescourcenVerkauf.TabIndex = 33;
             this.rescourcenVerkauf.TabStop = false;
             this.rescourcenVerkauf.Click += new System.EventHandler(this.rescourcenVerkauf_Click);
+            this.rescourcenVerkauf.MouseEnter += new System.EventHandler(this.rescourcenVerkauf_MouseEnter);
+            this.rescourcenVerkauf.MouseLeave += new System.EventHandler(this.rescourcenVerkauf_MouseLeave);
             // 
             // squadPanelBtn
             // 
@@ -151,6 +153,8 @@
             this.recruitSquad.TabIndex = 29;
             this.recruitSquad.TabStop = false;
             this.recruitSquad.Click += new System.EventHandler(this.recruitSquad_Click);
+            this.recruitSquad.MouseEnter += new System.EventHandler(this.recruitSquad_MouseEnter);
+            this.recruitSquad.MouseLeave += new System.EventHandler(this.recruitSquad_MouseLeave);
             // 
             // farmbauen
             // 
@@ -303,6 +307,8 @@
             this.rescourcenFenster.TabIndex = 15;
             this.rescourcenFenster.TabStop = false;
             this.rescourcenFenster.Click += new System.EventHandler(this.rescourcenFenster_Click);
+            this.rescourcenFenster.MouseEnter += new System.EventHandler(this.rescourcenFenster_MouseEnter);
+            this.rescourcenFenster.MouseLeave += new System.EventHandler(this.rescourcenFenster_MouseLeave);
             // 
             // momentanerSpieler
             // 
