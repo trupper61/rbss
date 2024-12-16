@@ -1323,7 +1323,7 @@ namespace rbss1
                 if (spieler.Count == 1)
                 {
                     var gewinner = spieler.First();
-                    DialogResult result = MessageBox.Show($"Spieler {gewinner.ToString()} hat gewonnen!", "Spiel Endet!", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show($"Zurück zum Menü", $"{gewinner.ToString()} hat gewonnen!", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         menu.Show();
